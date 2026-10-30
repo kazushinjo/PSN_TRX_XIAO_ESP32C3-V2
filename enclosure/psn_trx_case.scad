@@ -129,7 +129,7 @@ assert(phone_c[1] - phone_thin / 2 >= panel_inset + panel_t + 1, "PHN の薄肉�
 // 高さは後面パネルの外から見える範囲（底板上面〜ふた裏面）の中央にそろえる
 rear_zc = (floor_t - panel_z0 + H - lid_t - panel_z0) / 2;
 fuse_c = [21, rear_zc];     fuse_hole = 12.5; fuse_flange = 18; fuse_body = 16;  // 5x20 パネル取付ヒューズホルダ（パネル裏に約 35mm）
-dc_c   = [W - 20, rear_zc]; dc_hole = 8.0;    dc_flange = 14;   dc_body = 12;    // 12V DC ジャック（パネル取付、2.1/2.5mm）
+dc_c   = [42, rear_zc];     dc_hole = 8.0;    dc_flange = 14;   dc_body = 12;    // 12V DC ジャック（パネル取付、2.1/2.5mm）。ヒューズの右隣（DC ジャック〜ヒューズの線を短く）
 dc_thin = 15; dc_thin_t = 1.8;   // DC ジャック穴を中心に 15x15mm を板厚 1.8mm に（パネル内側から座ぐり。ジャックのねじ長さ対策）
 j1_uv  = [11.1, 38.5];      // 基板 J1（アンテナ）の中心（kicad/PSN_TRX.kicad_pcb より）
 l1_v   = 42.0;              // 基板 L1（T-50 縦置き、高さ約 14mm、基板の後端にかかる）の J1 側の端（v）
@@ -142,7 +142,9 @@ assert(fuse_c[0] + fuse_body / 2 <= bx - 1, "ヒューズホルダの本体が�
 for (c = [[bnc_c, bnc_body, 12], [dc_c, dc_body, 15]])   // [位置, 太さ, パネル内側への長さ]
     assert(abs(c[0][0] - psw_c[0]) >= c[1] / 2 + psw_body / 2 + 1 || psw_c[1] + psw_body / 2 + 2 <= D - panel_inset - fit / 2 - panel_t - c[2], "電源スイッチの本体が後面の BNC・DC ジャックにかかる");
 assert(abs(fuse_c[0] - phone_c[0]) >= fuse_body / 2 + phone_body / 2 + 1 || phone_c[1] + phone_body / 2 + 1 <= D - panel_inset - fit / 2 - panel_t - 35, "PHN の本体がヒューズホルダの本体にかかる");
-assert(dc_c[0] - dc_body / 2 >= bx + pcb_v + 1, "DC ジャックの本体が基板の上にかかる");
+// DC ジャックの本体（パネル内面から 15mm、Z 14〜26mm）は基板の左後ろの角に平面で約 1.6mm かかるが、そこには取付穴 H3 しかない（基板上 4mm 以上離す）
+assert(D - panel_inset - fit / 2 - panel_t - 15 >= by + pcb_u + 1 || pz(dc_c[1]) - dc_body / 2 >= bz + pcb_t + 4, "DC ジャックの本体が基板の後端の部品にかかる");
+assert(dc_c[0] - dc_flange / 2 >= fuse_c[0] + fuse_flange / 2 + 5, "ヒューズと DC の間が狭い");
 // BNC の本体（パネル内面から 12mm、Z 14〜26mm）は基板の後端に平面で約 1.2mm かかる。そこにある背の高い部品は L1 だけなので、L1 をかわす
 assert(D - panel_inset - fit / 2 - panel_t - 12 >= by + pcb_u + 1 || bnc_c[0] - bnc_body / 2 >= bp(0, l1_v)[0] + 1, "BNC の本体が基板の L1 にかかる");
 assert(abs(dc_c[0] - bnc_c[0]) >= dc_flange / 2 + bnc_flange / 2 + 5, "DC と BNC の間が狭い");
