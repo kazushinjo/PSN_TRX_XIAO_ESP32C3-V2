@@ -1,0 +1,186 @@
+情報: シンボル 'J3:Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical' を処理中です。
+情報: シンボル 'C2:Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm' を処理中です。
+情報: シンボル 'C3:Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm' を処理中です。
+情報: シンボル 'C4:Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm' を処理中です。
+情報: シンボル 'C5:Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm' を処理中です。
+情報: シンボル 'C6:Capacitor_THT:C_Disc_D3.0mm_W1.6mm_P2.50mm' を処理中です。
+情報: シンボル 'C7:Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm' を処理中です。
+情報: シンボル 'C8:Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm' を処理中です。
+情報: シンボル 'C9:Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm' を処理中です。
+情報: シンボル 'C10:Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm' を処理中です。
+情報: シンボル 'C11:Capacitor_THT:CP_Radial_D6.3mm_P2.50mm' を処理中です。
+情報: シンボル 'C12:Capacitor_THT:C_Disc_D3.0mm_W1.6mm_P2.50mm' を処理中です。
+情報: シンボル 'C13:Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm' を処理中です。
+情報: シンボル 'C14:Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm' を処理中です。
+情報: シンボル 'C15:Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm' を処理中です。
+情報: シンボル 'C16:Capacitor_THT:CP_Radial_D6.3mm_P2.50mm' を処理中です。
+情報: シンボル 'C17:Capacitor_THT:CP_Radial_D5.0mm_P2.00mm' を処理中です。
+情報: シンボル 'C18:Capacitor_THT:CP_Radial_D5.0mm_P2.00mm' を処理中です。
+情報: シンボル 'C19:Capacitor_THT:CP_Radial_D5.0mm_P2.00mm' を処理中です。
+情報: シンボル 'C20:Capacitor_THT:CP_Radial_D5.0mm_P2.00mm' を処理中です。
+情報: シンボル 'C21:Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm' を処理中です。
+情報: シンボル 'C22:Capacitor_THT:C_Disc_D3.0mm_W1.6mm_P2.50mm' を処理中です。
+情報: シンボル 'C23:Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm' を処理中です。
+情報: シンボル 'C24:Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm' を処理中です。
+情報: シンボル 'C25:Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm' を処理中です。
+情報: シンボル 'C27:Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm' を処理中です。
+情報: シンボル 'C28:Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm' を処理中です。
+情報: シンボル 'C29:Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm' を処理中です。
+情報: シンボル 'C30:Capacitor_THT:C_Disc_D3.0mm_W1.6mm_P2.50mm' を処理中です。
+情報: シンボル 'C31:Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm' を処理中です。
+情報: シンボル 'C32:Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm' を処理中です。
+情報: シンボル 'C33:Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm' を処理中です。
+情報: シンボル 'C34:Capacitor_THT:C_Disc_D3.0mm_W1.6mm_P2.50mm' を処理中です。
+情報: シンボル 'C35:Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm' を処理中です。
+情報: シンボル 'C36:Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm' を処理中です。
+情報: シンボル 'C37:Capacitor_THT:C_Disc_D3.0mm_W1.6mm_P2.50mm' を処理中です。
+情報: シンボル 'C38:Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm' を処理中です。
+情報: シンボル 'C39:Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm' を処理中です。
+情報: シンボル 'C40:Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm' を処理中です。
+情報: シンボル 'C41:Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm' を処理中です。
+情報: シンボル 'C42:Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm' を処理中です。
+情報: シンボル 'C43:Capacitor_THT:C_Disc_D3.0mm_W1.6mm_P2.50mm' を処理中です。
+情報: シンボル 'C44:Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm' を処理中です。
+情報: シンボル 'C45:Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm' を処理中です。
+情報: シンボル 'C46:Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm' を処理中です。
+情報: シンボル 'C47:Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm' を処理中です。
+情報: シンボル 'C48:Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm' を処理中です。
+情報: シンボル 'C49:Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm' を処理中です。
+情報: シンボル 'C50:Capacitor_THT:CP_Radial_D5.0mm_P2.00mm' を処理中です。
+情報: シンボル 'C51:Capacitor_THT:CP_Radial_D5.0mm_P2.00mm' を処理中です。
+情報: シンボル 'C52:Capacitor_THT:CP_Radial_D5.0mm_P2.00mm' を処理中です。
+情報: シンボル 'C53:Capacitor_THT:CP_Radial_D5.0mm_P2.00mm' を処理中です。
+情報: シンボル 'C54:Capacitor_THT:CP_Radial_D5.0mm_P2.00mm' を処理中です。
+情報: シンボル 'C55:Capacitor_THT:CP_Radial_D5.0mm_P2.00mm' を処理中です。
+情報: シンボル 'C56:Capacitor_THT:CP_Radial_D5.0mm_P2.00mm' を処理中です。
+情報: シンボル 'C57:Capacitor_THT:CP_Radial_D5.0mm_P2.00mm' を処理中です。
+情報: シンボル 'C58:Capacitor_THT:CP_Radial_D5.0mm_P2.00mm' を処理中です。
+情報: シンボル 'C59:Capacitor_THT:CP_Radial_D5.0mm_P2.00mm' を処理中です。
+情報: シンボル 'C60:Capacitor_THT:CP_Radial_D5.0mm_P2.00mm' を処理中です。
+情報: シンボル 'D1:Diode_THT:D_DO-35_SOD27_P2.54mm_Vertical_CathodeUp' を処理中です。
+情報: シンボル 'D2:Diode_THT:D_DO-35_SOD27_P2.54mm_Vertical_CathodeUp' を処理中です。
+情報: シンボル 'D3:Diode_THT:D_DO-41_SOD81_P10.16mm_Horizontal' を処理中です。
+情報: シンボル 'VR7:PSN_TRX:Potentiometer_TOCOS_GF063P_Vertical' を処理中です。
+情報: シンボル 'VR6:PSN_TRX:Potentiometer_TOCOS_GF063P_Vertical' を処理中です。
+情報: シンボル 'VR5:PSN_TRX:Potentiometer_TOCOS_GF063P_Vertical' を処理中です。
+情報: シンボル 'VR4:PSN_TRX:Potentiometer_TOCOS_GF063P_Vertical' を処理中です。
+情報: シンボル 'VR3:Potentiometer_THT:Potentiometer_Bourns_3266W_Vertical' を処理中です。
+情報: シンボル 'U2:PSN_TRX:DIP-8_W7.62mm' を処理中です。
+情報: シンボル 'U1:Package_TO_SOT_THT:TO-92_Inline' を処理中です。
+情報: シンボル 'TC1:PSN_TRX:C_Trimmer_TMCV01' を処理中です。
+情報: シンボル 'T1:PSN_TRX:Transformer_ST71_CB19' を処理中です。
+情報: シンボル 'D5:Diode_THT:D_DO-35_SOD27_P2.54mm_Vertical_CathodeUp' を処理中です。
+情報: シンボル 'D6:Diode_THT:D_DO-35_SOD27_P2.54mm_Vertical_CathodeUp' を処理中です。
+情報: シンボル 'D7:Diode_THT:D_DO-35_SOD27_P2.54mm_Vertical_CathodeUp' を処理中です。
+情報: シンボル 'D8:Diode_THT:D_DO-35_SOD27_P2.54mm_Vertical_CathodeUp' を処理中です。
+情報: シンボル 'IC1:Package_TO_SOT_THT:TO-92_Inline' を処理中です。
+情報: シンボル 'IC2:Package_DIP:DIP-8_W7.62mm' を処理中です。
+情報: シンボル 'Studio XIAO ESP32C3:PSN_TRX:Seeeduino_XIAO_Socket' を処理中です。
+情報: シンボル 'J1:Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical' を処理中です。
+情報: シンボル 'J2:Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical' を処理中です。
+情報: シンボル 'R33:Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical' を処理中です。
+情報: シンボル 'RFC1:Inductor_THT:L_Axial_L9.5mm_D4.0mm_P12.70mm_Horizontal_Fastron_SMCC' を処理中です。
+情報: シンボル 'J4:Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical' を処理中です。
+情報: シンボル 'J5:Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical' を処理中です。
+情報: シンボル 'J6:Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical' を処理中です。
+情報: シンボル 'J7:Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical' を処理中です。
+情報: シンボル 'J8:Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical' を処理中です。
+情報: シンボル 'J9:Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical' を処理中です。
+情報: シンボル 'J10:Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical' を処理中です。
+情報: シンボル 'K1:Relay_THT:Relay_DPDT_Omron_G5V-2' を処理中です。
+情報: シンボル 'VR8:PSN_TRX:Potentiometer_TOCOS_GF063P_Vertical' を処理中です。
+情報: シンボル 'C1:Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm' を処理中です。
+情報: シンボル 'R41:Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical' を処理中です。
+情報: シンボル 'L1:PSN_TRX:L_FCZ07S_CT' を処理中です。
+情報: シンボル 'L2:PSN_TRX:L_FCZ07S_CT' を処理中です。
+情報: シンボル 'L3:PSN_TRX:L_FCZ07S_CT' を処理中です。
+情報: シンボル 'L4:PSN_TRX:L_T50_2pin_Vertical' を処理中です。
+情報: シンボル 'L5:PSN_TRX:L_T50_2pin_Vertical' を処理中です。
+情報: シンボル 'L6:Inductor_THT:L_Axial_L9.5mm_D4.0mm_P12.70mm_Horizontal_Fastron_SMCC' を処理中です。
+情報: シンボル 'L7:PSN_TRX:L_FCZ07S_CT' を処理中です。
+情報: シンボル 'L8:PSN_TRX:L_FCZ07S_CT' を処理中です。
+情報: シンボル 'L9:PSN_TRX:L_FCZ07S_CT' を処理中です。
+情報: シンボル 'L10:PSN_TRX:L_AL0510-153K_Vertical' を処理中です。
+情報: シンボル 'L11:PSN_TRX:L_AL0510-153K_Vertical' を処理中です。
+情報: シンボル 'L12:PSN_TRX:L_AL0510-153K_Vertical' を処理中です。
+情報: シンボル 'L13:PSN_TRX:L_AL0510-153K_Vertical' を処理中です。
+情報: シンボル 'L14:PSN_TRX:L_AL0510-153K_Vertical' を処理中です。
+情報: シンボル 'Q1:Package_TO_SOT_THT:TO-92_Inline' を処理中です。
+情報: シンボル 'Q2:Package_TO_SOT_THT:TO-92_Inline' を処理中です。
+情報: シンボル 'Q3:PSN_TRX:BF998_SOT143' を処理中です。
+情報: シンボル 'Q4:Package_TO_SOT_THT:TO-92_Inline' を処理中です。
+情報: シンボル 'Q5:Package_TO_SOT_THT:TO-92_Inline' を処理中です。
+情報: シンボル 'Q6:Package_TO_SOT_THT:TO-92_Inline' を処理中です。
+情報: シンボル 'Q7:Package_TO_SOT_THT:TO-92_Inline' を処理中です。
+情報: シンボル 'Q8:Package_TO_SOT_THT:TO-220-3_Vertical' を処理中です。
+情報: シンボル 'Q9:Package_TO_SOT_THT:TO-92_Inline' を処理中です。
+情報: シンボル 'Q10:Package_TO_SOT_THT:TO-92_Inline' を処理中です。
+情報: シンボル 'Q11:Package_TO_SOT_THT:TO-92_Inline' を処理中です。
+情報: シンボル 'Q12:Package_TO_SOT_THT:TO-92_Inline' を処理中です。
+情報: シンボル 'Q13:Package_TO_SOT_THT:TO-92_Inline' を処理中です。
+情報: シンボル 'Q14:Package_TO_SOT_THT:TO-92_Inline' を処理中です。
+情報: シンボル 'Q15:Package_TO_SOT_THT:TO-92_Inline' を処理中です。
+情報: シンボル 'R40:Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical' を処理中です。
+情報: シンボル 'R39:Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical' を処理中です。
+情報: シンボル 'R38:Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical' を処理中です。
+情報: シンボル 'R37:Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical' を処理中です。
+情報: シンボル 'R1:Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical' を処理中です。
+情報: シンボル 'R2:Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical' を処理中です。
+情報: シンボル 'R3:Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical' を処理中です。
+情報: シンボル 'R4:Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical' を処理中です。
+情報: シンボル 'R5:Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical' を処理中です。
+情報: シンボル 'R6:Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical' を処理中です。
+情報: シンボル 'R7:Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical' を処理中です。
+情報: シンボル 'R8:Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical' を処理中です。
+情報: シンボル 'R9:Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical' を処理中です。
+情報: シンボル 'R10:Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical' を処理中です。
+情報: シンボル 'R11:Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical' を処理中です。
+情報: シンボル 'R12:Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical' を処理中です。
+情報: シンボル 'R13:Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical' を処理中です。
+情報: シンボル 'R14:Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical' を処理中です。
+情報: シンボル 'R15:Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical' を処理中です。
+情報: シンボル 'R16:Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical' を処理中です。
+情報: シンボル 'R36:Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical' を処理中です。
+情報: シンボル 'R35:Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical' を処理中です。
+情報: シンボル 'R34:Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical' を処理中です。
+情報: シンボル 'R17:Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical' を処理中です。
+情報: シンボル 'R18:Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical' を処理中です。
+情報: シンボル 'R19:Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical' を処理中です。
+情報: シンボル 'R21:Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical' を処理中です。
+情報: シンボル 'R22:Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P5.08mm_Vertical' を処理中です。
+情報: シンボル 'R23:Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical' を処理中です。
+情報: シンボル 'R24:Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical' を処理中です。
+情報: シンボル 'R25:Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical' を処理中です。
+情報: シンボル 'R26:Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical' を処理中です。
+情報: シンボル 'R27:Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical' を処理中です。
+情報: シンボル 'R28:Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical' を処理中です。
+情報: シンボル 'R29:Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical' を処理中です。
+情報: シンボル 'R30:Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical' を処理中です。
+情報: シンボル 'R31:Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical' を処理中です。
+情報: シンボル 'R32:Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical' を処理中です。
+K1 ピン 1 を Net-(J3-Pin_1) から Net-(D3-K) に再接続しました。
+ユニット R16 の付帯情報を更新しました。
+R16 ピン 1 を Net-(K1-Pad16) から Net-(D3-A) に再接続しました。
+フィールド R16 を更新.
+ユニット Q15 の付帯情報を更新しました。
+Q15 ピン 2 を Net-(K1-Pad16) から Net-(D3-A) に再接続しました。
+Q15 のフットプリント フィルター を 'TO?92*' に更新します。
+フィールド Q15 を更新.
+K1 ピン 16 を Net-(K1-Pad16) から Net-(D3-A) に再接続しました。
+J3 ピン 1 を Net-(J3-Pin_1) から Net-(D3-K) に再接続しました。
+IC2 のシンボルの関連付けを /45f3f879-0721-4b2e-9ef7-487f775d3d8b から /8e9d8272-6e7f-4214-a1ab-3a4b146684e9 へ変更しました。
+ユニット D3 の付帯情報を更新しました。
+D3 ピン 2 を Net-(K1-Pad16) から Net-(D3-A) に再接続しました。
+ネット Net-(D3-A) を追加します。
+D3 ピン 1 を Net-(J3-Pin_1) から Net-(D3-K) に再接続しました。
+ネット Net-(D3-K) を追加します。
+D3 のフットプリント フィルター を 'D*DO?41*' に更新します。
+D3 のシートファイルを 'PSN_TRX.kicad_sch' へ更新しました。
+D3 のシート名を '/' へ更新しました。
+フィールド D3 を更新.
+K1 ピン 13 を Net-(J3-Pin_1) から Net-(D3-K) に再接続しました。
+未使用のネット Net-(J3-Pin_1) を削除します。
+未使用のネット Net-(K1-Pad16) を削除します。
+
+
+情報: 合計警告数: 0、エラー数: 0.

@@ -1,0 +1,106 @@
+(footprint "L_T30_3pin_Vertical"
+	(version 20241209)
+	(generator "pcbnew")
+	(generator_version "10.0")
+	(layer "F.Cu")
+	(descr "T-30-10 powdered iron toroid core, 3-pin with centre tap, vertical mount (axis horizontal). OD=7.94mm ID=4.78mm H=3.18mm. Pitch P=2x2.54mm (total span 5.08mm). Pin1=winding start, Pin2=centre tap, Pin3=winding end. 0.4mm wire, drill 0.9mm.")
+	(tags "inductor toroid T30 T-30-10 vertical centre-tap CT ham")
+	(attr through_hole)
+	(fp_text reference "REF**"
+		(at 2.54 -5.2 0)
+		(layer "F.SilkS")
+		(uuid "g1g2g3g4-0001-0001-0001-000000000001")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(fp_text value "L_T30_3pin_Vertical"
+		(at 2.54 5.2 0)
+		(layer "F.Fab")
+		(uuid "g1g2g3g4-0001-0001-0001-000000000002")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(fp_text user "${REFERENCE}"
+		(at 2.54 0 0)
+		(layer "F.Fab")
+		(uuid "g1g2g3g4-0001-0001-0001-000000000003")
+		(effects
+			(font
+				(size 0.8 0.8)
+				(thickness 0.12)
+			)
+		)
+	)
+	(fp_rect
+		(start 1.15 -3.97)
+		(end 3.93 3.97)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(fill none)
+		(layer "F.SilkS")
+		(uuid "g1g2g3g4-0001-0001-0001-000000000004")
+	)
+	(fp_rect
+		(start 0.95 -3.97)
+		(end 4.13 3.97)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill none)
+		(layer "F.Fab")
+		(uuid "g1g2g3g4-0001-0001-0001-000000000005")
+	)
+	(fp_line
+		(start -0.5 -1.0)
+		(end -0.5 -2.0)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "g1g2g3g4-0001-0001-0001-000000000006")
+	)
+	(fp_rect
+		(start -1.5 -4.5)
+		(end 6.58 4.5)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(fill none)
+		(layer "F.CrtYd")
+		(uuid "g1g2g3g4-0001-0001-0001-000000000007")
+	)
+	(pad "1" thru_hole rect
+		(at 0 0)
+		(size 1.8 1.8)
+		(drill 0.9)
+		(layers "*.Cu" "*.Mask")
+		(uuid "g1g2g3g4-0001-0001-0001-00000000000a")
+	)
+	(pad "2" thru_hole circle
+		(at 2.54 0)
+		(size 1.8 1.8)
+		(drill 0.9)
+		(layers "*.Cu" "*.Mask")
+		(uuid "g1g2g3g4-0001-0001-0001-00000000000b")
+	)
+	(pad "3" thru_hole circle
+		(at 5.08 0)
+		(size 1.8 1.8)
+		(drill 0.9)
+		(layers "*.Cu" "*.Mask")
+		(uuid "g1g2g3g4-0001-0001-0001-00000000000c")
+	)
+)

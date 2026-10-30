@@ -1,0 +1,4 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "PSN_TRX")(type "KiCad")(uri "${KIPRJMOD}/PSN_TRX.pretty")(options "")(descr "PSN_TRX project footprints"))
+)

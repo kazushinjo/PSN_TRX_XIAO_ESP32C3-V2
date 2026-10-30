@@ -1,0 +1,78 @@
+(footprint "L_AL0510-153K_Vertical"
+	(version 20241209)
+	(generator "pcbnew")
+	(generator_version "10.0")
+	(layer "F.Cu")
+	(descr "Axial inductor AL0510-153K, 15mH +-10%, VERTICAL mount. Body D=5.0mm x L=14.0mm stood upright: pad 1 = straight lead at body center, pad 2 = opposite lead bent 180deg down the body side. Lead pitch P=2.54mm (= body radius). Lead 0.6mm dia, drill 0.9mm. RDC 102ohm max, IDC 95mA max.")
+	(tags "inductor axial AL0510 15mH choke THT vertical")
+	(attr through_hole)
+	(fp_text reference "REF**"
+		(at 1.27 -3.6 0)
+		(layer "F.SilkS")
+		(uuid "d1e2f3a4-0001-0001-0001-000000000001")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(fp_text value "L_AL0510-153K_Vert"
+		(at 1.27 3.6 0)
+		(layer "F.Fab")
+		(uuid "d1e2f3a4-0001-0001-0001-000000000002")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(fp_text user "${REFERENCE}"
+		(at 1.27 0 0)
+		(layer "F.Fab")
+		(uuid "d1e2f3a4-0001-0001-0001-000000000003")
+		(effects
+			(font
+				(size 0.8 0.8)
+				(thickness 0.15)
+			)
+		)
+	)
+	(fp_arc
+		(start 2.048 1.434)
+		(mid -2.5 0)
+		(end 2.048 -1.434)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "d1e2f3a4-0001-0001-0001-000000000004")
+	)
+	(fp_rect
+		(start -2.7 -2.7)
+		(end 3.6 2.7)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(fill none)
+		(layer "F.CrtYd")
+		(uuid "d1e2f3a4-0001-0001-0001-000000000005")
+	)
+	(pad "1" thru_hole rect
+		(at 0 0)
+		(size 1.8 1.8)
+		(drill 0.9)
+		(layers "*.Cu" "*.Mask")
+		(uuid "d1e2f3a4-0001-0001-0001-00000000000a")
+	)
+	(pad "2" thru_hole circle
+		(at 2.54 0)
+		(size 1.8 1.8)
+		(drill 0.9)
+		(layers "*.Cu" "*.Mask")
+		(uuid "d1e2f3a4-0001-0001-0001-00000000000b")
+	)
+)

@@ -1,0 +1,9 @@
+{
+  "additionalFiles": "../../..,../..,../..",
+  "compiler.optimization_flags": "-Os",
+  "customBuildProperties": "",
+  "fqbn": "esp32:esp32:XIAO_ESP32C3",
+  "hardwareFolders": "/Users/kazuichshinjo/Library/Arduino15/packages/esp32/hardware/esp32/3.3.12,/Users/kazuichshinjo/Library/Arduino15/packages/esp32/hardware/esp32/3.3.12",
+  "otherLibrariesFolders": "/Users/kazuichshinjo/Documents/Arduino/libraries",
+  "sketchLocation": "/Users/kazuichshinjo/AppDev/PSN_TRX-V2/PSN_TRX_XIAO_ESP32C3"
+}

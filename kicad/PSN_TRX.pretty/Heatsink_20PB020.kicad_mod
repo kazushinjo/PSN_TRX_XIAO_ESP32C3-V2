@@ -1,0 +1,100 @@
+(footprint "Heatsink_20PB020"
+	(version 20241209)
+	(generator "pcbnew")
+	(generator_version "10.0")
+	(layer "F.Cu")
+	(descr "GEC/Akizuki 20PB020 pin-type heatsink for vertical TO-220 (e.g. RD06HVF1). Plan view 20x20mm, height 25mm. Flat mounting face at y=-10; 2x pins dia 1.4mm (protrude 4.5mm), pitch 12.5mm, 3.5mm in from the mounting face. M3 tapped hole on mounting face, 19mm above PCB, centered.")
+	(tags "heatsink 20PB020 TO-220 RD06HVF1 mechanical")
+	(attr through_hole exclude_from_pos_files exclude_from_bom)
+	(fp_text reference "REF**"
+		(at 0 11.5 0)
+		(layer "F.SilkS")
+		(uuid "h5e6a710-0001-0001-0001-000000000001")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(fp_text value "Heatsink_20PB020"
+		(at 0 13 0)
+		(layer "F.Fab")
+		(uuid "h5e6a710-0002-0001-0001-000000000002")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(fp_rect
+		(start -10 -10)
+		(end 10 10)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+		(uuid "h5e6a710-0003-0001-0001-000000000003")
+	)
+	(fp_line
+		(start -10 -10)
+		(end 10 -10)
+		(stroke
+			(width 0.3)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "h5e6a710-000a-0001-0001-00000000000a")
+	)
+	(fp_text user "MOUNTING FACE (M3, 19mm high)"
+		(at 0 -8.8 0)
+		(layer "F.Fab")
+		(uuid "h5e6a710-0009-0001-0001-000000000009")
+		(effects
+			(font
+				(size 0.7 0.7)
+				(thickness 0.1)
+			)
+		)
+	)
+	(fp_rect
+		(start -10.25 -9.75)
+		(end 10.25 10.25)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.CrtYd")
+		(uuid "h5e6a710-0004-0001-0001-000000000004")
+	)
+	(fp_text user "20PB020"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(uuid "h5e6a710-0005-0001-0001-000000000005")
+		(effects
+			(font
+				(size 1.2 1.2)
+				(thickness 0.15)
+			)
+		)
+	)
+	(pad "" np_thru_hole circle
+		(at -6.25 -6.5)
+		(size 1.6 1.6)
+		(drill 1.6)
+		(layers "*.Cu" "*.Mask")
+		(uuid "h5e6a710-0006-0001-0001-000000000006")
+	)
+	(pad "" np_thru_hole circle
+		(at 6.25 -6.5)
+		(size 1.6 1.6)
+		(drill 1.6)
+		(layers "*.Cu" "*.Mask")
+		(uuid "h5e6a710-0007-0001-0001-000000000007")
+	)
+	(embedded_fonts no)
+)
