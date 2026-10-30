@@ -1,4 +1,4 @@
-# PSN_TRX-V2 基板 V2 Ver 1.0（SSB シングルスーパー受信）— JLCPCB 提出資料
+# PSN_TRX_XIAO_ESP32C3-V2 基板 V2 Ver 1.0（SSB シングルスーパー受信）— JLCPCB 提出資料
 
 作成日: 2026-10-21（2026-10-28 再チェック・再出力、同日 Ver 2.1 で再出力、**2026-10-30 V2 の基板から全製造データを再出力**）　／　対象: `kicad/PSN_TRX.kicad_pcb`（基板シルク V2 Ver 1.0）
 
