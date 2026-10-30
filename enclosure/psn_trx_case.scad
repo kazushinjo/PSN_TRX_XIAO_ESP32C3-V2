@@ -174,6 +174,16 @@ for (c = [[fuse_c, fuse_body], [dc_c, dc_body], [bnc_c, bnc_body]], x = panel_bo
     assert(abs(c[0][0] - x) >= c[1] / 2 + ear_d / 2 + 1, "後面部品の本体が後面パネル固定ボスにかかる");
 for (c = [[fuse_c, fuse_body], [dc_c, dc_body], [bnc_c, bnc_body]], x = ear_x)
     assert(abs(c[0][0] - x) >= c[1] / 2 + ear_d / 2 + 1, "後面部品の本体が後ろのふた固定ボスにかかる");
+// 左側面の DC ジャック（後面と同じ品、並列につないでどちらもヒューズへ）。ヒューズホルダ本体のすぐ前、高さは後面の部品と同じ
+sdc_y = 125;                  // ケース Y
+sdc_z = pz(rear_zc);          // ケース Z（穴の中心）
+sdc_engrave = 0.6;            // 文字は彫り込み（エンボスだとベースの幅が 220mm を超えてベッドに載らない）
+assert(sdc_y + dc_body / 2 + 1 <= D - panel_inset - fit / 2 - panel_t - 35 || wall + 15 + 1 <= fuse_c[0] - fuse_body / 2, "側面の DC ジャックがヒューズホルダ本体にかかる");
+for (y = ear_y) assert(abs(sdc_y - y) >= dc_body / 2 + ear_d / 2 + 1, "側面の DC ジャックがふた固定ボスにかかる");
+assert(wall + 15 + 1 <= bx, "側面の DC ジャックの本体が基板の上にかかる");
+assert(sdc_z + dc_body / 2 + 1 <= H - lid_t - 1.5, "側面の DC ジャックがスピーカーの枠にかかる");
+assert(sdc_z + dc_body / 2 + 1 <= H - lcd_depth || sdc_y - dc_body / 2 >= lcd_c[1] + lcd_cut[1] / 2, "側面の DC ジャックが LCD にかかる");
+assert(sdc_z + dc_flange / 2 + 3 + 3.2 + 0.5 <= H - lid_t && sdc_z - dc_flange / 2 - 3 - 2.4 - 0.5 >= 0, "側面の DC ジャックの文字が側板からはみ出す");
 for (x = panel_boss_x) {
     assert(abs(x - lcd_c[0]) >= bezel[0] / 2 + 3.3 + 7 || lcd_c[1] - bezel[1] / 2 >= panel_boss_y[0] + 3.3 + 7, "ベゼルと前面パネル固定ねじ頭の間が 7mm 未満（ドライバーが入らない）");
     assert(abs(x - lcd_c[0]) >= lcd_cut[0] / 2 + ear_d / 2 + 1 || lcd_c[1] - lcd_cut[1] / 2 >= panel_boss_y[0] + ear_d / 2 + 1, "LCD が前面パネル固定ボスにかかる");
@@ -234,6 +244,10 @@ module base() {
         // 底面通風スロット（PA・放熱器の下）
         for (i = [-2:3]) let(p = bp(hs1_uv[0] - i * 4.5, hs1_uv[1]))
             translate([p[0] - 14, p[1] - 1, -1]) cube([28, 2.2, floor_t + 2]);
+        // 左側面の DC ジャック: 穴、内側から薄肉（ジャックのねじ長さ対策）、外面に彫り込み文字
+        translate([-1, sdc_y, sdc_z]) rotate([0, 90, 0]) cylinder(d = dc_hole, h = wall + 2);
+        translate([dc_thin_t, sdc_y - dc_thin / 2, sdc_z - dc_thin / 2]) cube([wall - dc_thin_t + 0.01, dc_thin, dc_thin]);
+        translate([sdc_engrave - 0.01, 0, 0]) side_dc_labels(sdc_engrave + 0.02);
         // ゴム足の座ぐり
         for (x = [14, W - 14], y = [14, D - 14]) translate([x, y, -0.01]) cylinder(d = 12.5, h = 1);
     }
@@ -377,6 +391,12 @@ module rear_labels_2d() {
     t("+ CENTER", [rx(dc_c[0]), dc_c[1] - dc_flange / 2 - 3], 2.4);   // 極性表示は穴の下
     t("ANT", [rx(bnc_c[0]), bnc_c[1] + bnc_flange / 2 + 3]);
 }
+// 左側面の DC ジャックの文字（外から見て読める向き。x=0 の外面から -x 方向へ厚み t）
+module side_dc_labels(t) {
+    module t1(s, z, sz) translate([0, sdc_y, z]) rotate([90, 0, -90]) linear_extrude(t) text(s, size = sz, font = font, halign = "center", valign = "center");
+    t1("DC 12V", sdc_z + dc_flange / 2 + 3, 3.2);
+    t1("+ CENTER", sdc_z - dc_flange / 2 - 3, 2.4);
+}
 module rear_2d() { difference() { square([panel_w, panel_h]); rear_holes_2d(); } }
 module rear_print() {
     difference() {
@@ -486,6 +506,11 @@ module rear_parts_dummy() {
             translate([0, yo, 0]) rotate([-90, 0, 0]) cylinder(d = c[1], h = c[2]);
             translate([0, yi - c[4], 0]) rotate([-90, 0, 0]) cylinder(d = c[3], h = c[4]);
         }
+    // 左側面の DC ジャック
+    color("black") translate([0, sdc_y, sdc_z]) {
+        translate([-4, 0, 0]) rotate([0, 90, 0]) cylinder(d = 12, h = 4);
+        translate([wall, 0, 0]) rotate([0, 90, 0]) cylinder(d = dc_body, h = 15);
+    }
 }
 
 module assembly(explode = 0) {
