@@ -1,0 +1,109 @@
+(footprint "Transformer_ST71_CB19"
+	(version 20241209)
+	(generator "pcbnew")
+	(generator_version "10.0")
+	(layer "F.Cu")
+	(descr "Sansui ST-71 audio transformer, CB-19 LEAD type (リード型). 1P / split secondary 600:600 with center tap. Pads 1,2 = primary (span I=8mm); pads 3,4,5 = secondary (span G=14mm, pitch 7mm) with 4 = center tap. Row spacing C=16.5mm. Body B=20 x A=15.5mm. Flexible ~0.3mm lead wires, drill 0.8mm - hole positions may be adjusted to suit layout. Dimensions from Akizuki Sansui ST datasheet fig.7 (CB-19 lead type).")
+	(tags "transformer sansui ST-71 CB-19 lead audio PSN centertap")
+	(attr through_hole)
+	(fp_text reference "REF**"
+		(at 0 -10.2 0)
+		(layer "F.SilkS")
+		(uuid "b1c2d3e4-0001-0001-0001-000000000001")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(fp_text value "Transformer_ST71_CB19"
+		(at 0 10.2 0)
+		(layer "F.Fab")
+		(uuid "b1c2d3e4-0001-0001-0001-000000000002")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(fp_text user "${REFERENCE}"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(uuid "b1c2d3e4-0001-0001-0001-000000000003")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(fp_rect
+		(start -10 -7.3)
+		(end 10 7.3)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(fill none)
+		(layer "F.SilkS")
+		(uuid "b1c2d3e4-0001-0001-0001-000000000004")
+	)
+	(fp_line
+		(start -6 -8.25)
+		(end -6 -9.2)
+		(stroke
+			(width 0.15)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "b1c2d3e4-0001-0001-0001-000000000005")
+	)
+	(fp_rect
+		(start -10.6 -9.5)
+		(end 10.6 9.5)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(fill none)
+		(layer "F.CrtYd")
+		(uuid "b1c2d3e4-0001-0001-0001-000000000006")
+	)
+	(pad "1" thru_hole rect
+		(at 4 -8.25)
+		(size 1.6 1.6)
+		(drill 0.8)
+		(layers "*.Cu" "*.Mask")
+		(uuid "b1c2d3e4-0001-0001-0001-00000000000a")
+	)
+	(pad "2" thru_hole circle
+		(at -4 -8.25)
+		(size 1.5 1.5)
+		(drill 0.8)
+		(layers "*.Cu" "*.Mask")
+		(uuid "b1c2d3e4-0001-0001-0001-00000000000b")
+	)
+	(pad "3" thru_hole circle
+		(at -7 8.25)
+		(size 1.5 1.5)
+		(drill 0.8)
+		(layers "*.Cu" "*.Mask")
+		(uuid "b1c2d3e4-0001-0001-0001-00000000000c")
+	)
+	(pad "4" thru_hole circle
+		(at 0 8.25)
+		(size 1.5 1.5)
+		(drill 0.8)
+		(layers "*.Cu" "*.Mask")
+		(uuid "b1c2d3e4-0001-0001-0001-00000000000d")
+	)
+	(pad "5" thru_hole circle
+		(at 7 8.25)
+		(size 1.5 1.5)
+		(drill 0.8)
+		(layers "*.Cu" "*.Mask")
+		(uuid "b1c2d3e4-0001-0001-0001-00000000000e")
+	)
+)

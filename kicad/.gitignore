@@ -1,0 +1,19 @@
+# KiCad バックアップ・一時ファイル
+*.lck
+*-backups/
+_autosave-*
+_restore_backup_*/
+*.bak
+*.kicad_prl
+
+# DRCレポート（大容量）
+*.rpt
+
+# 作業用スクリプト
+*.py
+
+# 作業用画像
+tmcv01_img*.jpg
+
+# ヒストリー
+.history/

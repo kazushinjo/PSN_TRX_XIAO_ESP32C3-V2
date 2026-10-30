@@ -1,0 +1,3 @@
+__pycache__/
+# シミュレーション用スクリプトは残す（kicad/.gitignore の *.py の例外）
+!*.py

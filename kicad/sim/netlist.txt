@@ -1,0 +1,277 @@
+C1 68p 1=Net-(C1-Pad1) 2=GND
+C2 5p 1=Net-(C1-Pad1) 2=Net-(D2-K)
+C4 82p 1=Net-(C4-Pad1) 2=GND
+C5 0.01u 1=Net-(J4-Pin_2) 2=GND
+C6 39p 1=Net-(C6-Pad1) 2=GND
+C7 0.001u 1=Net-(Q3-D) 2=Net-(C6-Pad1)
+C8 0.01u 1=Net-(Q2-S) 2=GND
+C9 0.1uF 1=Net-(L6-SB) 2=GND
+C10 0.1uF 1=Net-(L6-SB) 2=GND
+C11 33p 1=Net-(Q2-D) 2=+9V
+C12 0.01u 1=+9V 2=GND
+C13 100u 1=Net-(L6-SB) 2=GND
+C14 22pF 1=Net-(Q3-G) 2=GND
+C15 100pF 1=Net-(L6-AA) 2=Net-(C15-Pad2)
+C17 0.01u 1=Net-(L6-SB) 2=GND
+C18 15p 1=Net-(L6-SA) 2=Net-(L6-SB)
+C19 0.01u 1=Net-(Q8-E) 2=GND
+C21 0.01u 1=Net-(Q8-B) 2=Net-(L7-AA)
+C22 1u 1=Net-(C103-Pad1) 2=Net-(Q9-B)
+C23 0.01u 1=Net-(L6-SB) 2=GND
+C24 15p 1=Net-(L7-SA) 2=Net-(L6-SB)
+C25 0.01u 1=Net-(Q10-S) 2=GND
+C26 1u 1=Net-(Q9-C) 2=Net-(C26-Pad2)
+C27 10u 1=+9V 2=GND
+C28 0.1u 1=Net-(C26-Pad2) 2=GND
+C29 27p 1=Net-(L9-SA) 2=+9V
+C30 0.01u 1=+9V 2=GND
+C31 15p 1=Net-(D4-A) 2=Net-(D5-K)
+C32 0.1u 1=Net-(Q12-B) 2=GND
+C33 0.01u 1=Net-(Q11-S) 2=GND
+C34 0.1u 1=Net-(Q12-E) 2=GND
+C35 0.01u 1=Net-(C35-Pad1) 2=GND
+C36 0.01u 1=Net-(Q11-G) 2=Net-(C36-Pad2)
+C37 1u 1=Net-(Q12-C) 2=Net-(C37-Pad2)
+C38 0.01u 1=Net-(C38-Pad1) 2=GND
+C39 0.001u 1=Net-(C36-Pad2) 2=Net-(C39-Pad2)
+C40 0.001u 1=Net-(C40-Pad1) 2=Net-(C40-Pad2)
+C41 1u 1=Net-(J5-Pin_2) 2=Net-(Q13-B)
+C42 1u 1=Net-(Q14-B) 2=Net-(J5-Pin_2)
+C43 1u 1=Net-(Q16-C) 2=Net-(C35-Pad1)
+C44 1u 1=Net-(Q15-C) 2=Net-(C38-Pad1)
+C45 100u 1=Net-(Q14-E) 2=GND
+C46 100u 1=Net-(Q13-C) 2=Net-(J6-Pin_1)
+C47 10u 1=+9V 2=GND
+C48 1u 1=Net-(C48-Pad1) 2=Net-(Q16-B)
+C49 1u 1=/PSN_I_OUT 2=Net-(Q15-B)
+C51 47PF 1=GND 2=Net-(C51-Pad2)
+C52 10u 1=Net-(IC1-VI) 2=GND
+C53 47PF 1=GND 2=Net-(C53-Pad2)
+C54 10u 1=Net-(C54-Pad1) 2=GND
+C55 10u 1=+5V 2=GND
+C56 47PF 1=GND 2=Net-(C56-Pad2)
+C57 47PF 1=GND 2=Net-(C57-Pad2)
+C58 0.01u 1=Net-(C56-Pad2) 2=Net-(U1-CLK0)
+C59 0.01u 1=Net-(C57-Pad2) 2=Net-(U1-CLK1)
+C60 1u 1=Net-(IC2A-+) 2=Net-(C60-Pad2)
+C61 1u 1=Net-(C61-Pad1) 2=GND
+C62 10u 1=Net-(C62-Pad1) 2=Net-(C60-Pad2)
+C63 0.068u 1=Net-(C62-Pad1) 2=GND
+C64 10u 1=Net-(U1-VDD) 2=GND
+C65 0.01u 1=Net-(C65-Pad1) 2=GND
+C66 10u 1=Net-(Q18-C) 2=Net-(C65-Pad1)
+C67 47u 1=Net-(C67-Pad1) 2=GND
+C68 1u 1=Net-(J10-Pin_2) 2=Net-(Q18-B)
+C71 100p 1=Net-(C71-Pad1) 2=GND
+C72 5p 1=Net-(C72-Pad1) 2=GND
+C73 1u 1=Net-(C73-Pad1) 2=Net-(C73-Pad2)
+C75 3300p 1=Net-(C75-Pad1) 2=GND
+C76 3300p 1=/PSN_I_OUT 2=GND
+C77 3300p 1=Net-(C77-Pad1) 2=GND
+C78 3300p 1=Net-(C48-Pad1) 2=GND
+C79 0.1u 1=+5V 2=GND
+C80 10p 1=Net-(Q20-G) 2=GND
+C82 5p 1=Net-(Q25-D) 2=GND
+C83 0.01u 1=Net-(Q20-S) 2=GND
+C84 0.01u 1=+9V 2=GND
+C85 0.01u 1=Net-(L19-TAP) 2=Net-(U4-SIG)
+C86 0.1u 1=Net-(U4-BYP) 2=GND
+C87 0.1u 1=Net-(U4-V+) 2=GND
+C88 0.01u 1=Net-(C88-Pad1) 2=Net-(U4-CARR)
+C89 0.01u 1=Net-(U4-OUT2) 2=Net-(Q21-B)
+C90 0.1u 1=Net-(C90-Pad1) 2=GND
+C91 0.1u 1=+9V 2=GND
+C92 0.01u 1=Net-(Q21-C) 2=Net-(C92-Pad2)
+C93 15p 1=Net-(C92-Pad2) 2=GND
+C94 82p 1=Net-(C94-Pad1) 2=GND
+C95 100p 1=Net-(C95-Pad1) 2=GND
+C96 120p 1=Net-(C96-Pad1) 2=GND
+C97 100p 1=Net-(C97-Pad1) 2=GND
+C98 82p 1=Net-(C98-Pad1) 2=GND
+C99 0.01u 1=Net-(Q2-D) 2=Net-(U5-SIG)
+C100 0.1u 1=Net-(U5-BYP) 2=GND
+C101 0.1u 1=Net-(U4-V+) 2=GND
+C102 0.01u 1=Net-(C102-Pad1) 2=Net-(U5-CARR)
+C103 0.047u 1=Net-(C103-Pad1) 2=GND
+C104 0.1u 1=+9V 2=GND
+C105 10u 1=Net-(U4-V+) 2=GND
+C106 0.01u 1=Net-(C106-Pad1) 2=Net-(Q22-B)
+C107 0.1u 1=Net-(C107-Pad1) 2=GND
+C108 33p 1=Net-(Q22-C) 2=GND
+C109 0.01u 1=+9V 2=GND
+C110 0.01u 1=Net-(Q22-C) 2=Net-(U7-INP)
+C111 0.01u 1=Net-(U7-INM) 2=GND
+C112 0.01u 1=Net-(U7-OFS) 2=GND
+C113 0.1u 1=Net-(U7-ENB) 2=GND
+C114 0.1u 1=Net-(J11-A0) 2=GND
+C116 0.01u 1=Net-(Q25-G) 2=GND
+C117 1u 1=Net-(U5-OUT2) 2=Net-(C117-Pad2)
+D1 1N4001 1/K_1=Net-(D1-K) 2/A_2=GND
+D2 1N60 1/K_1=Net-(D2-K) 2/A_2=GND
+D3 1N60 1/K_1=Net-(D3-K) 2/A_2=Net-(D2-K)
+D4 1N60 1/K_1=Net-(D4-K) 2/A_2=Net-(D4-A)
+D5 1N60 1/K_1=Net-(D5-K) 2/A_2=Net-(D5-A)
+D6 1N60 1/K_1=Net-(D6-K) 2/A_2=Net-(D4-A)
+D7 1N60 1/K_1=Net-(D5-K) 2/A_2=Net-(D7-A)
+D8 1N5819 1/K_1=Net-(D8-K) 2/A_2=+5V
+D9 1N4148 1/K_1=Net-(D10-A) 2/A_2=GND
+D10 1N4148 1/K_1=GND 2/A_2=Net-(D10-A)
+IC1 R-78E5.0-1.0 1/VO_1=+5V 2/GND_2=GND 3/VI_3=Net-(IC1-VI)
+IC2 NJM2904 1=Net-(C73-Pad1) 2/-_2=Net-(IC2A--) 3/+_3=Net-(IC2A-+) 4/V-_4=GND 5/+_5=GND 6/-_6=Net-(IC2B--) 7=Net-(IC2B--) 8/V+_8=+5V
+J1 RF_IN 1/Pin_1_1=Net-(J1-Pin_1) 2/Pin_2_2=GND
+J2 PWR_IN 1/Pin_1_1=Net-(J2-Pin_1) 2/Pin_2_2=GND
+J3 TX-ON-LED 1/Pin_1_1=Net-(J3-Pin_1) 2/Pin_2_2=Net-(J3-Pin_2)
+J4 Volume 1/Pin_1_1=Net-(J4-Pin_1) 2/Pin_2_2=Net-(J4-Pin_2) 3/Pin_3_3=GND
+J5 Volume 1/Pin_1_1=Net-(J5-Pin_1) 2/Pin_2_2=Net-(J5-Pin_2) 3/Pin_3_3=GND
+J6 SP-OUT 1/Pin_1_1=Net-(J6-Pin_1) 2/Pin_2_2=GND
+J7 Encoder 1/Pin_1_1=Net-(J7-Pin_1) 2/Pin_2_2=Net-(J7-Pin_2) 3/Pin_3_3=Net-(J7-Pin_3) 4/Pin_4_4=GND
+J8 NX4832T035 1/Pin_1_1=GND 2/Pin_2_2=Net-(J8-Pin_2) 3/Pin_3_3=Net-(J8-Pin_3) 4/Pin_4_4=+5V
+J9 I2C_OUT-LCD 1/SDA_1=Net-(J11-SDA) 2/SCL_2=Net-(J11-SCL) 3/GND_3=GND
+J10 MIC-IN 1/Pin_1_1=+5V 2/Pin_2_2=Net-(J10-Pin_2) 3/Pin_3_3=/PTT 4/Pin_4_4=GND
+J11 AE-ADS1015 1/VDD_1=Net-(J11-VDD) 10/A3_10=unconnected-(J11-A3-Pad10) 2/GND_2=GND 3/SCL_3=Net-(J11-SCL) 4/SDA_4=Net-(J11-SDA) 5/ADDR_5=GND 6/ALRT_6=unconnected-(J11-ALRT-Pad6) 7/A0_7=Net-(J11-A0) 8/A1_8=unconnected-(J11-A1-Pad8) 9/A2_9=unconnected-(J11-A2-Pad9)
+K1 G5V-2 DC12 1=GND 11=+9V 13=Net-(J2-Pin_1) 16=Net-(D1-K) 4=Net-(J1-Pin_1) 6=Net-(D10-A) 8=Net-(C1-Pad1) 9=Net-(L6-SB)
+L1 T-50-10 8T/0.6mm 1/1_1=Net-(C1-Pad1) 2/2_2=Net-(C71-Pad1)
+L3 T-50-10 9T/0.6mm 1/1_1=Net-(C4-Pad1) 2/2_2=Net-(C6-Pad1)
+L5 47nH 1/1_1=Net-(C15-Pad2) 2/2_2=Net-(Q3-G)
+L6 7T50 1/SA_1=Net-(L6-SA) 2/CT_2=unconnected-(L6-CT-Pad2) 3/SB_3=Net-(L6-SB) 4/AA_4=Net-(L6-AA) 5/AB_5=GND
+L7 7T50 1/SA_1=Net-(L7-SA) 2/CT_2=unconnected-(L7-CT-Pad2) 3/SB_3=Net-(L6-SB) 4/AA_4=Net-(L7-AA) 5/AB_5=GND
+L8 7T50 1/SA_1=Net-(D4-A) 2/CT_2=GND 3/SB_3=Net-(D5-K) 4/AA_4=Net-(L8-AA) 5/AB_5=GND
+L9 7T50 1/SA_1=Net-(L9-SA) 2/CT_2=unconnected-(L9-CT-Pad2) 3/SB_3=+9V 4/AA_4=Net-(L9-AA) 5/AB_5=GND
+L10 1mH 1/1_1=Net-(C40-Pad2) 2/2_2=Net-(C35-Pad1)
+L11 1mH 1/1_1=Net-(C39-Pad2) 2/2_2=Net-(C38-Pad1)
+L12 10uH 1/1_1=Net-(J2-Pin_1) 2/2_2=Net-(IC1-VI)
+L13 100nH 1/1_1=Net-(C56-Pad2) 2/2_2=Net-(C51-Pad2)
+L14 100nH 1/1_1=Net-(C57-Pad2) 2/2_2=Net-(C53-Pad2)
+L15 15mH 1/1_1=Net-(C62-Pad1) 2/2_2=Net-(C65-Pad1)
+L16 T-50-10 10T/0.6mm 1/1_1=Net-(C4-Pad1) 2/2_2=Net-(C71-Pad1)
+L17 T-30-6 8T/0.4mm 1/1_1=Net-(C71-Pad1) 2/2_2=Net-(C72-Pad1)
+L18 T30-6 11T/2T 1/1_1=Net-(Q20-G) 2/TAP_2=Net-(D10-A) 3/3_3=GND
+L19 T30-6 11T/2T 1/1_1=Net-(Q25-D) 2/TAP_2=Net-(L19-TAP) 3/3_3=+9V
+L21 8.2uH 1/1_1=Net-(C92-Pad2) 2/2_2=Net-(L21-Pad2)
+L22 4.7uH 1/1_1=+9V 2/2_2=Net-(Q2-D)
+L23 4.7uH 1/1_1=+9V 2/2_2=Net-(Q22-C)
+Q1 2SA1015 1/E_1=Net-(J2-Pin_1) 2/C_2=Net-(D1-K) 3/B_3=Net-(Q1-B)
+Q2 3SK59 1/G1_1=Net-(Q2-G1) 2/S_2=Net-(Q2-S) 3/G2_3=Net-(J4-Pin_2) 4/D_4=Net-(Q2-D)
+Q3 RD06HVF1 1/G_1=Net-(Q3-G) 2/S_2=GND 3/D_3=Net-(Q3-D)
+Q4 J310 1/D_1=Net-(Q2-D) 2/S_2=Net-(Q4-S) 3/G_3=Net-(J4-Pin_2)
+Q5 J310 1/D_1=Net-(Q4-S) 2/S_2=Net-(Q2-S) 3/G_3=Net-(Q2-G1)
+Q6 2SC1815 1/E_1=GND 2/C_2=Net-(J3-Pin_1) 3/B_3=Net-(D3-K)
+Q8 2SC1815 1/E_1=Net-(Q8-E) 2/C_2=Net-(L6-SA) 3/B_3=Net-(Q8-B)
+Q9 2SC1815 1/E_1=GND 2/C_2=Net-(Q9-C) 3/B_3=Net-(Q9-B)
+Q10 2SK439 1/G_1=Net-(L8-AA) 2/S_2=Net-(Q10-S) 3/D_3=Net-(L7-SA)
+Q11 2SK439 1/G_1=Net-(Q11-G) 2/S_2=Net-(Q11-S) 3/D_3=Net-(L9-SA)
+Q12 2SC1815 1/E_1=Net-(Q12-E) 2/C_2=Net-(Q12-C) 3/B_3=Net-(Q12-B)
+Q13 2SC2120 1/E_1=GND 2/C_2=Net-(Q13-C) 3/B_3=Net-(Q13-B)
+Q14 2SA950 1/E_1=Net-(Q14-E) 2/C_2=Net-(Q13-C) 3/B_3=Net-(Q14-B)
+Q15 2SC1815 1/E_1=Net-(Q15-E) 2/C_2=Net-(Q15-C) 3/B_3=Net-(Q15-B)
+Q16 2SC1815 1/E_1=Net-(Q16-E) 2/C_2=Net-(Q16-C) 3/B_3=Net-(Q16-B)
+Q17 2SC1815 1/E_1=GND 2/C_2=Net-(J4-Pin_2) 3/B_3=Net-(Q17-B)
+Q18 2SC1815 1/E_1=Net-(Q18-E) 2/C_2=Net-(Q18-C) 3/B_3=Net-(Q18-B)
+Q19 2SC1815 1/E_1=GND 2/C_2=Net-(Q19-C) 3/B_3=Net-(Q19-B)
+Q20 J310 1/D_1=Net-(Q20-D) 2/S_2=Net-(Q20-S) 3/G_3=Net-(Q20-G)
+Q21 2SC1815 1/E_1=Net-(Q21-E) 2/C_2=Net-(Q21-C) 3/B_3=Net-(Q21-B)
+Q22 2SC1815 1/E_1=Net-(Q22-E) 2/C_2=Net-(Q22-C) 3/B_3=Net-(Q22-B)
+Q23 2SC1815 1/E_1=GND 2/C_2=Net-(Q23-C) 3/B_3=Net-(Q23-B)
+Q25 J310 1/D_1=Net-(Q25-D) 2/S_2=Net-(Q20-D) 3/G_3=Net-(Q25-G)
+R1 4.7k 1=Net-(Q1-B) 2=/PTT
+R2 10k 1=Net-(J2-Pin_1) 2=Net-(Q1-B)
+R3 100k 1=Net-(D3-K) 2=GND
+R4 20k 1=Net-(J4-Pin_1) 2=+9V
+R5 120 1=Net-(Q2-S) 2=GND
+R6 330 1=Net-(L6-SB) 2=Net-(R6-Pad2)
+R7 10 1=Net-(Q3-G) 2=Net-(R7-Pad2)
+R9 1k 1=Net-(J3-Pin_2) 2=Net-(L6-SB)
+R11 100 1=Net-(Q8-E) 2=GND
+R13 20k 1=Net-(L6-SB) 2=Net-(Q8-B)
+R14 4.7k 1=Net-(Q8-B) 2=GND
+R15 100k 1=Net-(Q9-B) 2=Net-(Q9-C)
+R16 51 1=Net-(Q10-S) 2=GND
+R17 1k 1=Net-(Q9-C) 2=+9V
+R18 1.5k 1=Net-(C26-Pad2) 2=Net-(Q12-B)
+R19 51 1=Net-(Q11-S) 2=GND
+R20 100k 1=Net-(Q12-B) 2=Net-(Q12-C)
+R21 1k 1=Net-(Q12-E) 2=GND
+R22 100k 1=Net-(Q11-G) 2=GND
+R23 1k 1=Net-(Q12-C) 2=+9V
+R24 330 1=Net-(C37-Pad2) 2=Net-(J5-Pin_1)
+R25 10k 1=Net-(Q13-B) 2=Net-(Q13-C)
+R26 10k 1=Net-(Q13-C) 2=Net-(Q14-B)
+R27 100 1W 1=Net-(Q14-E) 2=+9V
+R28 4.7k 1=Net-(L6-SB) 2=Net-(Q15-C)
+R29 22 1=Net-(Q15-E) 2=GND
+R30 1M 1=Net-(Q15-C) 2=Net-(Q15-B)
+R31 4.7k 1=Net-(L6-SB) 2=Net-(Q16-C)
+R32 22 1=Net-(Q16-E) 2=GND
+R33 1M 1=Net-(Q16-C) 2=Net-(Q16-B)
+R34 47 1=Net-(C36-Pad2) 2=GND
+R35 47 1=Net-(C40-Pad1) 2=GND
+R36 20k 1=Net-(C73-Pad1) 2=Net-(IC2A--)
+R38 100k 1=Net-(J11-VDD) 2=Net-(U3-D2{slash}A2)
+R39 100k 1=Net-(U3-D2{slash}A2) 2=GND
+R40 1k 1=Net-(IC2A--) 2=Net-(C54-Pad1)
+R41 100k 1=+5V 2=Net-(IC2A-+)
+R42 10k 1=Net-(U3-D10{slash}MOSI) 2=Net-(C61-Pad1)
+R43 100k 1=Net-(IC2A-+) 2=GND
+R44 47k 1=Net-(C61-Pad1) 2=Net-(Q17-B)
+R45 47k 1=Net-(L6-SB) 2=Net-(Q19-B)
+R46 1k 1=Net-(L6-SB) 2=Net-(Q18-C)
+R47 330 1=Net-(Q18-E) 2=GND
+R48 10k 1=Net-(Q19-B) 2=GND
+R49 100k 1=Net-(Q18-C) 2=Net-(Q18-B)
+R50 10k 1=Net-(J11-VDD) 2=Net-(Q19-C)
+R51 470 1=Net-(L6-SB) 2=Net-(C67-Pad1)
+R52 4.7k 1=Net-(C67-Pad1) 2=Net-(J10-Pin_2)
+R58 620 1=Net-(C60-Pad2) 2=GND
+R59 22k 1=Net-(U3-D2{slash}A2) 2=Net-(C73-Pad2)
+R61 3.3k 1=Net-(C75-Pad1) 2=Net-(U3-D10{slash}MOSI)
+R62 3.3k 1=/PSN_I_OUT 2=Net-(C75-Pad1)
+R63 3.3k 1=Net-(C77-Pad1) 2=Net-(U3-D8{slash}SCK)
+R64 3.3k 1=Net-(C48-Pad1) 2=Net-(C77-Pad1)
+R66 100 1=Net-(Q20-S) 2=GND
+R67 2.2k 1=+9V 2=Net-(Q25-D)
+R68 470 1=Net-(L9-AA) 2=Net-(C88-Pad1)
+R69 100 1=Net-(C88-Pad1) 2=GND
+R70 1k 1=Net-(U4-OUT2) 2=GND
+R71 27k 1=+9V 2=Net-(Q21-B)
+R72 4.7k 1=Net-(Q21-B) 2=GND
+R73 33 1=Net-(Q21-E) 2=Net-(C90-Pad1)
+R74 180 1=Net-(C90-Pad1) 2=GND
+R75 1.5k 1=+9V 2=Net-(Q21-C)
+R76 330 1=Net-(Q2-G1) 2=GND
+R77 1.2k 1=Net-(U1-CLK2) 2=Net-(C102-Pad1)
+R78 100 1=Net-(C102-Pad1) 2=GND
+R79 1k 1=Net-(U5-OUT2) 2=GND
+R80 1k 1=Net-(Q23-C) 2=Net-(C103-Pad1)
+R81 2.2k 1=Net-(Q2-D) 2=Net-(C106-Pad1)
+R82 27k 1=+9V 2=Net-(Q22-B)
+R83 4.7k 1=Net-(Q22-B) 2=GND
+R84 27 1=Net-(Q22-E) 2=Net-(C107-Pad1)
+R85 220 1=Net-(C107-Pad1) 2=GND
+R86 10 1=Net-(U4-V+) 2=Net-(U7-ENB)
+R95 100k 1=Net-(J4-Pin_2) 2=Net-(Q25-G)
+R96 8.2k 1=Net-(C117-Pad2) 2=Net-(Q23-B)
+R97 100k 1=Net-(Q23-B) 2=Net-(Q23-C)
+R98 1k 1=Net-(Q23-C) 2=+9V
+RFC1 10uH 1/1_1=Net-(L6-SB) 2/2_2=Net-(Q3-D)
+TC1 30p 1=Net-(C4-Pad1) 2=GND
+TC2 10p 1=Net-(C72-Pad1) 2=GND
+TC3 30p 1=Net-(Q20-G) 2=GND
+TC4 30p 1=Net-(Q25-D) 2=GND
+U1 Si5351_DIP8 1/VDDO_1=Net-(U1-VDD) 2/SCL_2=Net-(J11-SCL) 3/SDA_3=Net-(J11-SDA) 4/GND_4=GND 5/CLK0_5=Net-(U1-CLK0) 6/CLK1_6=Net-(U1-CLK1) 7/CLK2_7=Net-(U1-CLK2) 8/VDD_8=Net-(U1-VDD)
+U2 LP2950-3.3_TO92 1/VO_1=Net-(U1-VDD) 2/GND_2=GND 3/VI_3=+5V
+U3 Seeeduino_XIAO_Socket 1/D0/A0_1=Net-(Q19-C) 10/3V3_10=Net-(J11-VDD) 11/D10/MOSI_11=Net-(U3-D10{slash}MOSI) 12/D9/MISO_12=Net-(J7-Pin_3) 13/D8/SCK_13=Net-(U3-D8{slash}SCK) 14/D7/RX_14=Net-(J8-Pin_3) 2/D1/A1_2=Net-(J7-Pin_2) 3/D2/A2_3=Net-(U3-D2{slash}A2) 4/D3/A3_4=Net-(J7-Pin_1) 5/D4/SDA_5=Net-(J11-SDA) 6/D5/SCL_6=Net-(J11-SCL) 7/D6/TX_7=Net-(J8-Pin_2) 8/VIN_8=Net-(D8-K) 9/GND_9=GND
+U4 NJM2594V 1/V+_1=Net-(U4-V+) 2/OUT1_2=unconnected-(U4-OUT1-Pad2) 3/OUT2_3=Net-(U4-OUT2) 4/GND_4=GND 5/SIG_5=Net-(U4-SIG) 6/BYP_6=Net-(U4-BYP) 7/CARR_7=Net-(U4-CARR) 8/NC_8=unconnected-(U4-NC-Pad8)
+U5 NJM2594V 1/V+_1=Net-(U4-V+) 2/OUT1_2=unconnected-(U5-OUT1-Pad2) 3/OUT2_3=Net-(U5-OUT2) 4/GND_4=GND 5/SIG_5=Net-(U5-SIG) 6/BYP_6=Net-(U5-BYP) 7/CARR_7=Net-(U5-CARR) 8/NC_8=unconnected-(U5-NC-Pad8)
+U6 78L05 1/VO_1=Net-(U4-V+) 2/GND_2=GND 3/VI_3=+9V
+U7 AD8307ANZ 1/INM_1=Net-(U7-INM) 2/COM_2=GND 3/OFS_3=Net-(U7-OFS) 4/OUT_4=Net-(J11-A0) 5/INT_5=unconnected-(U7-INT-Pad5) 6/ENB_6=Net-(U7-ENB) 7/VPS_7=Net-(U7-ENB) 8/INP_8=Net-(U7-INP)
+VR2 500 1/1_1=Net-(R6-Pad2) 2/2_2=Net-(R7-Pad2) 3/3_3=GND
+VR3 1k 1/1_1=Net-(D4-K) 2/2_2=Net-(C39-Pad2) 3/3_3=Net-(D5-A)
+VR4 1k 1/1_1=Net-(D6-K) 2/2_2=Net-(C40-Pad2) 3/3_3=Net-(D7-A)
+VR6 500 1/1_1=Net-(C36-Pad2) 2/2_2=Net-(C51-Pad2) 3/3_3=Net-(C51-Pad2)
+VR7 500 1/1_1=Net-(C40-Pad1) 2/2_2=Net-(C53-Pad2) 3/3_3=Net-(C53-Pad2)
+Y1 12MHz 1/1_1=Net-(L21-Pad2) 2/2_2=Net-(C94-Pad1)
+Y2 12MHz 1/1_1=Net-(C94-Pad1) 2/2_2=Net-(C95-Pad1)
+Y3 12MHz 1/1_1=Net-(C95-Pad1) 2/2_2=Net-(C96-Pad1)
+Y4 12MHz 1/1_1=Net-(C96-Pad1) 2/2_2=Net-(C97-Pad1)
+Y5 12MHz 1/1_1=Net-(C97-Pad1) 2/2_2=Net-(C98-Pad1)
+Y6 12MHz 1/1_1=Net-(C98-Pad1) 2/2_2=Net-(Q2-G1)
