@@ -229,7 +229,7 @@ for f in board['fps']:
     draw_fp(ax, f, 'normal', small=True)
 fig.text(0.03, 0.082, '□（四角）パッド = 1 番ピン / 電解コンデンサの＋ / ダイオードの K（カソード）。H1〜H4 = M3 取付穴（GND）。', fontsize=7, va='center')
 fig.text(0.03, 0.064, '部品はすべて部品面。表面実装は U4・U5（NJM2594V）だけで、最初に付ける。', fontsize=7, va='center')
-fig.text(0.03, 0.046, 'Q2（3SK59）と Q4+Q5（J310 カスコード）はどちらか一方だけ付ける。', fontsize=7, va='center')
+fig.text(0.03, 0.046, 'Q2（3SK59）と Q4+Q5（2SK192A-GR カスコード）はどちらか一方だけ付ける。', fontsize=7, va='center')
 fig.text(0.03, 0.028, 'ブロック別の詳細と部品表は次ページ以降（組立順の目安: 1→%d）。調整箇所は最終ページ。' % len(blocks), fontsize=7, va='center')
 lx = 0.555
 for i, b in enumerate(blocks):
