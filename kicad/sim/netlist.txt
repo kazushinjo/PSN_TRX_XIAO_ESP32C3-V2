@@ -146,7 +146,7 @@ L15 15mH 1/1_1=Net-(C62-Pad1) 2/2_2=Net-(C65-Pad1)
 L16 T-50-10 10T/0.6mm 1/1_1=Net-(C4-Pad1) 2/2_2=Net-(C71-Pad1)
 L17 T-30-6 8T/0.4mm 1/1_1=Net-(C71-Pad1) 2/2_2=Net-(C72-Pad1)
 L18 T30-6 11T/2T 1/1_1=Net-(Q20-G) 2/TAP_2=Net-(D10-A) 3/3_3=GND
-L19 T30-6 11T/2T 1/1_1=Net-(Q25-D) 2/TAP_2=Net-(L19-TAP) 3/3_3=+9V
+L19 T30-6 11T/3T 1/1_1=Net-(Q25-D) 2/TAP_2=Net-(L19-TAP) 3/3_3=+9V
 L21 8.2uH 1/1_1=Net-(C92-Pad2) 2/2_2=Net-(L21-Pad2)
 L22 4.7uH 1/1_1=+9V 2/2_2=Net-(Q2-D)
 L23 4.7uH 1/1_1=+9V 2/2_2=Net-(Q22-C)
