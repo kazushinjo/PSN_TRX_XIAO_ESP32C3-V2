@@ -1,7 +1,7 @@
 """受信部（V2: 12MHz の SSB シングルスーパー）の計算
-  1. 受信の前段（L18 の入力同調 → Q20・Q25 J310 カスコード → L19 の出力同調）: 利得・雑音指数・イメージ・半 IF・FM 放送の抑圧、トリマの位置
+  1. 受信の前段（L18 の入力同調 → Q20・Q25 2SK192A-GR カスコード → L19 の出力同調）: 利得・雑音指数・イメージ・半 IF・FM 放送の抑圧、トリマの位置
   2. 12MHz ラダーフィルタ（Y1〜Y6）: 帯域・挿入損失・リップル（水晶の運動定数は仮定）
-  3. RF 増幅（Q20・Q25 J310）と混合後増幅（Q21 2SC1815 ＋ L 整合）の利得
+  3. RF 増幅（Q20・Q25 2SK192A-GR）と混合後増幅（Q21 2SC1815 ＋ L 整合）の利得
   4. IF 増幅（Q2 3SK59）・S メーター増幅（Q22）の利得と、アンテナから積検波・AD8307・スピーカーまでのレベル
 定数は回路図のネットリスト（net.json）から読む。水晶・コア・FET の特性は仮定（下の表）。
 """
@@ -40,20 +40,20 @@ def tapped(ref, n_total, n_tap, k=0.9):
             f"K{ref} L{ref}h L{ref}c {k}")
 
 
-# J310（Q20・Q25）: Vp −4V・Idss 40mA（dc.py と同じ代表値）
+# 2SK192A-GR（Q20・Q25）: Vp −2V・Idss 10mA（dc.py と同じ代表値。Ciss 3.5pF・Crss 0.65pF）
 MODRF = """
-.model JJ310r NJF(VTO=-4 BETA=2.5m LAMBDA=0.01 CGS=5p CGD=2p RS=5 RD=5)
+.model JK192r NJF(VTO=-2 BETA=2.5m LAMBDA=0.01 CGS=2.9p CGD=0.65p RS=5 RD=5)
 """
 ZIN_MIX = 600        # NJM2594 の信号入力（約 600Ω と仮定）
 TAP19 = 2            # L19 のタップ（+9V 側から数えた巻数）
 
 
 def front(tc3, tc4, vg2=4.0, tap19=None, c80=None, c82=None):
-    """アンテナ（50Ω）→ L18 のタップ（同調 C80・TC3）→ Q20（J310）→ Q25（J310、ゲートは AGC の Q2_G2）
+    """アンテナ（50Ω）→ L18 のタップ（同調 C80・TC3）→ Q20（2SK192A）→ Q25（2SK192A、ゲートは AGC の Q2_G2）
     → L19（同調 C82・TC4、R67 で制動）のタップ → C85 → NJM2594 の入力（600Ω）"""
     e = [tapped('L18', 11, 2), C('C80', c80), f"CTC3 {pin('TC3','1')} 0 {tc3}", f"CD9 {pin('D9','1')} 0 2p",
-         f"J20 {pin('Q20','D')} {pin('Q20','G')} {pin('Q20','S')} JJ310r", R('R66'), C('C83'),
-         f"J25 {pin('Q25','D')} {pin('Q25','G')} {pin('Q25','S')} JJ310r", R('R95'), C('C116'),
+         f"J20 {pin('Q20','D')} {pin('Q20','G')} {pin('Q20','S')} JK192r", R('R66'), C('C83'),
+         f"J25 {pin('Q25','D')} {pin('Q25','G')} {pin('Q25','S')} JK192r", R('R95'), C('C116'),
          tapped('L19', 11, tap19 or TAP19), C('C82', c82), f"CTC4 {pin('TC4','1')} 0 {tc4}", R('R67'), C('C84'), C('C85'),
          f"RMIX {pin('C85','2')} 0 {ZIN_MIX}", f"V9 {node('+9V')} 0 dc 12", f"VG2 {pin('R95','1')} 0 dc {vg2}",
          f"VS src 0 dc 0 ac 2\nRS src {pin('L18','2')} 50"]
@@ -93,7 +93,7 @@ def nf_gain(net):
     return nf, 10 * math.log10((v ** 2 / ZIN_MIX) / (1 / 50))
 
 
-print('### 受信の前段（L18・L19 T30-6 11T、コア Q 約 120、結合 k 0.9。Q20・Q25 J310 カスコード、混合器の入力 600Ω と仮定）')
+print('### 受信の前段（L18・L19 T30-6 11T、コア Q 約 120、結合 k 0.9。Q20・Q25 2SK192A-GR カスコード、混合器の入力 600Ω と仮定）')
 for t19 in (2, 3):
     a, b = tune(tap19=t19)
     nf, g = nf_gain(front(a, b, tap19=t19))
@@ -176,10 +176,10 @@ MOD = """
 .model QS NPN(IS=2e-14 BF=200 VAF=100 BR=3 RB=50 RC=1 CJE=10p CJC=3.5p TF=0.5n)
 """ + MODRF
 print()
-print('### 利得（J310: Vp −4V・Idss 40mA、2SC1815: hFE 200 と仮定）')
+print('### 利得（2SK192A-GR: Vp −2V・Idss 10mA、2SC1815: hFE 200 と仮定）')
 # RF 増幅: Q20 のゲート → MIX_IN（1. の前段の計算から、ゲートまでの分を除く）
 RFA_GAIN = ref / BPF_GAIN
-print(f'  RF 増幅（Q20・Q25 J310 カスコード、ゲート → L19 のタップ → NJM2594 の入力 600Ω）: 電圧利得 {db(RFA_GAIN):+.1f} dB（50.5MHz）')
+print(f'  RF 増幅（Q20・Q25 2SK192A-GR カスコード、ゲート → L19 のタップ → NJM2594 の入力 600Ω）: 電圧利得 {db(RFA_GAIN):+.1f} dB（50.5MHz）')
 ngs.run(FE + ".op\n")
 try:
     vs, vd20, vd25 = ngs.vec(pin('Q20', 'S'))[0], ngs.vec(pin('Q20', 'D'))[0], ngs.vec(pin('Q25', 'D'))[0]

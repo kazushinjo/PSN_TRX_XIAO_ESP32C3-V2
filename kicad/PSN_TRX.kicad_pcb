@@ -1687,7 +1687,7 @@
 				)
 			)
 		)
-		(property "Value" "J310"
+		(property "Value" "2SK192A"
 			(at 1.27 2.79 270)
 			(layer "F.Fab")
 			(uuid "d535b1d2-dc24-46ae-83e2-d0a58f9f7993")
@@ -1711,7 +1711,7 @@
 				)
 			)
 		)
-		(property "Description" "RF 増幅のカスコード下段（ソース接地）。V2 改: 2N3819 → J310（TO-92、1 D・2 S・3 G）"
+		(property "Description" "RF 増幅のカスコード下段（ソース接地）。V2 改: 2N3819 → J310 → 2SK192A-GR（TO-92、1 D・2 S・3 G）"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -7697,7 +7697,7 @@
 				)
 			)
 		)
-		(property "Description" "Q2（3SK59 / J310 カスコード）のドレイン負荷。C11 33p と 12MHz に同調"
+		(property "Description" "Q2（3SK59 / 2SK192A-GR カスコード）のドレイン負荷。C11 33p と 12MHz に同調"
 			(at 0 0 180)
 			(layer "F.Fab")
 			(hide yes)
@@ -15850,7 +15850,7 @@
 				)
 			)
 		)
-		(property "Value" "J310"
+		(property "Value" "2SK192A"
 			(at 1.27 2.79 270)
 			(layer "F.Fab")
 			(uuid "c60bdcab-e8a6-404e-be6c-b4e47e86d2a7")
@@ -15874,7 +15874,7 @@
 				)
 			)
 		)
-		(property "Description" "RF 増幅のカスコード上段。ゲートは R95 で AGC（Q2_G2）へ。RF 段にも AGC・RF ゲインが効く"
+		(property "Description" "RF 増幅のカスコード上段。ゲートは R95 で AGC（Q2_G2）へ。RF 段にも AGC・RF ゲインが効く。2SK192A-GR"
 			(at 0 0 270)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -24021,7 +24021,7 @@
 				)
 			)
 		)
-		(property "Value" "100"
+		(property "Value" "47"
 			(at 1.27 2.37 90)
 			(layer "F.Fab")
 			(uuid "c8fba6c6-ef7b-4f59-82a3-9b5dbaa998ba")
@@ -24043,7 +24043,7 @@
 				)
 			)
 		)
-		(property "Description" "カスコード下段のソース抵抗（Id 約 12mA）"
+		(property "Description" "カスコード下段 Q20（2SK192A-GR）のソース抵抗（Id 約 6〜8mA）"
 			(at 0 0 90)
 			(layer "F.Fab")
 			(hide yes)
@@ -26185,7 +26185,7 @@
 				)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "Q2 のソース抵抗（3SK59 は 120Ω）。Q4・Q5（2SK192A-GR）を付けるときは 47Ω にし、22〜100Ω で 5〜8mA に合わせる"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -65119,7 +65119,7 @@
 				)
 			)
 		)
-		(property "Value" "J310"
+		(property "Value" "2SK192A"
 			(at 1.27 2.79 180)
 			(layer "F.Fab")
 			(uuid "fc2dc18b-0d11-41ec-babe-ee9a172a67d6")
@@ -65143,7 +65143,7 @@
 				)
 			)
 		)
-		(property "Description" "N-Channel JFET J310（TO-92、1 D・2 S・3 G。買った品のデータシートでピン配置を確認）"
+		(property "Description" "IF 増幅のカスコード上段（Q2 の代わり）。N-Channel JFET 2SK192A（GR ランク、IDSS 6〜14mA。東芝 TO-92 小型 2-4E1D、1 D・2 S・3 G）"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -67418,7 +67418,7 @@
 				)
 			)
 		)
-		(property "Value" "J310"
+		(property "Value" "2SK192A"
 			(at 1.27 2.79 0)
 			(layer "F.Fab")
 			(uuid "e312485f-85aa-4416-9c39-89d478e87641")
@@ -67442,7 +67442,7 @@
 				)
 			)
 		)
-		(property "Description" "N-Channel JFET J310（TO-92、1 D・2 S・3 G。買った品のデータシートでピン配置を確認）"
+		(property "Description" "IF 増幅のカスコード下段（Q2 の代わり）。R5 は 47Ω に。N-Channel JFET 2SK192A（GR ランク、IDSS 6〜14mA。東芝 TO-92 小型 2-4E1D、1 D・2 S・3 G）"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "F.Fab")

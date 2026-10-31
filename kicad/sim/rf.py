@@ -105,7 +105,7 @@ def agc():
     for hfe in (200, 400):
       row = []
       for vpwm in [0, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 1.13]:
-        net = f""".param hfe1815={hfe} hfe1923=100 hfe2120=180 vp310=-4 b310=2.5m
+        net = f""".param hfe1815={hfe} hfe1923=100 hfe2120=180 vpfet=-2 bfet=2.5m
 agc
 {MODELS}
 V9 n__9V 0 DC 12

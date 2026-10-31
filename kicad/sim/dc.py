@@ -1,15 +1,15 @@
-"""直流動作点: 電源 11/12/13.8V × hFE 下限/上限、J310 の個体差"""
+"""直流動作点: 電源 11/12/13.8V × hFE 下限/上限、2SK192A-GR の個体差"""
 import ngs
 from gen import *
 
 def circuit():
     e = []
-    # 受信 IF 増幅: J310 カスコード（Q5 下段・Q4 上段、V2 では 12MHz）、ゲイン J4（10k と仮定、最大）
-    e += [JFET('Q5', 'JJ310'), JFET('Q4', 'JJ310'), R('R5'), R('R76'), L('L22', 0.5), R('R4'),
+    # 受信 IF 増幅: 2SK192A-GR カスコード（Q5 下段・Q4 上段、V2 では 12MHz。R5 は 2SK192A 用の 47Ω）、ゲイン J4（10k と仮定、最大）
+    e += [JFET('Q5', 'J2SK192'), JFET('Q4', 'J2SK192'), R('R5', 47), R('R76'), L('L22', 0.5), R('R4'),
           "RJ4a n_Net__J4_Pin_1_ n__Q2_G2 1m", "RJ4b n__Q2_G2 0 10k",
           BJT('Q17', 'Q2SC1815'), R('R42'), R('R44')]
-    # 受信（V2）: RF 増幅 Q20・Q25（J310 カスコード、Q25 のゲートは AGC の Q2_G2 から R95）、混合後増幅 Q21、S メーター増幅 Q22
-    e += [JFET('Q20', 'JJ310'), JFET('Q25', 'JJ310'), f"RL18 {pin('L18','1')} 0 0.3", R('R66'), R('R95'), f"RL19 {pin('L19','1')} {pin('L19','3')} 0.3", R('R67'),
+    # 受信（V2）: RF 増幅 Q20・Q25（2SK192A-GR カスコード、Q25 のゲートは AGC の Q2_G2 から R95）、混合後増幅 Q21、S メーター増幅 Q22
+    e += [JFET('Q20', 'J2SK192'), JFET('Q25', 'J2SK192'), f"RL18 {pin('L18','1')} 0 0.3", R('R66'), R('R95'), f"RL19 {pin('L19','1')} {pin('L19','3')} 0.3", R('R67'),
           BJT('Q21', 'Q2SC1815'), R('R71'), R('R72'), R('R73'), R('R74'), R('R75'),
           BJT('Q22', 'Q2SC1815'), R('R82'), R('R83'), R('R84'), R('R85'), L('L23', 0.5)]
     # 受信 AF: Q23（前置増幅）→ Q9 → Q12 → AF 出力 Q13/Q14（入力は積検波 U5 の出力から C22）
@@ -40,10 +40,10 @@ TR = {'Q4': 'J', 'Q5': 'J', 'Q20': 'J', 'Q25': 'J', 'Q23': 'Q', 'Q21': 'Q', 'Q22
 
 def V(n): return '0' if n=='0' else f'v({n})'
 
-def run(vs, lo, j310):
+def run(vs, lo, fet):
     h = dict(hfe1815=200 if lo else 400, hfe1923=40 if lo else 240, hfe2120=120 if lo else 240)
-    vp, idss = j310
-    params = '\n'.join(f".param {k}={v}" for k, v in h.items()) + f"\n.param vp310={vp} b310={idss/vp**2}"
+    vp, idss = fet
+    params = '\n'.join(f".param {k}={v}" for k, v in h.items()) + f"\n.param vpfet={vp} bfet={idss/vp**2}"
     net = f"""dc
 {params}
 {MODELS}
@@ -83,7 +83,7 @@ if __name__ == '__main__':
     import itertools, json
     res = {}
     for vs, lo in itertools.product([11, 12, 13.8], [True, False]):
-        res[(vs, lo)] = run(vs, lo, (-4, 0.040))
+        res[(vs, lo)] = run(vs, lo, (-2, 0.010))
     keys = list(TR)
     print('Ic/Id [mA] (Vc/Vd [V]) Pd[mW]  hFE下限/上限 × 11/12/13.8V の範囲')
     for q in keys:
@@ -93,7 +93,7 @@ if __name__ == '__main__':
         xs = [res[x][k] for x in res]; print(f"{k:9} {min(xs):.3f}〜{max(xs):.3f}")
     for vs in [11, 12, 13.8]:
         print('MIC', vs, round(res[(vs, True)]['MIC'], 2), round(res[(vs, False)]['MIC'], 2))
-    print('J310 個体差（12V）:')
-    for vp, idss in [(-2, 0.024), (-4, 0.040), (-6.5, 0.060), (-2, 0.060), (-6.5, 0.024)]:
+    print('2SK192A-GR 個体差（12V、VGS(off) −1.2〜−3V・IDSS 6〜14mA、R5 47Ω・R66 47Ω）:')
+    for vp, idss in [(-1.2, 0.006), (-2, 0.010), (-3, 0.014), (-1.2, 0.014), (-3, 0.006)]:
         r = run(12, False, (vp, idss)); print(f"  Vp {vp} Idss {idss*1e3:.0f}mA → Id {r['Q5'][0]*1e3:.1f} mA, Q4 Vd {r['Q4'][1]:.2f} V, Q5 Vds {r['Q5'][1]-0:.2f}")
     print('定数:', ' '.join(f"{k}={v}" for k, v in sorted(used.items())))

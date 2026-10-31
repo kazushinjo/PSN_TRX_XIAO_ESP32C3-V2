@@ -4,7 +4,7 @@ import ngs, math, cmath, itertools
 from gen import *
 
 HDR = """.options rshunt=1e9
-.param hfe1815=300 hfe1923=100 hfe2120=180 vp310=-4 b310=2.5m
+.param hfe1815=300 hfe1923=100 hfe2120=180 vpfet=-2 bfet=2.5m
 """
 
 def mic_circuit(rl15, vol=5e3, vs=12, imic=1.0):
@@ -85,7 +85,7 @@ def rx_circuit(vol, vs=12):
          C('C41'), C('C42'), BJT('Q13', 'Q2SC2120'), BJT('Q14', 'Q2SA950'), R('R25'), R('R26'), R('R27'), C('C45'),
          C('C46'), f"RSP {pin('J6', '1')} 0 8", C('C27'), C('C47')]
     return f"""rx
-.param hfe1815=300 hfe1923=100 hfe2120=180 vp310=-4 b310=2.5m
+.param hfe1815=300 hfe1923=100 hfe2120=180 vpfet=-2 bfet=2.5m
 {MODELS}
 V9 n__9V 0 DC {vs}
 V33 n__XIAO_3V3 0 DC 3.3

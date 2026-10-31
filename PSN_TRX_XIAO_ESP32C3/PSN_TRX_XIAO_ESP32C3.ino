@@ -83,13 +83,13 @@
 // ★ Sメーター・AGC の調整値（実機で合わせる）
 // ============================================================
 // RF ゲイン VR 最大・AGC OFF で S9（-73dBm）の信号を入れたときの AD8307 の出力 [mV]
-// （シリアルモニタに出る "rssi" の値を入れる。ngspice の見積もりでは約 1900mV（AD8307 の入力 −8dBm、
-//   RF 増幅を J310 カスコードにした後の値））
-#define RSSI_S9_MV         1900.0f
+// （シリアルモニタに出る "rssi" の値を入れる。ngspice の見積もりでは約 1830mV（AD8307 の入力 −10.9dBm、
+//   RF 増幅を 2SK192A-GR カスコードにした後の値。J310 のときは 1900mV））
+#define RSSI_S9_MV         1830.0f
 // AD8307 の傾き [mV/dB]（データシートの値）
 #define RSSI_MV_PER_DB     25.0f
 // AGC が効き始める AD8307 の出力 [mV]（S9 の 6dB 下）
-#define AGC_TARGET_MV      1750.0f
+#define AGC_TARGET_MV      1680.0f
 // BFO の初期値 [Hz]。USB はラダーフィルタの通過域の下端の外、LSB は上端の外
 // （ngspice の見積もりで通過域は 12MHz の +220〜+2810Hz。水晶で変わるので bfo コマンドで合わせる）
 #define BFO_USB_DEFAULT    11999900L
