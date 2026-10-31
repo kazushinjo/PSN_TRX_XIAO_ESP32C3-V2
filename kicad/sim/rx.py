@@ -45,7 +45,7 @@ MODRF = """
 .model JK192r NJF(VTO=-2 BETA=2.5m LAMBDA=0.01 CGS=2.9p CGD=0.65p RS=5 RD=5)
 """
 ZIN_MIX = 600        # NJM2594 の信号入力（約 600Ω と仮定）
-TAP19 = 2            # L19 のタップ（+9V 側から数えた巻数）
+TAP19 = 3            # L19 のタップ（+9V 側から数えた巻数。2026-10-31 に 2 → 3）
 
 
 def front(tc3, tc4, vg2=4.0, tap19=None, c80=None, c82=None):

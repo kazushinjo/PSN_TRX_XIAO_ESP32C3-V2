@@ -47107,7 +47107,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "T30-6 11T/2T"
+		(property "Value" "T30-6 11T/3T"
 			(at 276.86 125.73 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -47140,7 +47140,7 @@
 				)
 			)
 		)
-		(property "Description" "RF 増幅の出力同調（ドレイン = 1 番、+9V = 3 番、タップ 2 番から混合器へ）"
+		(property "Description" "RF 増幅の出力同調（ドレイン = 1 番、+9V = 3 番、+9V 側から 3 回目のタップ 2 番から混合器へ）"
 			(at 271.78 119.38 0)
 			(hide yes)
 			(show_name no)

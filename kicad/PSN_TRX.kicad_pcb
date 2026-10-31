@@ -3071,7 +3071,7 @@
 				)
 			)
 		)
-		(property "Value" "T30-6 11T/2T"
+		(property "Value" "T30-6 11T/3T"
 			(at 2.54 5.2 90)
 			(layer "F.Fab")
 			(uuid "1c02cd01-bf4a-430f-93c9-9c55a1f7b8cb")
@@ -3093,7 +3093,7 @@
 				)
 			)
 		)
-		(property "Description" "RF 増幅の出力同調（ドレイン = 1 番、+9V = 3 番、タップ 2 番から混合器へ）"
+		(property "Description" "RF 増幅の出力同調（ドレイン = 1 番、+9V = 3 番、+9V 側から 3 回目のタップ 2 番から混合器へ）"
 			(at 0 0 90)
 			(layer "F.Fab")
 			(hide yes)
