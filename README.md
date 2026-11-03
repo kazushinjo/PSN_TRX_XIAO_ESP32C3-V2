@@ -2,7 +2,7 @@
 
 Seeed Studio XIAO ESP32C3 + Si5351 を使用した PSN 方式 SSB トランシーバー（KiCad 10.0）。
 
-> **V2 Ver 1.0（作業中）**: [PSN_TRX_XIAO_ESP32C3](https://github.com/kazushinjo/PSN_TRX_XIAO_ESP32C3) を元に、受信部をダイレクトコンバージョンから SSB のシングルスーパー（IF 12MHz・ラダーフィルタ・積検波）に変更した。回路図・基板（134.1 × 129.7mm、配線済み・DRC エラー 0）・ファームウェア（ビルドのみ）・部品表・シミュレーションは V2 に更新済み。**実機は未確認**。製造データ（ガーバー・JLCPCB 用ファイル、`kicad/production/`）は 2026-10-30 に V2 Ver 1.0 の基板から出力済み（基板シルク「V2 Ver 1.0」）。部品実装図（`docs/PSN_TRX_部品実装図.pdf`、ブロック別 13 ページ＋調整箇所）と調整手順（[`manual/調整手順.md`](manual/調整手順.md)）は V2 Ver 1.0 に更新済み。組み立て説明書などの docx と `kicad/PSN_TRX_部品配置図.pdf` は未更新。
+> **V2 Ver 1.0（作業中）**: [PSN_TRX_XIAO_ESP32C3](https://github.com/kazushinjo/PSN_TRX_XIAO_ESP32C3) を元に、受信部をダイレクトコンバージョンから SSB のシングルスーパー（IF 12MHz・ラダーフィルタ・積検波）に変更した。回路図・基板（134.1 × 129.7mm、配線済み・DRC エラー 0）・ファームウェア（ビルドのみ）・部品表・シミュレーションは V2 に更新済み。**実機は未確認**。製造データ（ガーバー・JLCPCB 用ファイル、`kicad/production/`）は 2026-10-30 に V2 Ver 1.0 の基板から出力済み（基板シルク「V2 Ver 1.0」）。部品実装図（`docs/PSN_TRX_部品実装図.pdf`、ブロック別 13 ページ＋調整箇所）・調整手順（[`manual/調整手順.md`](manual/調整手順.md)）・操作説明書（[`manual/README.md`](manual/README.md)）・送信 I/Q の調整手順は V2 Ver 1.0 に更新済み。組み立て説明書などの docx と `kicad/PSN_TRX_部品配置図.pdf` は未更新。
 
 ## 概要
 
