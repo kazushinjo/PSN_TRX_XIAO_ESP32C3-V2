@@ -17,3 +17,6 @@ tmcv01_img*.jpg
 
 # ヒストリー
 .history/
+
+# Python のキャッシュ
+__pycache__/
