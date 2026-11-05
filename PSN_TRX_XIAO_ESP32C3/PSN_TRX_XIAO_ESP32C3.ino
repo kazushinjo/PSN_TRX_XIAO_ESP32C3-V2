@@ -6,8 +6,8 @@
  * 50.000 ~ 51.000 MHz (6m Band)
  *
  * ---- V2: 受信は 12MHz の SSB シングルスーパー ----
- *   受信中: CLK0 = 第 1 局発（表示周波数 + RIT − BFO、38〜39MHz、PLLA）→ Q11 → L9 → R68・R69 → U4
- *           CLK2 = BFO（約 12MHz、PLLB）→ R77・R78 → U5（積検波）。CLK1 は止める
+ *   受信中: CLK0 = 第 1 局発（表示周波数 + RIT − BFO、38〜39MHz、PLLA）→ Q4 → L3 → R8・R9 → U1
+ *           CLK2 = BFO（約 12MHz、PLLB）→ R19・R20 → U2（積検波）。CLK1 は止める
  *   送信中: CLK0（0°）・CLK1（90°）= 表示周波数（PSN 変調、従来どおり）。CLK2 は止める
  *   BFO は USB ではラダーフィルタの通過域の下端の外、LSB では上端の外に置く（bfo コマンドで合わせる）
  *   Sメーター・AGC は Q2（IF 増幅）の出力を AD8307 で測り、ADS1015（I2C 0x48、A0）で読む
@@ -56,14 +56,14 @@
  *   Encoder A   -> D3 (GPIO5)
  *   Encoder B   -> D1 (GPIO3)
  *   Encoder SW  -> D9 (GPIO9)   ※ 基板 Ver 1.3 から（Ver 1.2 以前は D2）
- *   マイク入力  -> D2/A2 (GPIO4, ADC1)  送信中のマイク（IC2A → C73・R59）、R38/R39 で 1.65V にバイアス。処理は tx_dsp.cpp
+ *   マイク入力  -> D2/A2 (GPIO4, ADC1)  送信中のマイク（U5A → C65・R52）、R73/R74 で 1.65V にバイアス。処理は tx_dsp.cpp
  *                  ※ V2 では受信音は来ない（Sメーター・AGC は ADS1015 で測る）
  *   ADS1015     -> D4/D5 (I2C、Si5351 と共用、アドレス 0x48)  A0 = AD8307 の出力（25mV/dB）
- *   Si5351 CLK2 -> 受信中だけ BFO（R77・R78 → U5）
- *   AGC 出力    -> D10 (GPIO10) PWM → R42・C61 → R44 → Q17 で Q2 の G2 を下げる
- *                  送信中は I の PDM 出力（R61・C75・R62・C76 → C49 → Q15）
- *   Q 出力      -> D8 (GPIO8)   送信中だけ PDM（R63・C77・R64・C78 → C48 → Q16）
- *   送信検出    -> D0 (GPIO2)   送信中 LOW（Q19 が TX12V でオン）。基板 Ver 2.0 で D8 から移動
+ *   Si5351 CLK2 -> 受信中だけ BFO（R19・R20 → U2）
+ *   AGC 出力    -> D10 (GPIO10) PWM → R75・C104 → R76 → Q21 で Q2 の G2 を下げる
+ *                  送信中は I の PDM 出力（R53・C66・R54・C67 → C70 → Q15）
+ *   Q 出力      -> D8 (GPIO8)   送信中だけ PDM（R55・C68・R56・C69 → C72 → Q16）
+ *   送信検出    -> D0 (GPIO2)   送信中 LOW（Q22 が TX12V でオン）。基板 Ver 2.0 で D8 から移動
  *                  ※ 起動設定ピンなので、PTT を押したまま電源を入れないこと
  *   Nextion TX  -> D7 (GPIO20)  ※ Nextion 使用時（LCD の TX → XIAO の RX）
  *   Nextion RX  -> D6 (GPIO21)  ※ Nextion 使用時（XIAO の TX → LCD の RX）
@@ -84,7 +84,7 @@
 // ============================================================
 // RF ゲイン VR 最大・AGC OFF で S9（-73dBm）の信号を入れたときの AD8307 の出力 [mV]
 // （シリアルモニタに出る "rssi" の値を入れる。ngspice の見積もりでは約 1900mV（AD8307 の入力 −8.2dBm、
-//   RF 増幅を 2SK192A-GR カスコード・L19 のタップ 3 回目にした後の値））
+//   RF 増幅を 2SK192A-GR カスコード・L2 のタップ 3 回目にした後の値））
 #define RSSI_S9_MV         1900.0f
 // AD8307 の傾き [mV/dB]（データシートの値）
 #define RSSI_MV_PER_DB     25.0f
@@ -94,11 +94,11 @@
 // （ngspice の見積もりで通過域は 12MHz の +220〜+2810Hz。水晶で変わるので bfo コマンドで合わせる）
 #define BFO_USB_DEFAULT    11999900L
 #define BFO_LSB_DEFAULT    12003100L
-// Q17 が効き始める PWM 値と、G2 をほぼ 0V まで下げる PWM 値（12 ビット、0〜4095）
+// Q21 が効き始める PWM 値と、G2 をほぼ 0V まで下げる PWM 値（12 ビット、0〜4095）
 #define AGC_DUTY_START     700
 #define AGC_DUTY_FULL      1400
 // AGC を最大に効かせたときのゲイン低下 [dB]（Sメーター換算用の目安。ngspice の見積もりで
-//   RF 増幅 Q25 約 15dB ＋ IF 増幅 Q2 約 13dB）
+//   RF 増幅 Q3 約 15dB ＋ IF 増幅 Q2 約 13dB）
 #define AGC_RANGE_DB       28.0f
 // ============================================================
 

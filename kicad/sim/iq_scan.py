@@ -1,6 +1,6 @@
 """送信 AF の I/Q 位相差を周波数スキャンしてグラフにする（Ver 2.0）
 
-  U3 の複素 FIR（tx_dsp.cpp と同じ作り方・同じ int16 量子化）× PDM 出力〜変調器入力のアナログ部（ngspice）で、
+  U7 の複素 FIR（tx_dsp.cpp と同じ作り方・同じ int16 量子化）× PDM 出力〜変調器入力のアナログ部（ngspice）で、
   I と Q の位相差が 90° からどれだけずれるか、振幅差、そこから決まる逆側帯波の抑圧を 100〜4000 Hz で求める。
   RC のばらつき（I +3%・Q −3%）と、ファームウェアの iqd・iqa で補正した後も並べる。
 
@@ -40,10 +40,10 @@ def fir(iq_delay_us=0.0, iq_gain_db=0.0):
 
 
 def analog(dI=1.0, dQ=1.0, rload=500):
-    """PDM 出力（R61・R63 の入力）→ 変調器入力（L11・L10）"""
+    """PDM 出力（R53・R55 の入力）→ 変調器入力（L10・L11）"""
     ngs.run(out_circuit(rload, dI=dI, dQ=dQ))
     f = np.array([x.real for x in ngs.vec('frequency')])
-    hi = np.array(ngs.vec(pin('L11', '1'))); hq = np.array(ngs.vec(pin('L10', '1')))
+    hi = np.array(ngs.vec(pin('L10', '1'))); hq = np.array(ngs.vec(pin('L11', '1')))
     ip = lambda h: np.interp(F, f, h.real) + 1j * np.interp(F, f, h.imag)
     return ip(hi), ip(hq)
 
@@ -73,10 +73,10 @@ def main():
     iqd, iqa = -tau * 1e6, -20 * math.log10(g)          # ファームウェアに入れる値（iqd µs・iqa dB）
     cI, cQ = fir(iqd, iqa)
     cases = [
-        ('FIR だけ（U3 の計算）', fI, fQ, 'C0', '-'),
-        ('FIR＋アナログ部（定数どおり）', fI * nI, fQ * nQ, 'C2', '-'),
+        ('FIR だけ（U7 の計算）', fI, fQ, 'C0', '-'),
+        ('FIR＋アナログ部（定数どおり）', fI * nI, fQ * nQ, 'C103', '-'),
         ('RC が I +3%・Q −3%（補正なし）', fI * mI, fQ * mQ, 'C3', '--'),
-        (f'同上を iqd {iqd:+.2f}・iqa {iqa:+.2f} で補正', cI * mI, cQ * mQ, 'C1', '-'),
+        (f'同上を iqd {iqd:+.2f}・iqa {iqa:+.2f} で補正', cI * mI, cQ * mQ, 'C102', '-'),
     ]
     fp = '/System/Library/Fonts/ヒラギノ角ゴシック W3.ttc'
     if os.path.exists(fp):

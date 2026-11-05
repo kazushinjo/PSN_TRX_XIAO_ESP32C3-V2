@@ -53,7 +53,7 @@ bx = 43.3;                                     // 基板の X 位置（左端）
 by = panel_inset + groove_w + pcb_front_gap;   // 基板の Y 位置（前端）
 bz = floor_t + standoff_h;                     // 基板下面の Z
 // 基板座標(u: KiCad X, v: KiCad Y、原点=基板左上) → ケース座標
-// 基板の右辺（LCD/エンコーダ用ヘッダ J8/J7/J9）が前面、左辺（J1/J2）が後面を向く
+// 基板の右辺（LCD/エンコーダ用ヘッダ J11/J10/J8）が前面、左辺（J1/J2）が後面を向く
 function bp(u, v) = [bx + pcb_v - v, by + pcb_u - u];
 mount_uv = [[4, 4], [130, 4], [4, 125.63], [130, 125.63]];
 
@@ -67,7 +67,7 @@ panel_x0 = wall - groove_d + fit / 2;                // パネル左端の X
 function pz(z) = panel_z0 + z;
 
 // ---------------- 上面部品（ふた上面、ケース X/Y 座標。前から見て読める向き） ----------------
-// LCD: Nextion NX4832T035（3.5インチ 480×320 シリアル HMI、基板 J8 に接続）
+// LCD: Nextion NX4832T035（3.5インチ 480×320 シリアル HMI、基板 J11 に接続）
 //   外形・表示領域は Nextion NX4832T035 の公表値（100.5×54.94×5.45mm、表示領域 73.44×48.96mm）。
 //   ※ 表示領域の中心ずれ（lcd_win_off）と取付穴（lcd_holes）は推定値。実物を実測して修正すること。
 lcd_mod   = [100.5, 54.94];  // モジュール外形（基板）
@@ -97,7 +97,7 @@ afv_c   = [psw_c[0], 85];  afv_hole = 7.2;  afv_knob = 20;  afv_body = 17;   // 
 rfg_c   = [psw_c[0], 118]; rfg_hole = 7.2;  rfg_knob = 20;  rfg_body = 17;   // RF ゲイン（ボリューム、VOL と同じ寸法と仮定）
 led_c   = [psw_c[0] + 20, psw_c[1]]; led_hole = 3.1;                    // 3mm 電源 LED（電源スイッチの右、LED ホルダ使用時は 5.0）
 // LCD の手前（前面寄り）、LCD の中央付近に横 1 列: 左から MIC・PHN。
-//   ふた裏の本体は基板の前端 6mm まで（X 60〜110 のこの範囲には部品なし。J8 は前端から 6.4mm）。MIC は左前の前面パネル固定ボス（X=60）の右にかわす
+//   ふた裏の本体は基板の前端 6mm まで（X 60〜110 のこの範囲には部品なし。J11 は前端から 6.4mm）。MIC は左前の前面パネル固定ボス（X=60）の右にかわす
 mic_c   = [74, 22];  mic_hole = 16.2; mic_flange = 20; mic_body = 20;   // 4P 丸型マイクコネクタ。mic_flange = つば・プラグの太さ、mic_body = ふた裏の本体の太さ
 phone_c = [99, 22];  phone_hole = 6.2; phone_plug = 8; phone_body = 12; // 3.5mm イヤホンジャック（秋月 MJ-352W-C、M6 P0.5 ねじ長 3.5mm、スイッチ付き）。phone_plug = プラグ根元の太さ
 phone_thin = 15; phone_thin_t = 1.8;   // PHN 穴を中心に 15x15mm を板厚 1.8mm に（ふた裏から座ぐり。ジャックのねじ長さ対策）
@@ -132,8 +132,8 @@ fuse_c = [21, rear_zc];     fuse_hole = 12.5; fuse_flange = 18; fuse_body = 16; 
 dc_c   = [42, rear_zc];     dc_hole = 8.0;    dc_flange = 14;   dc_body = 12;    // 12V DC ジャック（パネル取付、2.1/2.5mm）。ヒューズの右隣（DC ジャック〜ヒューズの線を短く）
 dc_thin = 15; dc_thin_t = 1.8;   // DC ジャック穴を中心に 15x15mm を板厚 1.8mm に（パネル内側から座ぐり。ジャックのねじ長さ対策）
 j1_uv  = [11.1, 38.5];      // 基板 J1（アンテナ）の中心（kicad/PSN_TRX.kicad_pcb より）
-l1_v   = 42.0;              // 基板 L1（T-50 縦置き、高さ約 14mm、基板の後端にかかる）の J1 側の端（v）
-bnc_c  = [bp(j1_uv[0], j1_uv[1])[0] + 3.6, rear_zc]; bnc_hole = 9.6; bnc_flange = 14; bnc_body = 12;   // BNC（アンテナ）。J1 のすぐ後ろ（同軸を短く）、左の L1 をかわして 3.6mm 右
+l1_v   = 42.0;              // 基板 L19（T-50 縦置き、高さ約 14mm、基板の後端にかかる）の J1 側の端（v）
+bnc_c  = [bp(j1_uv[0], j1_uv[1])[0] + 3.6, rear_zc]; bnc_hole = 9.6; bnc_flange = 14; bnc_body = 12;   // BNC（アンテナ）。J1 のすぐ後ろ（同軸を短く）、左の L19 をかわして 3.6mm 右
 for (c = [[fuse_c, fuse_flange], [dc_c, dc_flange], [bnc_c, bnc_flange]]) {
     assert(c[0][1] - c[1] / 2 >= floor_t - panel_z0, "後面部品のつばが底板にかかる");
     assert(c[0][1] + c[1] / 2 <= H - lid_t - panel_z0, "後面部品のつばがふたにかかる");
@@ -145,8 +145,8 @@ assert(abs(fuse_c[0] - phone_c[0]) >= fuse_body / 2 + phone_body / 2 + 1 || phon
 // DC ジャックの本体（パネル内面から 15mm、Z 14〜26mm）は基板の左後ろの角に平面で約 1.6mm かかるが、そこには取付穴 H3 しかない（基板上 4mm 以上離す）
 assert(D - panel_inset - fit / 2 - panel_t - 15 >= by + pcb_u + 1 || pz(dc_c[1]) - dc_body / 2 >= bz + pcb_t + 4, "DC ジャックの本体が基板の後端の部品にかかる");
 assert(dc_c[0] - dc_flange / 2 >= fuse_c[0] + fuse_flange / 2 + 5, "ヒューズと DC の間が狭い");
-// BNC の本体（パネル内面から 12mm、Z 14〜26mm）は基板の後端に平面で約 1.2mm かかる。そこにある背の高い部品は L1 だけなので、L1 をかわす
-assert(D - panel_inset - fit / 2 - panel_t - 12 >= by + pcb_u + 1 || bnc_c[0] - bnc_body / 2 >= bp(0, l1_v)[0] + 1, "BNC の本体が基板の L1 にかかる");
+// BNC の本体（パネル内面から 12mm、Z 14〜26mm）は基板の後端に平面で約 1.2mm かかる。そこにある背の高い部品は L19 だけなので、L19 をかわす
+assert(D - panel_inset - fit / 2 - panel_t - 12 >= by + pcb_u + 1 || bnc_c[0] - bnc_body / 2 >= bp(0, l1_v)[0] + 1, "BNC の本体が基板の L19 にかかる");
 assert(abs(dc_c[0] - bnc_c[0]) >= dc_flange / 2 + bnc_flange / 2 + 5, "DC と BNC の間が狭い");
 assert(dc_thin > dc_hole + 1 && dc_thin_t < panel_t, "DC ジャックの薄肉部の寸法が不正");
 // 穴の上の文字（中心 +3mm、高さ約 3.2mm）がふた裏面より下、DC の下の文字（-3mm、高さ約 2.4mm）が底板より上に収まる
@@ -424,14 +424,14 @@ assert(lcd_c[1] + lcd_cut[1] / 2 + 2 <= bp(hs1_uv[0], hs1_uv[1])[1] - 20.1 / 2, 
 lid_vent_x = [bp(hs1_uv[0], hs1_uv[1])[0] - 10, W / 2 + 38];   // 左端は放熱器の左 10mm（放熱器の左端の少し左）、右端は右後ろのパネル固定ボスの手前
 lid_vent_y0 = 123; lid_vent_n = 7; lid_vent_pitch = 5;             // 1 本目の前端 Y、本数、ピッチ（発熱は少ないので後面パネル寄りに置く）
 // スピーカー（秋月 116024 DXYD50N-22Z-8A-F、8Ω 0.5W）: 通風スロットの左、ふた裏に M3 皿ねじ＋ナットで固定
-sp_c = [41, 138];        // 中心。マグネットの左はヒューズホルダ本体、枠の右は Q3（TO-220）、前は LCD
+sp_c = [41, 138];        // 中心。マグネットの左はヒューズホルダ本体、枠の右は Q19（TO-220）、前は LCD
 sp_size = 50;            // 外形 50 × 50
 sp_pitch = 40;           // 取付穴 φ4 のピッチ（対角 56.5 mm）
 sp_depth = 17.5;         // 枠の前面からマグネット後端まで
 sp_magnet = 22;          // マグネット直径
 sp_grille_d = 35;        // 放音穴を並べる範囲の直径
 sp_hole = 2.5; sp_hole_pitch = 4.5;   // 放音穴（六角配置）
-// 送信表示 LED（基板 J3）: MIC の左 30mm、MIC の穴と同じ高さ
+// 送信表示 LED（基板 J9）: MIC の左 30mm、MIC の穴と同じ高さ
 tx_c = [mic_c[0] - 30, mic_c[1]]; tx_hole = 3.0;
 tx_depth = 6;   // ふた裏から LED 本体・足の曲げ部の下端まで
 for (b = boss_pos) assert(norm(tx_c - b) >= 3.3 + 5, "TX LED の穴がふた固定ねじ頭に近すぎる");
@@ -447,8 +447,8 @@ for (b = boss_pos) let(dx = max(abs(b[0] - sp_c[0]) - sp_size / 2, 0), dy = max(
     assert(norm([dx, dy]) >= ear_d / 2 + 1, "スピーカーがふた固定ボスにかかる");
 // ヒューズホルダ本体（後面パネル内面から 35mm、φ16）とマグネット: 平面で 1mm 以上離すか、マグネットの下端がヒューズの上端より上
 assert(sp_c[0] - sp_magnet / 2 - 1 >= fuse_c[0] + fuse_body / 2 || H - lid_t - sp_depth >= pz(fuse_c[1]) + fuse_body / 2 + 1, "スピーカーのマグネットがヒューズホルダにかかる");
-// 基板の上でマグネットの下に来る部品: C13（100µF）は寝かせて付けるか高さ 7mm 以下。RFC1（横置き φ4）はそのままでよい。
-// 枠の下には J3・R9・Q6・VR2・L3（T-50 縦置き、枠の右後ろの角）などが来るが、枠はふた裏に密着しているので当たらない。Q3 は枠の外（右）
+// 基板の上でマグネットの下に来る部品: C96（100µF）は寝かせて付けるか高さ 7mm 以下。RFC1（横置き 15.24mm、φ5・高さ約 5mm）はそのままでよい（縦置きにするとマグネットに当たる）。
+// 枠の下には J9・R72・Q20・VR7・L16（T-50 縦置き、枠の右後ろの角）などが来るが、枠はふた裏に密着しているので当たらない。Q19 は枠の外（右）
 assert(H - lid_t - sp_depth >= bz + pcb_t + 7 + 2, "マグネットと基板上の部品（高さ 7mm）の隙間が 2mm 未満");
 assert(lid_vent_y0 >= lcd_c[1] + bezel[1] / 2 + 3, "ふたの通風スロットがベゼルにかかる");
 assert(lid_vent_y0 + (lid_vent_n - 1) * lid_vent_pitch + 2.5 + 3 <= D - panel_inset - fit / 2 - panel_t, "ふたの通風スロットが後面パネルにかかる");
@@ -459,11 +459,11 @@ assert(H - lcd_depth >= bz + pcb_t + 14 + 2, "LCD 裏のコネクタと基板上
 module pcb_dummy() {
     color("darkgreen") hull() for (m = mount_uv) let(p = bp(m[0], m[1])) translate([p[0], p[1], bz]) cylinder(r = 4, h = pcb_t);
     // 部品ブロック: [u, v, ケース X 方向の幅, ケース Y 方向の奥行き, 高さ, 色]
-    for (c = [[hs1_uv[0], hs1_uv[1], 25.1, 20.1, hs1_h, "dimgray"],     // HS1 放熱器（＋Q3）
+    for (c = [[hs1_uv[0], hs1_uv[1], 25.1, 20.1, hs1_h, "dimgray"],     // HS1 放熱器（＋Q19）
               [19.1, 43.63, 20.9, 10.7, 10, "white"],                 // K1 リレー
               [97.5, 112.13, 19.1, 21.3, 14, "tan"],                   // T1 トランス
               [108.6, 73.73, 18.1, 21.6, 12, "royalblue"],            // XIAO（ソケット込み）
-              [111.4, 59.43, 9.1, 12.2, 10.4, "orange"]])             // IC1 DC-DC（R-78E）
+              [111.4, 59.43, 9.1, 12.2, 10.4, "orange"]])             // U8 DC-DC（R-78E）
         let(p = bp(c[0], c[1])) color(c[5]) translate([p[0] - c[2] / 2, p[1] - c[3] / 2, bz + pcb_t]) cube([c[2], c[3], c[4]]);
 }
 module top_parts_dummy() {
