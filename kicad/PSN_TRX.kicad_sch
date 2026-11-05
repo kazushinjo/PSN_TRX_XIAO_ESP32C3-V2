@@ -6,7 +6,7 @@
 	(paper "A0")
 	(title_block
 		(title "50Mhz PSN トランシーバ")
-		(rev "V2 Ver 1.1")
+		(rev "V2 Ver 1.2")
 	)
 	(lib_symbols
 		(symbol "Amplifier_Operational:LM2904"
@@ -9204,6 +9204,24 @@
 		(uuid "fb9dd0b9-db84-4085-b0d4-32a97f622f8c")
 	)
 	(junction
+		(at 152.4 294.64)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "62d9e823-8b30-410f-86df-cd40f5dbf95a")
+	)
+	(junction
+		(at 157.48 294.64)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "fe32b262-dd8d-492d-ae45-fc7cebddd3e9")
+	)
+	(junction
+		(at 165.1 294.64)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "5bf13f41-69d1-4df3-8999-666114b9a1ef")
+	)
+	(junction
 		(at 830.58 566.42)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -10258,6 +10276,66 @@
 	(no_connect
 		(at 725.17 195.58)
 		(uuid "fcc3d6c0-72dc-4e75-9113-0d023a5d1183")
+	)
+	(wire
+		(pts
+			(xy 152.4 294.64) (xy 152.4 297.18)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "53396341-8858-472c-ab24-4f45aa63ee82")
+	)
+	(wire
+		(pts
+			(xy 157.48 294.64) (xy 157.48 297.18)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "dbdcc995-b878-4c60-90ad-d063b5ca46e8")
+	)
+	(wire
+		(pts
+			(xy 165.1 294.64) (xy 165.1 297.18)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "08cf7ce8-1967-420f-bdd5-04e090df54df")
+	)
+	(wire
+		(pts
+			(xy 165.1 304.8) (xy 167.64 304.8)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1e85cb19-cca7-44fe-89eb-43e0c34ddadc")
+	)
+	(wire
+		(pts
+			(xy 167.64 307.34) (xy 165.1 307.34)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4823df38-b4a2-4a4b-a477-458fcebfd213")
+	)
+	(wire
+		(pts
+			(xy 165.1 307.34) (xy 165.1 309.88)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "03b2c1f7-cf0c-4189-ba68-1f387887f11e")
 	)
 	(wire
 		(pts
@@ -36790,7 +36868,7 @@
 				)
 			)
 		)
-		(property "Footprint" "PSN_TRX:SolderWire_1x02_P5.08mm_D1.5mm"
+		(property "Footprint" "PSN_TRX:SolderWire_1x02_P5.08mm_D1.1mm"
 			(at 120.65 294.64 0)
 			(hide yes)
 			(show_name no)
@@ -36812,7 +36890,7 @@
 				)
 			)
 		)
-		(property "Description" "DC 電源入力 12V（2 ピンヘッダ、Pin1=+12V、Pin2=GND）"
+		(property "Description" "DC 電源入力 12V（電線をじか付け、穴 φ1.1mm・5.08mm ピッチ、AWG20。1 = +12V（□）、2 = GND）"
 			(at 120.65 294.64 0)
 			(hide yes)
 			(show_name no)
@@ -36833,6 +36911,560 @@
 			(project "PSN_TRX"
 				(path "/50835569-93ad-4c8c-aafc-424a6a3761ef"
 					(reference "J2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 152.4 300.99 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "c3a15317-afc3-4090-b82a-0f53c9e5f72b")
+		(property "Reference" "C109"
+			(at 154.94 299.72 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "0.1u"
+			(at 154.94 302.26 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm"
+			(at 152.4 300.99 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 152.4 300.99 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "+12V 入力のパスコン（J2 のすぐ横）"
+			(at 152.4 300.99 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "3447d48c-150e-4197-9c6b-a961b4e7e32e")
+		)
+		(pin "2"
+			(uuid "21fc7376-d706-4237-b72c-d894970832d8")
+		)
+		(instances
+			(project "PSN_TRX"
+				(path "/50835569-93ad-4c8c-aafc-424a6a3761ef"
+					(reference "C109")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 157.48 300.99 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "2268e474-9574-405e-b959-41fc5cec975c")
+		(property "Reference" "C110"
+			(at 160.02 299.72 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "0.01u"
+			(at 160.02 302.26 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm"
+			(at 157.48 300.99 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 157.48 300.99 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "+12V 入力のパスコン（高い周波数用、J2 のすぐ横）"
+			(at 157.48 300.99 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "1673a6c7-5fe2-4fa3-bd95-031399c33978")
+		)
+		(pin "2"
+			(uuid "cf929f99-d5b4-42fa-9d44-344a8bab1282")
+		)
+		(instances
+			(project "PSN_TRX"
+				(path "/50835569-93ad-4c8c-aafc-424a6a3761ef"
+					(reference "C110")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 165.1 300.99 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "c0ac114e-98cb-4f76-803c-32f26cce167d")
+		(property "Reference" "R80"
+			(at 169.418 299.466 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "10k"
+			(at 169.418 301.752 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical"
+			(at 165.1 300.99 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 165.1 300.99 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "電源 LED の電流制限（+12V から約 1mA）"
+			(at 165.1 300.99 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "0596e3ce-0096-4135-8a87-b9e6dfe72c98")
+		)
+		(pin "2"
+			(uuid "6e14c644-5c2f-4474-96ce-5e0c83417e36")
+		)
+		(instances
+			(project "PSN_TRX"
+				(path "/50835569-93ad-4c8c-aafc-424a6a3761ef"
+					(reference "R80")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector_Generic:Conn_01x02")
+		(at 172.72 304.8 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "9940a3af-0370-4ecb-8fb1-b52a8e5489ef")
+		(property "Reference" "J12"
+			(at 172.72 300.8 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "POWER-LED"
+			(at 164.846 300.736 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical"
+			(at 172.72 304.8 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 172.72 304.8 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "電源 LED（ふた上面）へ。1 = アノード側（R80 経由 +12V）、2 = GND"
+			(at 172.72 304.8 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "43ad9067-64d2-438d-a0b6-f57cca06a05f")
+		)
+		(pin "2"
+			(uuid "5d49c422-9fed-48b0-a18f-3233037e9baf")
+		)
+		(instances
+			(project "PSN_TRX"
+				(path "/50835569-93ad-4c8c-aafc-424a6a3761ef"
+					(reference "J12")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 152.4 304.8 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "2bfc32b4-cc75-41eb-bf01-1499417b5057")
+		(property "Reference" "#PWR197"
+			(at 152.4 311.15 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GND"
+			(at 156.464 305.054 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 152.4 304.8 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 152.4 304.8 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 152.4 304.8 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "bfe3a2c7-5293-4b19-9acc-7860d226a7cb")
+		)
+		(instances
+			(project "PSN_TRX"
+				(path "/50835569-93ad-4c8c-aafc-424a6a3761ef"
+					(reference "#PWR197")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 157.48 304.8 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "7627c4b3-b9e8-4f3e-b880-738613bb414c")
+		(property "Reference" "#PWR198"
+			(at 157.48 311.15 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GND"
+			(at 161.544 305.054 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 157.48 304.8 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 157.48 304.8 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 157.48 304.8 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "6f367353-a184-4868-b6a4-df0459b19f5d")
+		)
+		(instances
+			(project "PSN_TRX"
+				(path "/50835569-93ad-4c8c-aafc-424a6a3761ef"
+					(reference "#PWR198")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 165.1 309.88 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "3ef4acc0-782c-4c82-918a-60d3fee58ba6")
+		(property "Reference" "#PWR199"
+			(at 165.1 316.23 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GND"
+			(at 169.164 310.134 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 165.1 309.88 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 165.1 309.88 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 165.1 309.88 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "a0b1dea5-6654-4087-8e3d-f9fecc775f53")
+		)
+		(instances
+			(project "PSN_TRX"
+				(path "/50835569-93ad-4c8c-aafc-424a6a3761ef"
+					(reference "#PWR199")
 					(unit 1)
 				)
 			)
@@ -43929,7 +44561,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical"
+		(property "Footprint" "PSN_TRX:SolderWire_1x02_P2.54mm_D1.1mm"
 			(at 120.65 284.48 0)
 			(hide yes)
 			(show_name no)
@@ -43951,7 +44583,7 @@
 				)
 			)
 		)
-		(property "Description" "ピンヘッダ"
+		(property "Description" "アンテナ入力（同軸ケーブルをじか付け、穴 φ1.1mm・2.54mm ピッチ。1 = 芯線、2 = 編組）"
 			(at 120.65 284.48 0)
 			(hide yes)
 			(show_name no)
