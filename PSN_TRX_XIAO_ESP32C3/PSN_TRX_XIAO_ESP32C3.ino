@@ -10,7 +10,7 @@
  *           CLK2 = BFO（約 12MHz、PLLB）→ R19・R20 → U2（積検波）。CLK1 は止める
  *   送信中: CLK0（0°）・CLK1（90°）= 表示周波数（PSN 変調、従来どおり）。CLK2 は止める
  *   BFO は USB ではラダーフィルタの通過域の下端の外、LSB では上端の外に置く（bfo コマンドで合わせる）
- *   Sメーター・AGC は Q2（IF 増幅）の出力を AD8307 で測り、ADS1015（I2C 0x48、A0）で読む
+ *   Sメーター・AGC は IF 増幅（Q6・Q7）の出力を Q8 で増幅して AD8307 で測り、ADS1015（I2C 0x48、A0）で読む
  *
  * ---- コンパイル時ディスプレイ選択 ----
  *   #define USE_NEXTION_DISPLAY  → Nextion NX4832T035  Serial1: D6(TX) D7(RX)
@@ -60,7 +60,7 @@
  *                  ※ V2 では受信音は来ない（Sメーター・AGC は ADS1015 で測る）
  *   ADS1015     -> D4/D5 (I2C、Si5351 と共用、アドレス 0x48)  A0 = AD8307 の出力（25mV/dB）
  *   Si5351 CLK2 -> 受信中だけ BFO（R19・R20 → U2）
- *   AGC 出力    -> D10 (GPIO10) PWM → R75・C104 → R76 → Q21 で Q2 の G2 を下げる
+ *   AGC 出力    -> D10 (GPIO10) PWM → R75・C104 → R76 → Q21 で RF 増幅 Q3・IF 増幅 Q7 のゲートを下げる
  *                  送信中は I の PDM 出力（R53・C66・R54・C67 → C70 → Q15）
  *   Q 出力      -> D8 (GPIO8)   送信中だけ PDM（R55・C68・R56・C69 → C72 → Q16）
  *   送信検出    -> D0 (GPIO2)   送信中 LOW（Q22 が TX12V でオン）。基板 Ver 2.0 で D8 から移動
@@ -94,11 +94,11 @@
 // （ngspice の見積もりで通過域は 12MHz の +220〜+2810Hz。水晶で変わるので bfo コマンドで合わせる）
 #define BFO_USB_DEFAULT    11999900L
 #define BFO_LSB_DEFAULT    12003100L
-// Q21 が効き始める PWM 値と、G2 をほぼ 0V まで下げる PWM 値（12 ビット、0〜4095）
+// Q21 が効き始める PWM 値と、Q3・Q7 のゲートをほぼ 0V まで下げる PWM 値（12 ビット、0〜4095）
 #define AGC_DUTY_START     700
 #define AGC_DUTY_FULL      1400
 // AGC を最大に効かせたときのゲイン低下 [dB]（Sメーター換算用の目安。ngspice の見積もりで
-//   RF 増幅 Q3 約 15dB ＋ IF 増幅 Q2 約 13dB）
+//   RF 増幅 Q3 約 15.7dB ＋ IF 増幅 Q7 約 15.5dB = 約 31dB。28dB は控えめの値で、実機で合わせる）
 #define AGC_RANGE_DB       28.0f
 // ============================================================
 
