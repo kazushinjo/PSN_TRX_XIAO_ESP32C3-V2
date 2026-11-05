@@ -89,7 +89,7 @@ lcd_insert_depth = lcd_boss_h + bezel_t - 1.0;   // ベゼル前面に 1mm 残�
 bezel_screw = [bezel[0] / 2 - 6, 20];            // ベゼル固定ねじ位置（中心からのずれ。LCD の左右の帯に上下 2 本ずつ）
 bezel_insert_depth = bezel_t - 1.0;              // ベゼル前面に 1mm 残す止まり穴
 bezel_hole = 3.4;            // ふたのベゼル固定ねじ穴（M3）
-lcd_c = [33 + bezel[0] / 2, 47 + bezel[1] / 2];  // LCD・ベゼル中心（ベゼル左端 X=33（2026-11-06 に 13 → 33、窓を 20mm 右へ。下の列は動かさない）、前端 Y=47。手前に MIC・PHN、奥は放熱器の手前まで）
+lcd_c = [26 + bezel[0] / 2, 47 + bezel[1] / 2];  // LCD・ベゼル中心（ベゼル左端 X=26（2026-11-06 に 13 → 26。下の列とは別に決める）、前端 Y=47。手前に MIC・PHN、奥は放熱器の手前まで）
 
 // LCD の右（基板の外側、X > 174 のふた裏は空いている）に縦 1 列（同じ X）: 奥から RF・VOL・TUNE
 col_x   = 184;
@@ -99,15 +99,17 @@ col_x   = 184;
 row_y   = 20;                 // 列の Y（電源スイッチの本体が基板の前端より手前に収まる位置）
 row_p   = 24;                 // 間隔
 row_cx  = 85.5;                // 下の列の中心 X（LCD の窓とは別に固定）
-psw_c   = [row_cx - 1.5 * row_p, row_y];  psw_hole = 13.0; psw_body = 16;   // 電源スイッチ（丸穴 φ13、ふた裏に約 20mm）
+row_dl  = -5;                 // 電源スイッチ・ON の左右のずれ（2026-11-06 に 5mm 左へ）
+row_dr  = 5;                  // MIC・PHN の左右のずれ（2026-11-06 に 5mm 右へ）
+psw_c   = [row_cx - 1.5 * row_p + row_dl, row_y];  psw_hole = 13.0; psw_body = 16;   // 電源スイッチ（丸穴 φ13、ふた裏に約 20mm）
 enc_c   = [col_x, 45];  enc_hole = 7.2;  enc_knob = 32;  enc_body = 14;   // ロータリーエンコーダ（M7 ブッシュ）。enc_knob = 周波数ダイヤルのつまみ直径、enc_body = ふた裏の本体の幅
 afv_c   = [col_x, 85];  afv_hole = 7.2;  afv_knob = 20;  afv_body = 17;   // AF ボリューム
 rfg_c   = [col_x, 118]; rfg_hole = 7.2;  rfg_knob = 20;  rfg_body = 17;   // RF ゲイン（ボリューム、VOL と同じ寸法と仮定）
-led_c   = [row_cx - 0.5 * row_p, row_y]; led_hole = 3.1;              // 3mm 電源 LED（LED ホルダ使用時は 5.0）
+led_c   = [row_cx - 0.5 * row_p + row_dl, row_y]; led_hole = 3.1;              // 3mm 電源 LED（LED ホルダ使用時は 5.0）
 // LCD の手前（前面寄り）、LCD の中央付近に横 1 列: 左から MIC・PHN。
 //   ふた裏の本体は基板の前端 6mm まで（X 60〜110 のこの範囲には部品なし。J11 は前端から 6.4mm）。MIC は左前の前面パネル固定ボス（X=60）の右にかわす
-mic_c   = [row_cx + 0.5 * row_p, row_y];  mic_hole = 16.2; mic_flange = 20; mic_body = 20;   // 4P 丸型マイクコネクタ。mic_flange = つば・プラグの太さ、mic_body = ふた裏の本体の太さ
-phone_c = [row_cx + 1.5 * row_p, row_y];  phone_hole = 6.2; phone_plug = 8; phone_body = 12; // 3.5mm イヤホンジャック（秋月 MJ-352W-C、M6 P0.5 ねじ長 3.5mm、スイッチ付き）。phone_plug = プラグ根元の太さ
+mic_c   = [row_cx + 0.5 * row_p + row_dr, row_y];  mic_hole = 16.2; mic_flange = 20; mic_body = 20;   // 4P 丸型マイクコネクタ。mic_flange = つば・プラグの太さ、mic_body = ふた裏の本体の太さ
+phone_c = [row_cx + 1.5 * row_p + row_dr, row_y];  phone_hole = 6.2; phone_plug = 8; phone_body = 12; // 3.5mm イヤホンジャック（秋月 MJ-352W-C、M6 P0.5 ねじ長 3.5mm、スイッチ付き）。phone_plug = プラグ根元の太さ
 phone_thin = 15; phone_thin_t = 1.8;   // PHN 穴を中心に 15x15mm を板厚 1.8mm に（ふた裏から座ぐり。ジャックのねじ長さ対策）
 
 // 干渉チェック
@@ -449,7 +451,7 @@ sp_magnet = 22;          // マグネット直径
 sp_grille_d = 35;        // 放音穴を並べる範囲の直径
 sp_hole = 2.5; sp_hole_pitch = 4.5;   // 放音穴（六角配置）
 // 送信表示 LED（基板 J9）: MIC の左 30mm、MIC の穴と同じ高さ
-tx_c = [col_x, 142]; tx_hole = 3.0;   // 送信ランプ（右の列、RF ゲインのつまみの後ろ。基板の J9 は右側の辺の前寄り）
+tx_c = [col_x, 149]; tx_hole = 3.0;   // 送信ランプ（右の列、RF ゲインのつまみの後ろ。基板の J9 は右側の辺の前寄り）
 tx_depth = 6;   // ふた裏から LED 本体・足の曲げ部の下端まで
 for (b = boss_pos) assert(norm(tx_c - b) >= 3.3 + 5, "TX LED の穴がふた固定ねじ頭に近すぎる");
 assert(H - lid_t - tx_depth >= bz + pcb_t + 14 + 2, "TX LED と基板上の部品（高さ 14mm）の隙間が 2mm 未満");
