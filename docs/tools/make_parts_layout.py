@@ -37,7 +37,7 @@ OUT = sys.argv[3]
 PNGDIR = sys.argv[4] if len(sys.argv) > 4 else None
 
 TITLE = 'PSN_TRX_XIAO_ESP32C3-V2　部品実装図'
-SUB = '基板 134.1 × 129.7 mm / 4層 / リード部品＋表面実装 2 点（U4・U5 NJM2594V）　V2 Ver 1.0　2026-10-30'
+SUB = '基板 134.1 × 129.7 mm / 4層 / リード部品＋表面実装 2 点（U1・U2 NJM2594V）　V2 Ver 1.1　2026-11-05'
 COPPER = '#c8762f'
 FAB = '#333333'
 FAINT = '#c8c8c8'
@@ -219,7 +219,7 @@ def shade(col):
 
 pages_total = 1 + len(blocks) + 1
 A4 = (11.69, 8.27)
-pdf = PdfPages(OUT, metadata={'Title': 'PSN_TRX_XIAO_ESP32C3-V2 部品実装図 V2 Ver 1.0', 'Author': 'JA6FUF'})
+pdf = PdfPages(OUT, metadata={'Title': 'PSN_TRX_XIAO_ESP32C3-V2 部品実装図 V2 Ver 1.1', 'Author': 'JA6FUF'})
 # ---- 1. 全体図
 fig = plt.figure(figsize=A4)
 header(fig, '全体図', 1, pages_total)
@@ -228,8 +228,8 @@ draw_blocks(ax)
 for f in board['fps']:
     draw_fp(ax, f, 'normal', small=True)
 fig.text(0.03, 0.082, '□（四角）パッド = 1 番ピン / 電解コンデンサの＋ / ダイオードの K（カソード）。H1〜H4 = M3 取付穴（GND）。', fontsize=7, va='center')
-fig.text(0.03, 0.064, '部品はすべて部品面。表面実装は U4・U5（NJM2594V）だけで、最初に付ける。', fontsize=7, va='center')
-fig.text(0.03, 0.046, 'Q2（3SK59）と Q4+Q5（2SK192A-GR カスコード）はどちらか一方だけ付ける。', fontsize=7, va='center')
+fig.text(0.03, 0.064, '部品はすべて部品面。表面実装は U1・U2（NJM2594V）だけで、最初に付ける。', fontsize=7, va='center')
+fig.text(0.03, 0.046, '2SK192A は 4 個とも BL ランク（RF 増幅 Q2・Q3、IF 増幅 Q6・Q7）。部品番号は 2026-11-05 に振り直した（kicad/refdes_map_2026-11-05.csv）。', fontsize=7, va='center')
 fig.text(0.03, 0.028, 'ブロック別の詳細と部品表は次ページ以降（組立順の目安: 1→%d）。調整箇所は最終ページ。' % len(blocks), fontsize=7, va='center')
 lx = 0.555
 for i, b in enumerate(blocks):

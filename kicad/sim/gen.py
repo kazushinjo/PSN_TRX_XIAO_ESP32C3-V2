@@ -9,8 +9,8 @@ def pin(ref, p):
     raise KeyError((ref, p))
 
 # 回路図でラベルをやめて線で結んだネット（名前が自動名になった）を、計算では元の名前で呼ぶ（代表のピンで見分ける）
-ALIAS_PIN = {'TX12V': ('C13', '1'), 'XIAO_3V3': ('R38', '1'), 'AF_ADC': ('R39', '1'), 'AGC_PWM': ('R42', '1'),
-             'Q2_G2': ('C5', '1'), 'TX_SENSE': ('R50', '2'), 'PWR_IN': ('L12', '1'), 'DCDC_IN': ('L12', '2')}
+ALIAS_PIN = {'TX12V': ('C96', '1'), 'XIAO_3V3': ('R73', '1'), 'AF_ADC': ('R74', '1'), 'AGC_PWM': ('R75', '1'),
+             'Q2_G2': ('C22', '1'), 'TX_SENSE': ('R79', '2'), 'PWR_IN': ('L20', '1'), 'DCDC_IN': ('L20', '2')}
 ALIAS = {}
 for _n, (_r, _p) in ALIAS_PIN.items():
     for _num, _fn, _net in PINS.get(_r, []):
@@ -81,12 +81,12 @@ OPAMP = """
 Rin inp inn 1e8
 E1 a 0 inp inn 1e5
 R1 a b 1k
-C1 b 0 26.5u
+C102 b 0 26.5u
 E2 out 0 b 0 1
 .ends
 """
-def OPA(half, ref='IC2'):
-    """NJM2904 の片側: half='A'(1,2,3) or 'B'(7,6,5)。ref は IC2 または IC3"""
+def OPA(half, ref='U5'):
+    """NJM2904 の片側: half='A'(1,2,3) or 'B'(7,6,5)。ref は U5 または IC3"""
     o, n, p = ('1', '2', '3') if half == 'A' else ('7', '6', '5')
     used[ref] = COMPS[ref]
     return f"X{ref}{half} {pin(ref,p)} {pin(ref,n)} {pin(ref,o)} OA"

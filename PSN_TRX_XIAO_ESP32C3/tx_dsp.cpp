@@ -5,7 +5,7 @@
  *
  * ---- 設定コマンド（USB シリアル、115200 bps。1 行ずつ。w で NVS に保存）----
  *   dsp          設定と動作状態の表示
- *   mic <dB>     マイク利得（-12〜+30 dB。IC2A で約 26 dB 増幅済み）
+ *   mic <dB>     マイク利得（-12〜+30 dB。U5A で約 26 dB 増幅済み）
  *   out <%>      出力レベル（変調の深さ、5〜100 %）
  *   iqd <us>     I/Q の遅延補正（-20〜+20 µs。+ で I 側を遅らせる）
  *   iqa <dB>     I/Q の利得補正（-2〜+2 dB。+ で I 側を上げる）
@@ -17,7 +17,7 @@
  * ---- I/Q の補正の合わせ方 ----
  *   ダミーロードに送信し、tone 1000 で 1 kHz を出す。受信機で反対側の側帯波（搬送波から逆側に 1 kHz）が
  *   最小になるよう iqd → iqa の順に合わせ、w で保存する。希望の側帯波が逆なら sb で切り替える。
- *   2 段 RC（R61〜R64・C75〜C78）の部品のばらつき（I と Q で ±3%）は、iqd が数 µs・iqa が 0.2 dB 程度で打ち消せる。
+ *   2 段 RC（R53〜R56・C66〜C69）の部品のばらつき（I と Q で ±3%）は、iqd が数 µs・iqa が 0.2 dB 程度で打ち消せる。
  *
  * ---- ALC（デジタル）----
  *   マイク利得のあと・複素 FIR の前で、入力のピークが効き始めのレベルを超えた分だけ利得を下げる
@@ -132,7 +132,7 @@ static void startAdc() {
   hc.conv_frame_size = ADC_FRAME;
   ESP_ERROR_CHECK(adc_continuous_new_handle(&hc, &adcH));
   adc_digi_pattern_config_t pat = {};
-  pat.atten = ADC_ATTEN_DB_12;              // 約 0〜2.5 V。AF_ADC は R38/R39 で 1.65 V にバイアス
+  pat.atten = ADC_ATTEN_DB_12;              // 約 0〜2.5 V。AF_ADC は R73/R74 で 1.65 V にバイアス
   pat.channel = MIC_ADC_CH;
   pat.unit = ADC_UNIT_1;
   pat.bit_width = SOC_ADC_DIGI_MAX_BITWIDTH;
@@ -298,7 +298,7 @@ static void saveSettings() {
 
 void dspBegin(uint8_t pTx, uint8_t pQ, uint8_t pI, uint32_t fAgc, uint8_t bAgc) {
   pinTx = pTx; pinQ = pQ; pinI = pI; agcFreq = fAgc; agcBits = bAgc;
-  pinMode(pinTx, INPUT);                    // R50（10 kΩ）で 3.3 V に引き上げ済み
+  pinMode(pinTx, INPUT);                    // R79（10 kΩ）で 3.3 V に引き上げ済み
   pinMode(pinQ, OUTPUT);
   digitalWrite(pinQ, LOW);
   ledcAttach(pinI, agcFreq, agcBits);
