@@ -127,7 +127,7 @@ Ref,Val,Package,PosX,PosY,Rot,Side
 "J6","SP-OUT","PinHeader_1x02_P2.54mm_Vertical",117.157500,-16.827500,90.000000,top
 "J7","MIC-IN","PinHeader_1x04_P2.54mm_Vertical",68.262500,-104.775000,-90.000000,top
 "J8","I2C_OUT-LCD","PinHeader_1x03_P2.54mm_Vertical",118.427500,-45.720000,180.000000,top
-"J9","TX-ON-LED","PinHeader_1x02_P2.54mm_Vertical",28.575000,-103.822500,90.000000,top
+"J9","TX-ON-LED","PinHeader_1x02_P2.54mm_Vertical",79.810000,11.950000,90.000000,top
 "J10","Encoder","PinHeader_1x04_P2.54mm_Vertical",127.635000,-42.545000,0.000000,top
 "J11","NX4832T035","PinHeader_1x04_P2.54mm_Vertical",127.635000,-66.040000,0.000000,top
 "J12","POWER-LED","PinHeader_1x02_P2.54mm_Vertical",101.810000,-111.050000,90.000000,top

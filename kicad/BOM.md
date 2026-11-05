@@ -255,7 +255,7 @@
 | J6 | SP-OUT | `PinHeader_1x02_P2.54mm_Vertical` | 1 | 秋月電子 | PH-1x40SG（100167） |  |
 | J7 | MIC-IN | `PinHeader_1x04_P2.54mm_Vertical` | 1 | 秋月電子 | PH-1x40SG（100167） |  |
 | J8 | I2C_OUT-LCD | `PinHeader_1x03_P2.54mm_Vertical` | 1 | 秋月電子 | PH-1x40SG（100167） |  |
-| J9 | TX-ON-LED | `PinHeader_1x02_P2.54mm_Vertical` | 1 | 秋月電子 | PH-1x40SG（100167） |  |
+| J9 | TX-ON-LED | `PinHeader_1x02_P2.54mm_Vertical` | 1 | 秋月電子 | PH-1x40SG（100167） | 送信表示 LED（ふた上面、RF ゲインのつまみの後ろ）へ。V2 Ver 1.2 で基板の右側の辺の前寄りへ移した（Q20・R72 までは 0.25mm の線） |
 | J10 | Encoder | `PinHeader_1x04_P2.54mm_Vertical` | 1 | 秋月電子 | PH-1x40SG（100167） |  |
 | J11 | NX4832T035 | `PinHeader_1x04_P2.54mm_Vertical` | 1 | 秋月電子 | PH-1x40SG（100167） |  |
 | J12 | POWER-LED | `PinHeader_1x02_P2.54mm_Vertical` | 1 | 秋月電子 | PH-1x40SG（100167） | 電源 LED（ふた上面、LCD の窓の下）へ。Pin1 = アノード側（R80 10kΩ 経由で +12V）、Pin2 = GND（V2 Ver 1.2 追加） |
