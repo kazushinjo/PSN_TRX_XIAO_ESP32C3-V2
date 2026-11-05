@@ -89,16 +89,16 @@ lcd_insert_depth = lcd_boss_h + bezel_t - 1.0;   // ベゼル前面に 1mm 残�
 bezel_screw = [bezel[0] / 2 - 6, 20];            // ベゼル固定ねじ位置（中心からのずれ。LCD の左右の帯に上下 2 本ずつ）
 bezel_insert_depth = bezel_t - 1.0;              // ベゼル前面に 1mm 残す止まり穴
 bezel_hole = 3.4;            // ふたのベゼル固定ねじ穴（M3）
-lcd_c = [23 + bezel[0] / 2, 47 + bezel[1] / 2];  // LCD・ベゼル中心（ベゼル左端 X=23（2026-11-06 に 13 → 23、窓を 10mm 右へ）、前端 Y=47。手前に MIC・PHN、奥は放熱器の手前まで）
+lcd_c = [33 + bezel[0] / 2, 47 + bezel[1] / 2];  // LCD・ベゼル中心（ベゼル左端 X=33（2026-11-06 に 13 → 33、窓を 20mm 右へ。下の列は動かさない）、前端 Y=47。手前に MIC・PHN、奥は放熱器の手前まで）
 
 // LCD の右（基板の外側、X > 174 のふた裏は空いている）に縦 1 列（同じ X）: 奥から RF・VOL・TUNE
 col_x   = 184;
 // 電源スイッチと電源 LED は LCD の窓の下の列（左寄り。DC ジャック・ヒューズ・基板の J2 と同じ左側で、電源線をケースの左側だけに通す）
-// LCD の窓の下（手前）に横 1 列、窓の中心から左右対称に等間隔: 左から POWER・ON（電源 LED）・MIC・PHN
+// LCD の窓の手前に横 1 列、X 85.5 を中心に左右対称の等間隔: 左から POWER・ON（電源 LED）・MIC・PHN（LCD の窓は 2026-11-06 にこの列とは別に右へ寄せた）
 //   間隔 24mm = MIC のつば（φ20）と PHN のプラグ（φ8）の間に指が入る 10mm を取った値（4 個で窓の幅 74.5mm に収まる）
 row_y   = 20;                 // 列の Y（電源スイッチの本体が基板の前端より手前に収まる位置）
 row_p   = 24;                 // 間隔
-row_cx  = lcd_c[0] + lcd_win_off[0];   // LCD の窓の中心 X
+row_cx  = 85.5;                // 下の列の中心 X（LCD の窓とは別に固定）
 psw_c   = [row_cx - 1.5 * row_p, row_y];  psw_hole = 13.0; psw_body = 16;   // 電源スイッチ（丸穴 φ13、ふた裏に約 20mm）
 enc_c   = [col_x, 45];  enc_hole = 7.2;  enc_knob = 32;  enc_body = 14;   // ロータリーエンコーダ（M7 ブッシュ）。enc_knob = 周波数ダイヤルのつまみ直径、enc_body = ふた裏の本体の幅
 afv_c   = [col_x, 85];  afv_hole = 7.2;  afv_knob = 20;  afv_body = 17;   // AF ボリューム
@@ -125,9 +125,8 @@ for (c = [[enc_c, enc_body], [afv_c, afv_body], [rfg_c, rfg_body]])
 assert(psw_c[0] + psw_body / 2 + 1 <= bx || psw_c[1] + psw_body / 2 + 1 <= by, "電源スイッチの本体が基板の上にかかる");
 assert(psw_c[1] - psw_body / 2 >= panel_inset + groove_w + 1, "電源スイッチの本体が前面パネルにかかる");
 assert(psw_c[0] - psw_body / 2 >= wall + 1, "電源スイッチの本体が左の側板にかかる");
-assert(tx_c[0] + tx_hole / 2 + 5 <= psw_c[0] - psw_hole / 2, "電源スイッチと TX LED の間が狭い");
 assert(psw_c[0] + psw_body / 2 + 1 <= mic_c[0] - mic_body / 2, "電源スイッチの本体が MIC の本体にかかる");
-assert(abs((psw_c[0] + phone_c[0]) / 2 - row_cx) < 0.01 && psw_c[0] >= row_cx - lcd_win[0] / 2 - 1 && phone_c[0] <= row_cx + lcd_win[0] / 2 + 1, "下の列が LCD の窓の下に収まっていない");
+assert(psw_c[0] - psw_body / 2 >= lcd_c[0] - bezel[0] / 2 - 20 && phone_c[0] + phone_body / 2 <= lcd_c[0] + bezel[0] / 2, "下の列がベゼルの下から外れすぎている");
 assert(psw_c[1] + psw_hole / 2 + 4.5 + 2 <= lcd_c[1] - bezel[1] / 2 - 2, "POWER の文字がベゼルにかかる");
 assert(psw_c[0] + psw_hole / 2 + 3 <= led_c[0] - led_hole / 2, "電源 LED と電源スイッチの間が狭い");
 assert(led_c[0] + led_hole / 2 + 3 <= mic_c[0] - mic_flange / 2, "電源 LED と MIC の間が狭い");
@@ -327,7 +326,7 @@ module top_labels_2d() {
     t("RF", [rfg_c[0], rfg_c[1] + rfg_knob / 2 + 4], 3.2);
     t("POWER", [psw_c[0], row_y + mic_flange / 2 + 4], 3.2);   // 下の列の文字はすべて同じ高さ
     t("ON", [led_c[0], row_y + mic_flange / 2 + 4], 3.2);
-    t("TX", [tx_c[0], row_y + mic_flange / 2 + 4], 3.2);
+    t("TX", [tx_c[0], tx_c[1] + tx_hole / 2 + 4], 3.2);
     t("MIC", [mic_c[0], row_y + mic_flange / 2 + 4], 3.2);
     t("PHN", [phone_c[0], row_y + mic_flange / 2 + 4], 3.2);
 }
@@ -450,11 +449,12 @@ sp_magnet = 22;          // マグネット直径
 sp_grille_d = 35;        // 放音穴を並べる範囲の直径
 sp_hole = 2.5; sp_hole_pitch = 4.5;   // 放音穴（六角配置）
 // 送信表示 LED（基板 J9）: MIC の左 30mm、MIC の穴と同じ高さ
-tx_c = [13, row_y]; tx_hole = 3.0;   // 送信ランプ（下の列の左外）
+tx_c = [col_x, 142]; tx_hole = 3.0;   // 送信ランプ（右の列、RF ゲインのつまみの後ろ。基板の J9 は右側の辺の前寄り）
 tx_depth = 6;   // ふた裏から LED 本体・足の曲げ部の下端まで
 for (b = boss_pos) assert(norm(tx_c - b) >= 3.3 + 5, "TX LED の穴がふた固定ねじ頭に近すぎる");
 assert(H - lid_t - tx_depth >= bz + pcb_t + 14 + 2, "TX LED と基板上の部品（高さ 14mm）の隙間が 2mm 未満");
-assert(tx_c[0] - tx_hole / 2 >= wall + 3, "TX LED の穴が左の縁に近すぎる");
+assert(tx_c[1] - tx_hole / 2 >= rfg_c[1] + rfg_knob / 2 + 4.5 + 3.2 + 1, "TX LED の穴が RF の文字に近すぎる");
+assert(tx_c[1] + tx_hole / 2 + 4 + 3.2 <= D - 3, "TX の文字がふたの縁にかかる");
 // スピーカー
 assert(sp_c[0] + sp_size / 2 + 3 <= lid_vent_x[0], "スピーカーが通風スロットに近すぎる");
 assert(sp_c[1] - sp_size / 2 >= lcd_c[1] + lcd_cut[1] / 2 + 2, "スピーカーが LCD にかかる");
