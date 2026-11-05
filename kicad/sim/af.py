@@ -8,7 +8,7 @@ HDR = """.options rshunt=1e9
 """
 
 def mic_circuit(rl15, vol=5e3, vs=12, imic=1.0):
-    """マイク → Q14 → L7 LPF（R47 で終端）→ C62 → IC2A（非反転、約 21 倍）→ C65・R52 → AF_ADC（U7 の A2）
+    """マイク → Q14 → L7 LPF（R47 で終端）→ C62 → U5A（非反転、約 21 倍）→ C65・R52 → AF_ADC（U7 の A2）
     AF_ADC には R73/R74 のバイアスがつながる（V2 で受信音の R37・C50 は外した）"""
     e = [BJT('Q14', 'Q2SC1815'), R('R45'), R('R46'), R('R44'), R('R42'), R('R43'), C('C56'), C('C57'),
          C('C58'), C('C59'), L('L7', rl15), C('C60'), C('C61'), R('R47'), C('C62'), R('R48'), R('R49'),
@@ -48,12 +48,12 @@ def sup(pe, ae):
 
 def tx():
     pts = [300, 500, 1000, 2000, 2700, 4000, 10000]
-    print('マイク → IC2A → AF_ADC（U7 の A2）の 1kHz 基準の振幅 [dB]、1 Pa（エレクトレット −42 dBV/Pa ≒ 3.6 µA）での電圧')
+    print('マイク → U5A → AF_ADC（U7 の A2）の 1kHz 基準の振幅 [dB]、1 Pa（エレクトレット −42 dBV/Pa ≒ 3.6 µA）での電圧')
     for rl15 in (30, 90):
         ngs.run(mic_circuit(rl15, imic=3.6e-6)); f = [x.real for x in ngs.vec('frequency')]
         h = ngs.vec('n__AF_ADC'); o = ngs.vec(pin('U5', '1')); ref = abs(at(f, h, 1000))
         print(f"  RL15 {rl15:3}Ω: " + ' '.join(f"{p}Hz {20*math.log10(abs(at(f,h,p))/ref):+.1f}" for p in pts)
-              + f" | 1 kHz・1 Pa で IC2A 出力 {abs(at(f,o,1000))*1e3:.0f} mVrms、AF_ADC {ref*1e3:.0f} mVrms")
+              + f" | 1 kHz・1 Pa で U5A 出力 {abs(at(f,o,1000))*1e3:.0f} mVrms、AF_ADC {ref*1e3:.0f} mVrms")
     print('U7 の PDM 出力 → 変調器入力（I=L10 側、Q=L11 側）の 1kHz 基準の振幅 [dB]、PDM・PWM の周波数での減衰')
     for rload in (200, 1000):
         ngs.run(out_circuit(rload)); f = [x.real for x in ngs.vec('frequency')]

@@ -200,14 +200,14 @@ def tx_net(vi, vq, vr3=0.5, vr4=0.5, d4is=1.0, idq=0.1, vs=12.0, vr6=0.5, vr7=0.
          C('C92'), L('L15', 0.2), C('C93'), R('R69'), R('R70'),
          f"CGS3 {pin('Q19','G')} 0 25p\nCGD3 {pin('Q19','G')} {pin('Q19','D')} 1.3p",
          f"M3 {pin('Q19','D')} {pin('Q19','G')} 0 0 RD06 W=1 L=1",
-         f"VTX {node('Net-(L14-SB)')} 0 dc {vs}"]
+         f"VTX {node('/TX12V')} 0 dc {vs}"]
     # VR7: ゲート電圧が Idq になる位置
     vg = 3.0 + math.sqrt(2 * idq / 1.2)
     r23 = vg * (330 + 500) / vs                      # ワイパー〜GND の抵抗
     e.append(POT('VR7', 1 - r23 / 500))
     net = lpf(1.0, 18e-12, 11e-12, 1.0, 6.5e-12)     # PA ドレイン → LPF → 50Ω（rf.py と同じ）
     net = net.replace('VS src 0 AC 2\n', '').replace(f"RS src {pin('C94','1')} 50\n", '')
-    net = net.replace('RRFC rfc 0 0.3', f"RRFC rfc {node('Net-(L14-SB)')} 0.3")
+    net = net.replace('RRFC rfc 0 0.3', f"RRFC rfc {node('/TX12V')} 0.3")
     net = re.sub(r'\n\.ac .*', '', net)
     models = MODELS.replace('{hfe1815}', '250').replace('{hfe1923}', '100').replace('{hfe2120}', '180')
     return (net + '\n' + models + '\n' + PA_MODEL +

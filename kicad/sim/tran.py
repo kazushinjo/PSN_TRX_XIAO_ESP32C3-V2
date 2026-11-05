@@ -57,7 +57,7 @@ def rx_power():
 # ---------------------------------------------------------------- マイクアンプ
 def mic_level():
     print('マイク入力の大きさと飽和（1 kHz、L7 直流抵抗 60Ω、音量つまみ 5kΩ、電源 12V）。'
-          'IC2A は NJM2904 の出力範囲 0.03〜3.6V で制限。U7 の ADC（減衰 12dB）は約 0〜2.5V、中点 1.65V')
+          'U5A は NJM2904 の出力範囲 0.03〜3.6V で制限。U7 の ADC（減衰 12dB）は約 0〜2.5V、中点 1.65V')
     for pa in [0.3, 1, 2, 3, 5, 10]:
         ipk = 3.6e-6 * math.sqrt(2) * pa
         net = mic_circuit(60).replace(' OA\n', ' OAR\n').replace('.subckt OA ', OAR + '\n.subckt OA ')
@@ -67,7 +67,7 @@ def mic_level():
         ho, ha = harm(t, vo, 1e3, 20), harm(t, va, 1e3, 20)
         n0 = [i for i, x in enumerate(t) if x >= t[-1] - 20e-3]
         print(f"  {pa:4} Pa（{94+20*math.log10(pa):5.1f} dB SPL）: Q14 コレクタ {min(vq[i] for i in n0):5.2f}〜{max(vq[i] for i in n0):5.2f} V | "
-              f"IC2A 出力 {min(vo[i] for i in n0):4.2f}〜{max(vo[i] for i in n0):4.2f} V 歪み {thd(ho):5.1f} % | "
+              f"U5A 出力 {min(vo[i] for i in n0):4.2f}〜{max(vo[i] for i in n0):4.2f} V 歪み {thd(ho):5.1f} % | "
               f"AF_ADC {min(va[i] for i in n0):4.2f}〜{max(va[i] for i in n0):4.2f} V 歪み {thd(ha):5.1f} %")
 
 # ---------------------------------------------------------------- 変調器ドライブ
@@ -128,7 +128,7 @@ def pa():
 
 # ---------------------------------------------------------------- 電源投入・送信開始
 def power_on():
-    print('電源投入（+9V が 1ms で 0→12V）時のスピーカー（8Ω）のポップ音: 音量 0.5、電源 12V')
+    print('電源投入（RX12V が 1ms で 0→12V）時のスピーカー（8Ω）のポップ音: 音量 0.5、電源 12V')
     net = rx_circuit(0.5).replace('V9 n_RX12V 0 DC 12', 'V9 n_RX12V 0 PWL(0 0 1m 12)')
     tran(net, 10e-6, 1.0, 0, uic=True); t = ngs.vec('time'); v = ngs.vec(pin('J6', '1'))
     k = max(range(len(v)), key=lambda i: abs(v[i]))
@@ -159,7 +159,7 @@ def tx_start():
     k = max(range(len(va)), key=lambda i: abs(va[i] - va[-1]))
     st = next((t[i] for i in range(len(va) - 1, -1, -1) if abs(va[i] - va[-1]) > 0.01), 0)
     print(f"  AF_ADC の最大のずれ {va[k]-va[-1]:+.2f} V（{t[k]*1e3:.0f} ms、{va[k]:.2f} V）、±10mV 以内になるまで {st*1e3:.0f} ms、"
-          f"IC2A 出力 {min(vo):.2f}〜{max(vo):.2f} V")
+          f"U5A 出力 {min(vo):.2f}〜{max(vo):.2f} V")
 
 if __name__ == '__main__':
     import sys

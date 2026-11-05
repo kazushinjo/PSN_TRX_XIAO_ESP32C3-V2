@@ -21450,7 +21450,7 @@
 				)
 			)
 		)
-		(property "Value" "5k"
+		(property "Value" "10k"
 			(at 242.57 313.69 90)
 			(show_name no)
 			(do_not_autoplace no)

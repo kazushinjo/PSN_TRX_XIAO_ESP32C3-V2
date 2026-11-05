@@ -4,7 +4,7 @@ from gen import *
 
 def circuit():
     e = []
-    # 受信 IF 増幅: 2SK192A-BL カスコード（Q6 下段・Q7 上段、V2 では 12MHz。R18 は 2SK192A 用の 47Ω）、ゲイン J3（10k と仮定、最大）
+    # 受信 IF 増幅: 2SK192A-BL カスコード（Q6 下段・Q7 上段、V2 では 12MHz。R18 は 2SK192A 用の 47Ω）、ゲイン J3（VR1 10kΩ、最大）
     e += [JFET('Q6', 'J2SK192'), JFET('Q7', 'J2SK192'), R('R18'), R('R16'), L('L5', 0.5), R('R17'),
           "RJ4a n_Net__J3_Pin_1_ n__Q2_G2 1m", "RJ4b n__Q2_G2 0 10k",
           BJT('Q21', 'Q2SC1815'), R('R75'), R('R76')]
@@ -23,7 +23,7 @@ def circuit():
     e += [JFET('Q4', 'J2SK439'), R('R7'), R('R6'), WIND('L3'),
           JFET('Q17', 'J2SK439'), R('R65'), WIND('L13'), WIND('L12'),
           BJT('Q18', 'Q2SC1815'), R('R66'), R('R67'), R('R68'), WIND('L14')]
-    # 送信 AF: マイク Q14、マイクアンプ IC2A、Q15/Q16（U7 の PDM 出力は C72/C70 で直流を切る）
+    # 送信 AF: マイク Q14、マイクアンプ U5A、Q15/Q16（U7 の PDM 出力は C72/C70 で直流を切る）
     e += [BJT('Q14', 'Q2SC1815'), R('R45'), R('R46'), R('R44'), R('R42'), R('R43'),
           f"IMIC {pin('J7','2')} 0 DC 0.5m",
           L('L7', 60), R('R47'), R('R48'), R('R49'), R('R50'), R('R51'), OPA('A'),
@@ -74,7 +74,7 @@ VAGC n__AGC_PWM 0 DC 0
     v = lambda n: ngs.vec(n)[0]
     r['R27W'] = (v('n_RX12V') - v(pin('Q12', 'E'))) ** 2 / 100
     r['MIC'] = v(pin('J7', '2'))
-    r['IC2A_out'] = v(pin('U5', '1'))
+    r['U5A_out'] = v(pin('U5', '1'))
     r['Q21_B'] = v(pin('Q21','B')); r['C104'] = v('n_Net__C104_Pad1_')
     r['TX_SENSE'] = v('n__TX_SENSE'); r['Q2_G2'] = v('n__Q2_G2')
     return r
@@ -89,7 +89,7 @@ if __name__ == '__main__':
     for q in keys:
         ics = [res[k][q][0] * 1e3 for k in res]; vcs = [res[k][q][1] for k in res]; ps = [res[k][q][2] * 1e3 for k in res]
         print(f"{q:4} {COMPS[q]:9} Ic {min(ics):6.2f}〜{max(ics):6.2f} mA  Vc {min(vcs):5.2f}〜{max(vcs):5.2f} V  Pd 最大 {max(ps):6.1f} mW")
-    for k in ['R27W', 'MIC', 'IC2A_out', 'TX_SENSE', 'Q2_G2', 'Q21_B', 'C104']:
+    for k in ['R27W', 'MIC', 'U5A_out', 'TX_SENSE', 'Q2_G2', 'Q21_B', 'C104']:
         xs = [res[x][k] for x in res]; print(f"{k:9} {min(xs):.3f}〜{max(xs):.3f}")
     for vs in [11, 12, 13.8]:
         print('MIC', vs, round(res[(vs, True)]['MIC'], 2), round(res[(vs, False)]['MIC'], 2))

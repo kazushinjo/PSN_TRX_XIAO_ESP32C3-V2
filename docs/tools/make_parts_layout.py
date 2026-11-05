@@ -116,7 +116,7 @@ def draw_fp(ax, f, mode, mirror=False, label=True, small=False):
         cx, cy = (x0 + x1) / 2, (y0 + y1) / 2
         if mirror:
             cx = BX0 + BX1 - cx
-        ref = 'U3 (XIAO)' if f['ref'] == 'U3' else f['ref']
+        ref = 'U7 (XIAO)' if f['ref'] == 'U7' else f['ref']
         fs = 4.6 if small else 6.0
         ax.text(cx, cy, ref, ha='center', va='center', fontsize=fs, color=NAVY, fontproperties=BOLD,
                 zorder=20, bbox=dict(fc='white', ec='none', alpha=0.65, pad=0.2))
@@ -132,7 +132,7 @@ def board_axes(fig, rect, mirror=False):
     ax.axis('off')
     ax.add_patch(Rectangle((BX0, BY0), BX1 - BX0, BY1 - BY0, fill=False, ec='black', lw=1.4, zorder=30))
     # XIAO の USB 向き
-    x = FP['U3']
+    x = FP['U7']
     return ax
 
 
@@ -229,7 +229,7 @@ for f in board['fps']:
     draw_fp(ax, f, 'normal', small=True)
 fig.text(0.03, 0.082, '□（四角）パッド = 1 番ピン / 電解コンデンサの＋ / ダイオードの K（カソード）。H1〜H4 = M3 取付穴（GND）。', fontsize=7, va='center')
 fig.text(0.03, 0.064, '部品はすべて部品面。表面実装は U1・U2（NJM2594V）だけで、最初に付ける。', fontsize=7, va='center')
-fig.text(0.03, 0.046, '2SK192A は 4 個とも BL ランク（RF 増幅 Q2・Q3、IF 増幅 Q6・Q7）。部品番号は 2026-11-05 に振り直した（kicad/refdes_map_2026-11-05.csv）。', fontsize=7, va='center')
+fig.text(0.03, 0.046, '2SK192A は 4 個とも BL ランク（Q2・Q3・Q6・Q7）。部品番号は 2026-11-05 の振り直し後の番号。', fontsize=7, va='center')
 fig.text(0.03, 0.028, 'ブロック別の詳細と部品表は次ページ以降（組立順の目安: 1→%d）。調整箇所は最終ページ。' % len(blocks), fontsize=7, va='center')
 lx = 0.555
 for i, b in enumerate(blocks):
