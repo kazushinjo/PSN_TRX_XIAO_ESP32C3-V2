@@ -184,7 +184,8 @@ docs/
   PSN_TRX_評価試験報告書.docx  - 評価試験報告書（ERC・DRC・配線長・計算・シミュレーション）
   PSN_TRX_回路図論理検証レポート.docx - 回路図の論理検証（信号の流れ・ファームウェアとの照合・確認事項）
   PSN_TRX_部品実装図.pdf      - 部品実装図（全体図・ブロック別 13 ページ・調整箇所）
-  tools/                      - 部品実装図（make_parts_layout.py）と docx（make_docx.py）を作るスクリプト
+  PSN_TRX_間違いやすい部品形.pdf - 間違いやすい部品の部品形（寸法・ピン名・つながる信号入り、9 ページ。PNG は images/fp_check/）
+  tools/                      - 部品実装図（make_parts_layout.py）・間違いやすい部品形（make_fp_check.py）・docx（make_docx.py）を作るスクリプト
   images/                     - README の図（PA 出力 LPF の特性・PA 出力のスペクトル・送信 I/Q の位相差）
 ```
 

@@ -250,7 +250,7 @@
 | J1 | RF_IN | `PinHeader_1x02_P2.54mm_Vertical` | 1 | 秋月電子 | PH-1x40SG（100167） |  |
 | J2 | PWR_IN | `SolderWire_1x02_P5.08mm_D1.5mm` | 1 | （電線） | 0.75〜1.25sq（AWG18〜16） | 電源 12V 入力（Pin1 = +12V、□ パッド、Pin2 = GND）。0.75〜1.25sq の電線を穴 φ1.5mm に直接はんだ付け（2026-11-05 にピンヘッダから変更） |
 | J3, J5 | Volume | `PinHeader_1x03_P2.54mm_Vertical` | 2 | 秋月電子 | PH-1x40SG（100167） |  |
-| J4 | AE-ADS1015 | `AE-ADS1015_Vertical` | 1 | 秋月電子 | AE-ADS1015（113838） | 秋月 AE-ADS1015（ADS1015 モジュール、I2C 0x48）を差す。A0 = U3（AD8307）の出力（S メーター・AGC、V2 追加） |
+| J4 | AE-ADS1015 | `AE-ADS1015_Vertical` | 1 | 秋月電子 | AE-ADS1015（113838） | 秋月 AE-ADS1015（ADS1015 モジュール、I2C 0x48）を差す。A0 = U3（AD8307）の出力（S メーター・AGC、V2 追加）。**モジュール裏の SDA・SCL のプルアップ用はんだジャンパを短絡する（I2C の線にほかのプルアップがない。Si5351 モジュール・XIAO には付いていない）** |
 | J6 | SP-OUT | `PinHeader_1x02_P2.54mm_Vertical` | 1 | 秋月電子 | PH-1x40SG（100167） |  |
 | J7 | MIC-IN | `PinHeader_1x04_P2.54mm_Vertical` | 1 | 秋月電子 | PH-1x40SG（100167） |  |
 | J8 | I2C_OUT-LCD | `PinHeader_1x03_P2.54mm_Vertical` | 1 | 秋月電子 | PH-1x40SG（100167） |  |
