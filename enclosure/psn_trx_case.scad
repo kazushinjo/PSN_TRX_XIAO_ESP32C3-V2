@@ -2,9 +2,10 @@
 // Copyright (C) 2026 JA6FUF (kazushinjo)
 // ============================================================
 // PSN_TRX_XIAO_ESP32C3  ケース（筐体）  OpenSCAD パラメトリックモデル
-//   基板: kicad/PSN_TRX.kicad_pcb  134.0 x 129.63 mm（V2 Ver 1.0）, M3 取付穴 4 か所（角から 4 mm）
+//   基板: kicad/PSN_TRX.kicad_pcb  134.0 x 129.63 mm（V2 Ver 1.2）, M3 取付穴 4 か所（角から 4 mm）
 //   構成: ベース（底板＋左右側板）／ふた／前面パネル／後面パネル（溝に差し込み）
 //   操作部（LCD・TUNE・VOL・RF・POWER）と MIC・PHN はふたの上面、前面は機種名、電源・アンテナ・ヒューズは後面
+//   電源関係（DC ジャック・ヒューズ・電源スイッチ・電源 LED・基板の J2）は左、アンテナ関係（BNC・基板の J1）は右に集め、電源線が PA の出力 LPF・BNC の上を通らないようにする
 //
 //   表示・出力する部品は mode（数字）で選択（コマンドライン: -D mode=1 等）
 //     0: 組立図（ふたを浮かせて表示）      ← 確認用
@@ -88,33 +89,50 @@ lcd_insert_depth = lcd_boss_h + bezel_t - 1.0;   // ベゼル前面に 1mm 残�
 bezel_screw = [bezel[0] / 2 - 6, 20];            // ベゼル固定ねじ位置（中心からのずれ。LCD の左右の帯に上下 2 本ずつ）
 bezel_insert_depth = bezel_t - 1.0;              // ベゼル前面に 1mm 残す止まり穴
 bezel_hole = 3.4;            // ふたのベゼル固定ねじ穴（M3）
-lcd_c = [13 + bezel[0] / 2, 47 + bezel[1] / 2];  // LCD・ベゼル中心（ベゼル左端 X=13、前端 Y=47。手前に MIC・PHN、奥は放熱器の手前まで）
+lcd_c = [23 + bezel[0] / 2, 47 + bezel[1] / 2];  // LCD・ベゼル中心（ベゼル左端 X=23（2026-11-06 に 13 → 23、窓を 10mm 右へ）、前端 Y=47。手前に MIC・PHN、奥は放熱器の手前まで）
 
-// LCD の右（基板の外側、X > 174 のふた裏は空いている）に縦 1 列（同じ X）: 奥から POWER・RF・VOL・TUNE
-psw_c   = [184, 152]; psw_hole = 13.0; psw_body = 16;                   // 電源スイッチ（丸穴 φ13）
-enc_c   = [psw_c[0], 45];  enc_hole = 7.2;  enc_knob = 32;  enc_body = 14;   // ロータリーエンコーダ（M7 ブッシュ）。enc_knob = 周波数ダイヤルのつまみ直径、enc_body = ふた裏の本体の幅
-afv_c   = [psw_c[0], 85];  afv_hole = 7.2;  afv_knob = 20;  afv_body = 17;   // AF ボリューム
-rfg_c   = [psw_c[0], 118]; rfg_hole = 7.2;  rfg_knob = 20;  rfg_body = 17;   // RF ゲイン（ボリューム、VOL と同じ寸法と仮定）
-led_c   = [psw_c[0] + 20, psw_c[1]]; led_hole = 3.1;                    // 3mm 電源 LED（電源スイッチの右、LED ホルダ使用時は 5.0）
+// LCD の右（基板の外側、X > 174 のふた裏は空いている）に縦 1 列（同じ X）: 奥から RF・VOL・TUNE
+col_x   = 184;
+// 電源スイッチと電源 LED は LCD の窓の下の列（左寄り。DC ジャック・ヒューズ・基板の J2 と同じ左側で、電源線をケースの左側だけに通す）
+// LCD の窓の下（手前）に横 1 列、窓の中心から左右対称に等間隔: 左から POWER・ON（電源 LED）・MIC・PHN
+//   間隔 24mm = MIC のつば（φ20）と PHN のプラグ（φ8）の間に指が入る 10mm を取った値（4 個で窓の幅 74.5mm に収まる）
+row_y   = 20;                 // 列の Y（電源スイッチの本体が基板の前端より手前に収まる位置）
+row_p   = 24;                 // 間隔
+row_cx  = lcd_c[0] + lcd_win_off[0];   // LCD の窓の中心 X
+psw_c   = [row_cx - 1.5 * row_p, row_y];  psw_hole = 13.0; psw_body = 16;   // 電源スイッチ（丸穴 φ13、ふた裏に約 20mm）
+enc_c   = [col_x, 45];  enc_hole = 7.2;  enc_knob = 32;  enc_body = 14;   // ロータリーエンコーダ（M7 ブッシュ）。enc_knob = 周波数ダイヤルのつまみ直径、enc_body = ふた裏の本体の幅
+afv_c   = [col_x, 85];  afv_hole = 7.2;  afv_knob = 20;  afv_body = 17;   // AF ボリューム
+rfg_c   = [col_x, 118]; rfg_hole = 7.2;  rfg_knob = 20;  rfg_body = 17;   // RF ゲイン（ボリューム、VOL と同じ寸法と仮定）
+led_c   = [row_cx - 0.5 * row_p, row_y]; led_hole = 3.1;              // 3mm 電源 LED（LED ホルダ使用時は 5.0）
 // LCD の手前（前面寄り）、LCD の中央付近に横 1 列: 左から MIC・PHN。
 //   ふた裏の本体は基板の前端 6mm まで（X 60〜110 のこの範囲には部品なし。J11 は前端から 6.4mm）。MIC は左前の前面パネル固定ボス（X=60）の右にかわす
-mic_c   = [74, 22];  mic_hole = 16.2; mic_flange = 20; mic_body = 20;   // 4P 丸型マイクコネクタ。mic_flange = つば・プラグの太さ、mic_body = ふた裏の本体の太さ
-phone_c = [99, 22];  phone_hole = 6.2; phone_plug = 8; phone_body = 12; // 3.5mm イヤホンジャック（秋月 MJ-352W-C、M6 P0.5 ねじ長 3.5mm、スイッチ付き）。phone_plug = プラグ根元の太さ
+mic_c   = [row_cx + 0.5 * row_p, row_y];  mic_hole = 16.2; mic_flange = 20; mic_body = 20;   // 4P 丸型マイクコネクタ。mic_flange = つば・プラグの太さ、mic_body = ふた裏の本体の太さ
+phone_c = [row_cx + 1.5 * row_p, row_y];  phone_hole = 6.2; phone_plug = 8; phone_body = 12; // 3.5mm イヤホンジャック（秋月 MJ-352W-C、M6 P0.5 ねじ長 3.5mm、スイッチ付き）。phone_plug = プラグ根元の太さ
 phone_thin = 15; phone_thin_t = 1.8;   // PHN 穴を中心に 15x15mm を板厚 1.8mm に（ふた裏から座ぐり。ジャックのねじ長さ対策）
 
 // 干渉チェック
 knob_gap = 5;   // つまみ同士・つまみとほかの部品の最小隙間
 assert(norm(afv_c - enc_c) >= enc_knob / 2 + afv_knob / 2 + knob_gap, "VOL つまみと TUNE つまみの隙間が 5mm 未満");
 assert(norm(rfg_c - afv_c) >= afv_knob / 2 + rfg_knob / 2 + knob_gap, "RF つまみと VOL つまみの隙間が 5mm 未満");
-assert(norm(psw_c - rfg_c) >= rfg_knob / 2 + psw_hole / 2 + knob_gap, "電源スイッチと RF つまみの隙間が 5mm 未満");
 // 文字（穴の上＝奥側 4〜7.5mm、高さ約 3.2mm）が一つ奥のつまみにかからない
 assert(enc_c[1] + enc_knob / 2 + 7.5 + 2 <= afv_c[1] - afv_knob / 2 - 1, "TUNE の文字が VOL つまみにかかる");
 assert(afv_c[1] + afv_knob / 2 + 4 + 2 <= rfg_c[1] - rfg_knob / 2 - 1, "VOL の文字が RF つまみにかかる");
-assert(rfg_c[1] + rfg_knob / 2 + 4 + 2 <= psw_c[1] - psw_hole / 2 - 1, "RF の文字が電源スイッチにかかる");
-assert(psw_c[1] + psw_hole / 2 + 4.5 + 2 <= D - 3, "POWER の文字がふたの縁にかかる");
+assert(rfg_c[1] + rfg_knob / 2 + 4.5 + 2 <= D - 3, "RF の文字がふたの縁にかかる");
 assert(lcd_c[0] + bezel[0] / 2 + knob_gap <= enc_c[0] - enc_knob / 2, "ベゼルと TUNE つまみの隙間が 5mm 未満");
-for (c = [[enc_c, enc_body], [afv_c, afv_body], [rfg_c, rfg_body], [psw_c, psw_body]])
+for (c = [[enc_c, enc_body], [afv_c, afv_body], [rfg_c, rfg_body]])
     assert(c[0][0] - c[1] / 2 >= bx + pcb_v + 1, "上面部品のふた裏の本体が基板の上にかかる");
+// 電源スイッチ・電源 LED（LCD の窓の下の列）
+assert(psw_c[0] + psw_body / 2 + 1 <= bx || psw_c[1] + psw_body / 2 + 1 <= by, "電源スイッチの本体が基板の上にかかる");
+assert(psw_c[1] - psw_body / 2 >= panel_inset + groove_w + 1, "電源スイッチの本体が前面パネルにかかる");
+assert(psw_c[0] - psw_body / 2 >= wall + 1, "電源スイッチの本体が左の側板にかかる");
+assert(tx_c[0] + tx_hole / 2 + 5 <= psw_c[0] - psw_hole / 2, "電源スイッチと TX LED の間が狭い");
+assert(psw_c[0] + psw_body / 2 + 1 <= mic_c[0] - mic_body / 2, "電源スイッチの本体が MIC の本体にかかる");
+assert(abs((psw_c[0] + phone_c[0]) / 2 - row_cx) < 0.01 && psw_c[0] >= row_cx - lcd_win[0] / 2 - 1 && phone_c[0] <= row_cx + lcd_win[0] / 2 + 1, "下の列が LCD の窓の下に収まっていない");
+assert(psw_c[1] + psw_hole / 2 + 4.5 + 2 <= lcd_c[1] - bezel[1] / 2 - 2, "POWER の文字がベゼルにかかる");
+assert(psw_c[0] + psw_hole / 2 + 3 <= led_c[0] - led_hole / 2, "電源 LED と電源スイッチの間が狭い");
+assert(led_c[0] + led_hole / 2 + 3 <= mic_c[0] - mic_flange / 2, "電源 LED と MIC の間が狭い");
+assert(led_c[0] - led_hole / 2 >= wall + 3, "電源 LED が左の縁に近すぎる");
+for (b = boss_pos) assert(norm(led_c - b) >= 3.3 + 5, "電源 LED の穴がふた固定ねじ頭に近すぎる");
 for (c = [[mic_c, mic_body], [phone_c, phone_body]])
     assert(c[0][0] + c[1] / 2 <= bx - 1 || c[0][1] + c[1] / 2 <= by + 6, "MIC・PHN のふた裏の本体が基板の部品にかかる");
 assert(mic_c[1] + mic_flange / 2 + 15 <= lcd_c[1] - bezel[1] / 2, "MIC とベゼルの隙間が 15mm 未満（プラグを抜き差しする指が入らない）");
@@ -307,11 +325,11 @@ module top_labels_2d() {
     t("TUNE", [enc_c[0], enc_c[1] + enc_knob / 2 + 4], 3.2);
     t("VOL", [afv_c[0], afv_c[1] + afv_knob / 2 + 4], 3.2);
     t("RF", [rfg_c[0], rfg_c[1] + rfg_knob / 2 + 4], 3.2);
-    t("POWER", [psw_c[0], psw_c[1] + psw_hole / 2 + 4.5], 3.2);
-    t("ON", [led_c[0], psw_c[1] + psw_hole / 2 + 4.5], 2.6);
-    t("TX", [tx_c[0], mic_c[1] + mic_flange / 2 + 4], 3.2);   // MIC・PHN と高さをそろえる
-    t("MIC", [mic_c[0], mic_c[1] + mic_flange / 2 + 4], 3.2);
-    t("PHN", [phone_c[0], mic_c[1] + mic_flange / 2 + 4], 3.2);  // MIC と高さをそろえる
+    t("POWER", [psw_c[0], row_y + mic_flange / 2 + 4], 3.2);   // 下の列の文字はすべて同じ高さ
+    t("ON", [led_c[0], row_y + mic_flange / 2 + 4], 3.2);
+    t("TX", [tx_c[0], row_y + mic_flange / 2 + 4], 3.2);
+    t("MIC", [mic_c[0], row_y + mic_flange / 2 + 4], 3.2);
+    t("PHN", [phone_c[0], row_y + mic_flange / 2 + 4], 3.2);
 }
 
 // ---------------- 前面パネル（2D、外から見た向き） ----------------
@@ -432,11 +450,11 @@ sp_magnet = 22;          // マグネット直径
 sp_grille_d = 35;        // 放音穴を並べる範囲の直径
 sp_hole = 2.5; sp_hole_pitch = 4.5;   // 放音穴（六角配置）
 // 送信表示 LED（基板 J9）: MIC の左 30mm、MIC の穴と同じ高さ
-tx_c = [mic_c[0] - 30, mic_c[1]]; tx_hole = 3.0;
+tx_c = [13, row_y]; tx_hole = 3.0;   // 送信ランプ（下の列の左外）
 tx_depth = 6;   // ふた裏から LED 本体・足の曲げ部の下端まで
 for (b = boss_pos) assert(norm(tx_c - b) >= 3.3 + 5, "TX LED の穴がふた固定ねじ頭に近すぎる");
 assert(H - lid_t - tx_depth >= bz + pcb_t + 14 + 2, "TX LED と基板上の部品（高さ 14mm）の隙間が 2mm 未満");
-assert(tx_c[0] + tx_hole / 2 + 3 <= mic_c[0] - mic_flange / 2, "TX LED の穴が MIC に近すぎる");
+assert(tx_c[0] - tx_hole / 2 >= wall + 3, "TX LED の穴が左の縁に近すぎる");
 // スピーカー
 assert(sp_c[0] + sp_size / 2 + 3 <= lid_vent_x[0], "スピーカーが通風スロットに近すぎる");
 assert(sp_c[1] - sp_size / 2 >= lcd_c[1] + lcd_cut[1] / 2 + 2, "スピーカーが LCD にかかる");
@@ -454,7 +472,7 @@ assert(lid_vent_y0 >= lcd_c[1] + bezel[1] / 2 + 3, "ふたの通風スロット�
 assert(lid_vent_y0 + (lid_vent_n - 1) * lid_vent_pitch + 2.5 + 3 <= D - panel_inset - fit / 2 - panel_t, "ふたの通風スロットが後面パネルにかかる");
 for (x = panel_boss_x)
     assert(x + ear_d / 2 + 2 <= lid_vent_x[0] || x - ear_d / 2 - 2 >= lid_vent_x[1], "ふたの通風スロットが後面パネル固定ボス・ねじ頭にかかる");
-assert(lid_vent_x[1] + 5 <= psw_c[0] - psw_body / 2, "ふたの通風スロットが電源スイッチにかかる");
+assert(lid_vent_x[1] + 5 <= col_x - rfg_body / 2, "ふたの通風スロットが RF ボリュームにかかる");
 assert(H - lcd_depth >= bz + pcb_t + 14 + 2, "LCD 裏のコネクタと基板上の部品（高さ 14mm）の隙間が 2mm 未満");
 module pcb_dummy() {
     color("darkgreen") hull() for (m = mount_uv) let(p = bp(m[0], m[1])) translate([p[0], p[1], bz]) cylinder(r = 4, h = pcb_t);

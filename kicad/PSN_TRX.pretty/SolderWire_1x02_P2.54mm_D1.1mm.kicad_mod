@@ -1,0 +1,22 @@
+(footprint "SolderWire_1x02_P2.54mm_D1.1mm"
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(descr "同軸ケーブルじか付け用 2 ピン（2.54mm ピッチ、穴 φ1.1mm、ランド φ2.0mm）。1 = 芯線、2 = 編組（GND）。RG-174 など。編組の引き出しは短く")
+	(tags "solder wire coax RF")
+	(property "Reference" "REF**"
+		(at 1.27 -2.3 0)
+		(layer "F.SilkS")
+		(effects (font (size 1 1) (thickness 0.15)))
+	)
+	(property "Value" "SolderWire_1x02_P2.54mm_D1.1mm"
+		(at 1.27 2.3 0)
+		(layer "F.Fab")
+		(effects (font (size 1 1) (thickness 0.15)))
+	)
+	(attr through_hole)
+	(fp_rect (start -1.25 -1.25) (end 3.79 1.25) (stroke (width 0.05) (type solid)) (fill no) (layer "F.CrtYd"))
+	(pad "1" thru_hole rect (at 0 0) (size 2 2) (drill 1.1) (layers "*.Cu" "*.Mask"))
+	(pad "2" thru_hole circle (at 2.54 0) (size 2 2) (drill 1.1) (layers "*.Cu" "*.Mask"))
+)

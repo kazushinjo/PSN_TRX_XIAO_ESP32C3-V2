@@ -1,4 +1,4 @@
-PSN_TRX V2 Ver 1.1 検査記録（2026-11-05、KiCad 10.0.6 の kicad-cli で実行）
+PSN_TRX V2 Ver 1.2 検査記録（2026-11-06、KiCad 10.0.6 の kicad-cli で実行）
 
 回路図（PSN_TRX.kicad_sch）
   ERC（すべての重大度）: 指摘 8 件、うち除外 8 件（パネル部品 VR1・VR2・LED1 の未接続ピン。配線で接続するため）
@@ -9,6 +9,8 @@ PSN_TRX V2 Ver 1.1 検査記録（2026-11-05、KiCad 10.0.6 の kicad-cli で実
   ** Found 0 DRC violations **
   ** Found 0 unconnected pads **
   ** Found 0 Footprint errors **
+  回路図との不一致 0
 
-変更内容は BOM.md の先頭と ../README.md の変更履歴（2026-11-05）、部品番号の新旧は refdes_map_2026-11-05.csv。
+製造データ（production/・PSN_TRX_pick_place.csv・PSN_TRX_部品配置図.pdf）は make_production.py で作成。
+変更内容は BOM.md の先頭と ../README.md の変更履歴（2026-11-06）、部品番号の新旧は refdes_map_2026-11-05.csv。
 以前の「回路図から基板を更新」のログ（2026-10 版）は git の履歴にある。
