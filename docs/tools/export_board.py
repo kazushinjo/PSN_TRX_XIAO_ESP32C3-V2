@@ -25,7 +25,7 @@ for f in b.GetFootprints():
     fab = [shp(g) for g in f.GraphicalItems() if g.GetLayer() == FAB and g.GetClass() == 'PCB_SHAPE']
     if not fab: fab = [shp(g) for g in f.GraphicalItems() if g.GetLayer() == SILK and g.GetClass() == 'PCB_SHAPE']
     pads = [{'n': p.GetNumber(), 'c': mm(p.GetPosition()), 'sz': mm(p.GetSize(pcbnew.F_Cu)), 'ang': p.GetOrientationDegrees(),
-             'sh': SH.get(p.GetShape(pcbnew.F_Cu), 'rect'), 'drill': mm(p.GetDrillSize().x)} for p in f.Pads()]
+             'sh': SH.get(p.GetShape(pcbnew.F_Cu), 'rect'), 'drill': mm(p.GetDrillSize().x), 'net': p.GetNetname(), 'fn': p.GetPinFunction()} for p in f.Pads()]
     cy = f.GetCourtyard(CY); bb = cy.BBox() if cy.OutlineCount() else f.GetBoundingBox(False)
     out['fps'].append({'ref': f.GetReference(), 'val': f.GetValue(), 'side': side, 'pos': mm(f.GetPosition()),
                        'fab': [x for x in fab if x], 'pads': pads, 'bbox': [mm(bb.GetOrigin()), mm(bb.GetEnd())]})
