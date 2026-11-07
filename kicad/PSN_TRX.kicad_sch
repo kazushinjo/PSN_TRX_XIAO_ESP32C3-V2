@@ -6,7 +6,7 @@
 	(paper "A0")
 	(title_block
 		(title "50Mhz PSN トランシーバ")
-		(rev "V2 Ver 1.2")
+		(rev "V2 Ver 1.3")
 	)
 	(lib_symbols
 		(symbol "Amplifier_Operational:LM2904"
@@ -6383,7 +6383,7 @@
 					(justify left)
 				)
 			)
-			(property "Footprint" "Relay_THT:Relay_DPDT_Omron_G5V-2"
+			(property "Footprint" "PSN_TRX:Relay_DPDT_Omron_G5V-2_D1.0mm"
 				(at 16.51 -1.27 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -9222,12 +9222,6 @@
 		(uuid "5bf13f41-69d1-4df3-8999-666114b9a1ef")
 	)
 	(junction
-		(at 830.58 566.42)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "01c08c2f-7375-4d1e-85ce-58ceeb4d4f4f")
-	)
-	(junction
 		(at 839.47 124.46)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -11469,16 +11463,6 @@
 	)
 	(wire
 		(pts
-			(xy 830.58 566.42) (xy 855.98 566.42)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "318d728d-40a8-4aef-8873-200472197f1a")
-	)
-	(wire
-		(pts
 			(xy 256.54 473.71) (xy 261.62 473.71)
 		)
 		(stroke
@@ -12846,16 +12830,6 @@
 			(type default)
 		)
 		(uuid "673b07c7-56db-457f-a60f-d17674b293a8")
-	)
-	(wire
-		(pts
-			(xy 855.98 566.42) (xy 855.98 576.58)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "677a899b-f4c3-462c-9e56-8f36965f011a")
 	)
 	(wire
 		(pts
@@ -16877,7 +16851,7 @@
 				)
 			)
 		)
-		(property "Value" "470"
+		(property "Value" "1k"
 			(at 860.34 581.66 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -20070,7 +20044,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:CP_Radial_D5.0mm_P2.00mm"
+		(property "Footprint" "PSN_TRX:C_Radial_D5.0mm_P2.00mm_CPpad"
 			(at 803.91 607.06 0)
 			(hide yes)
 			(show_name no)
@@ -22394,6 +22368,93 @@
 				)
 			)
 		)
+	)
+	(symbol
+		(lib_id "power:+5V")
+		(at 855.98 571.5 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "140942ef-9e62-4c5b-bcd2-c7ba5cdef945")
+		(property "Reference" "#PWR200"
+			(at 855.98 575.31 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "+5V"
+			(at 857.504 568.198 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 855.98 571.5 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 855.98 571.5 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 855.98 571.5 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "6143e126-e30f-4ccb-8e46-0957f5b573b6")
+		)
+		(instances
+			(project "PSN_TRX"
+				(path "/50835569-93ad-4c8c-aafc-424a6a3761ef"
+					(reference "#PWR200")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(wire
+		(pts
+			(xy 855.98 571.5) (xy 855.98 576.58)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "83a58523-23cd-4fa1-a740-40760d6ae07b")
 	)
 	(symbol
 		(lib_id "Device:R")
@@ -38920,7 +38981,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Relay_THT:Relay_DPDT_Omron_G5V-2"
+		(property "Footprint" "PSN_TRX:Relay_DPDT_Omron_G5V-2_D1.0mm"
 			(at 187.96 284.48 0)
 			(hide yes)
 			(show_name no)
@@ -51528,7 +51589,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:CP_Radial_D5.0mm_P2.00mm"
+		(property "Footprint" "PSN_TRX:C_Radial_D5.0mm_P2.00mm_CPpad"
 			(at 816.61 607.06 0)
 			(hide yes)
 			(show_name no)

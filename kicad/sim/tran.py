@@ -149,10 +149,10 @@ def tx_start():
             st = next((t[i] for i in range(len(v) - 1, -1, -1) if abs(v[i]) > 0.01), 0)
             print(f"  負荷 {rload:4}Ω {nm}: 変調器入力の最大 {v[k]*1e3:+6.0f} mV（{t[k]*1e3:5.1f} ms）、±10mV 以内になるまで {st*1e3:4.0f} ms、"
                   f"{q} コレクタ {vc[-1]:.2f} V（定常）")
-    print('送信開始時のマイク系: AF_ADC（U7 の A2）の過渡（マイク無音、L7 60Ω）')
+    print('送信開始時のマイク系: AF_ADC（U7 の A2）の過渡（マイク無音、L7 60Ω。マイクは +5V から常時給電、Q14 と U5A の電源は TX12V と同時に入る）')
     net = mic_circuit(60).replace(' OA\n', ' OAR\n').replace('.subckt OA ', OAR + '\n.subckt OA ')
     net = net.replace('VTX n__TX12V 0 DC 12', 'VTX n__TX12V 0 PWL(0 0 10u 12)')
-    net = re.sub(r"IMIC (\S+) 0 DC 0.5m AC \S+", r"IMIC \1 0 PWL(0 0 10u 0.5m)", net)
+    # マイクは +5V から R42・R43 で常時給電（V2 Ver 1.3）なので、マイクの電流は送信開始の前から流れている（IMIC は DC のまま）
     net = net.replace('V5 n__5V 0 DC 5', 'V5 n__5V 0 DC 5')
     tran(net, 20e-6, 1.5, 0, uic=False)
     t = ngs.vec('time'); va = ngs.vec('n__AF_ADC'); vo = ngs.vec(pin('U5', '1'))

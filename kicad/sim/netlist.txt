@@ -214,7 +214,7 @@ R38 330 1=Net-(C44-Pad2) 2=Net-(J5-Pin_1)
 R39 10k 1=Net-(Q12-C) 2=Net-(Q12-B)
 R40 10k 1=Net-(Q13-B) 2=Net-(Q12-C)
 R41 100 1W 1=Net-(Q12-E) 2=RX12V
-R42 470 1=/TX12V 2=Net-(C56-Pad1)
+R42 1k 1=+5V 2=Net-(C56-Pad1)
 R43 4.7k 1=Net-(C56-Pad1) 2=Net-(J7-Pin_2)
 R44 100k 1=Net-(Q14-C) 2=Net-(Q14-B)
 R45 1k 1=/TX12V 2=Net-(Q14-C)

@@ -1,4 +1,4 @@
-PSN_TRX_XIAO_ESP32C3-V2 完全KiCadプロジェクト（V2 Ver 1.2）
+PSN_TRX_XIAO_ESP32C3-V2 完全KiCadプロジェクト（V2 Ver 1.3）
 
 【このフォルダの開き方】
 1. KiCad 10 のプロジェクトマネージャで「ファイルを開く」→ PSN_TRX.kicad_pro を選択
@@ -7,7 +7,7 @@ PSN_TRX_XIAO_ESP32C3-V2 完全KiCadプロジェクト（V2 Ver 1.2）
 2. 基板エディタで「検査 → デザインルールチェッカー(DRC)」を実行
    （シルク警告3件は修正済み。残る場合は除外で可）
 3. 発注用のデータは「python3 make_production.py」で作り直せます（ガーバー・ドリル・JLCPCB 用 BOM/CPL・座標・部品配置図）
-   （同梱の production/ は 2026-11-06 に基板 V2 Ver 1.2 から DRC エラー0・未配線0・回路図との不一致0 の状態で出力済み）
+   （同梱の production/ は 2026-11-08 に基板 V2 Ver 1.3 から DRC エラー0・未配線0・回路図との不一致0 の状態で出力済み）
 
 【含まれるもの】
 - PSN_TRX.kicad_pro / .kicad_sch / .kicad_pcb / .kicad_sym / .kicad_prl
@@ -19,7 +19,7 @@ PSN_TRX_XIAO_ESP32C3-V2 完全KiCadプロジェクト（V2 Ver 1.2）
 - refdes_map_2026-11-05.csv（部品番号の新旧対応表。2026-11-05 に部品番号を信号の流れの順に振り直した）
 - refdes_map_2026-10-15.csv（その前の対応表。2026-10-15 に部品番号を回路図の位置順に振り直した）
 - bom_purchase.csv（購入用部品表: 購入先・型番・秋月の販売コード・入数・価格）／make_bom_purchase.py（その作成スクリプト）
-- production/（JLCPCB 用製造データ、2026-11-06 に V2 Ver 1.2 から make_production.py で出力）
+- production/（JLCPCB 用製造データ、2026-11-08 に V2 Ver 1.3 から make_production.py で出力）
     PSN_TRX_Gerber_JLCPCB.zip … ガーバー11層＋ドリル(PTH/NPTH)＋ジョブファイル。発注時はこれだけアップロード
     PSN_TRX_BOM_JLCPCB.csv / PSN_TRX_CPL_JLCPCB.csv … 実装も頼む場合の部品表・座標（LCSC 番号は未記入）
     発注指定: 4層、1.6mm、134.1×129.7mm、最小穴 0.3mm、最小線幅 0.2mm・間隔 0.2mm（いずれも標準仕様内）

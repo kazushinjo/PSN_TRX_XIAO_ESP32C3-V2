@@ -54,6 +54,8 @@ V5 n__5V 0 DC 5
 V33 n__XIAO_3V3 0 DC 3.3
 VAGC n__AGC_PWM 0 DC 0
 {circuit()}
+* L7・L10・L11 の先は直流的に浮いている（コンデンサだけ）ので、各点に 1GΩ の逃げ道を入れて収束させる
+.options rshunt=1e9
 .op
 """
     out = ngs.run(net)
