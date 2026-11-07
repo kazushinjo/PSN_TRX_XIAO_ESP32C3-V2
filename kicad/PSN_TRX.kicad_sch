@@ -37725,7 +37725,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Inductor_THT:L_Axial_L9.5mm_D4.0mm_P12.70mm_Horizontal_Fastron_SMCC"
+		(property "Footprint" "Inductor_THT:L_Axial_L9.5mm_D4.0mm_P2.54mm_Vertical_Fastron_SMCC"
 			(at 351.79 468.63 0)
 			(hide yes)
 			(show_name no)

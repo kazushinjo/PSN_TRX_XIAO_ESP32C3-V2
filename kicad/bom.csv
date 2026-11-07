@@ -52,7 +52,7 @@
 "L7","15mH","PSN_TRX:L_AL0510-153K_Vertical","1",""
 "L8,L9","100nH","PSN_TRX:L_AL0510-153K_Vertical","2",""
 "L10,L11","1mH","PSN_TRX:L_AL0510-153K_Vertical","2",""
-"L15","47nH","Inductor_THT:L_Axial_L9.5mm_D4.0mm_P12.70mm_Horizontal_Fastron_SMCC","1",""
+"L15","47nH","Inductor_THT:L_Axial_L9.5mm_D4.0mm_P2.54mm_Vertical_Fastron_SMCC","1",""
 "L16","T-50-10 9T/0.6mm","PSN_TRX:L_T50_2pin_Vertical","1",""
 "L17","T-50-10 10T/0.6mm","PSN_TRX:L_T50_2pin_Vertical","1",""
 "L18","T-30-6 8T/0.4mm","PSN_TRX:L_T30_2pin_Vertical","1",""

@@ -3,7 +3,7 @@
 	(generator "pcbnew")
 	(generator_version "10.0")
 	(layer "F.Cu")
-	(descr "GEC/Akizuki 17PB046-01025 pin-type heatsink for vertical TO-220 (e.g. RD06HVF1), 11.9 C/W. Plan view 46.2x17mm, height 25mm. Flat mounting face at y=-8.5; 2x pins dia 1.4mm (protrude 4.5mm), pitch 30mm, 3mm in from the mounting face. M3 tapped hole on mounting face, 19mm above PCB, centered.")
+	(descr "GEC/Akizuki 17PB046-01025 pin-type heatsink for vertical TO-220 (e.g. RD06HVF1), 11.9 C/W. Profile 46.2x17mm (fins 10mm on one side of the mounting face, two flanges 1.34x7mm on the transistor side), height 25mm. Flat mounting face at y=-8.5; 2x pins dia 1.4mm (protrude 4.5mm), pitch 30mm, 3mm in from the mounting face. M3 tapped hole on mounting face, 19mm above PCB, centered. GEC 17pb046.pdf")
 	(tags "heatsink 17PB046 TO-220 RD06HVF1 mechanical")
 	(attr through_hole exclude_from_pos_files exclude_from_bom)
 	(fp_text reference "REF**"
@@ -28,59 +28,79 @@
 			)
 		)
 	)
-	(fp_rect
-		(start -23.1 -8.5)
-		(end 23.1 8.5)
+	(fp_poly
+		(pts (xy -23.1 1.5) (xy 23.1 1.5) (xy 23.1 -15.5) (xy 21.76 -15.5) (xy 21.76 -8.5) (xy -21.76 -8.5) (xy -21.76 -15.5) (xy -23.1 -15.5))
 		(stroke
 			(width 0.1)
 			(type solid)
 		)
 		(fill no)
 		(layer "F.Fab")
-		(uuid "a17b0460-0003-4001-8001-000000000003")
+		(uuid "ff679fe4-d0d8-4da2-b653-045204d6e525")
 	)
 	(fp_line
-		(start -23.1 -8.5)
-		(end 23.1 -8.5)
+		(start -21.76 -8.5)
+		(end 21.76 -8.5)
 		(stroke
 			(width 0.3)
 			(type solid)
 		)
 		(layer "F.Fab")
-		(uuid "a17b0460-000a-4001-8001-00000000000a")
+		(uuid "fead44da-93a3-4aed-a20a-e1e3d1be4bce")
 	)
 	(fp_text user "MOUNTING FACE (M3, 19mm high)"
 		(at 0 -7.3 0)
 		(layer "F.Fab")
-		(uuid "a17b0460-0009-4001-8001-000000000009")
+		(uuid "371dd1ac-8984-41eb-871e-2efbeb000b70")
 		(effects
 			(font
 				(size 0.7 0.7)
-				(thickness 0.1)
+				(thickness 0.12)
 			)
 		)
 	)
-	(fp_rect
-		(start -23.35 -8.25)
-		(end 23.35 8.75)
+	(fp_text user "FLANGE 7mm"
+		(at -18.5 -12 0)
+		(layer "F.Fab")
+		(uuid "4968d6e0-3b39-4db7-b762-e529fa8d1f7c")
+		(effects
+			(font
+				(size 0.7 0.7)
+				(thickness 0.12)
+			)
+		)
+	)
+	(fp_text user "FLANGE 7mm"
+		(at 18.5 -12 0)
+		(layer "F.Fab")
+		(uuid "b4217f83-4926-4d07-b1f7-0a245eac3f2b")
+		(effects
+			(font
+				(size 0.7 0.7)
+				(thickness 0.12)
+			)
+		)
+	)
+	(fp_text user "17PB046"
+		(at 0 -2.5 0)
+		(layer "F.Fab")
+		(uuid "20034dc4-29d5-40f6-a4e8-80afd81a7008")
+		(effects
+			(font
+				(size 1.2 1.2)
+				(thickness 0.12)
+			)
+		)
+	)
+	(fp_poly
+		(pts (xy -23.35 1.75) (xy 23.35 1.75) (xy 23.35 -15.75) (xy 21.51 -15.75) (xy 21.51 -8.25) (xy -21.51 -8.25) (xy -21.51 -15.75) (xy -23.35 -15.75))
 		(stroke
 			(width 0.05)
 			(type solid)
 		)
 		(fill no)
 		(layer "F.CrtYd")
-		(uuid "a17b0460-0004-4001-8001-000000000004")
-	)
-	(fp_text user "17PB046"
-		(at 0 0 0)
-		(layer "F.Fab")
-		(uuid "a17b0460-0005-4001-8001-000000000005")
-		(effects
-			(font
-				(size 1.2 1.2)
-				(thickness 0.15)
-			)
-		)
+		(uuid "31aa7a15-5e00-4ae9-ad0b-a94b6dfddda8")
 	)
 	(pad "" np_thru_hole circle
 		(at -15 -5.5)
