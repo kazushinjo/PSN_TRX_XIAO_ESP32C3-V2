@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 """原寸確認図（docs/PSN_TRX_原寸確認図.pdf）を作る。
 
-A4 縦に基板を 1:1 で描く（部品の外形・パッド・穴・部品番号、100mm の目盛り）。
+A4 縦に基板を 1:1 で描く（1 ページ目: 部品の外形・パッド・穴・部品番号、100mm の目盛り。
+2 ページ目: 主な部品のピン名・コネクタの信号名）。
 100%（実際のサイズ）で印刷し、実物の部品を紙の上に置いて足の位置・外形の当たりを確かめる。
 
 使い方（リポジトリの一番上で）:
@@ -121,6 +122,90 @@ notes = [
 ]
 for i, t in enumerate(notes):
     ov.text(LM, yb + 14 + i * 5.2, t, fontsize=6.6)
+# ---- 2 ページ目: 主な部品のピン名・信号名
+KEY = ['U7', 'U6', 'J4', 'K1', 'U8', 'U3', 'U5', 'U4', 'U9', 'Q19'] + [f'J{i}' for i in range(1, 13)]
+LABEL = {'U7': {'1': 'D0', '2': 'D1', '3': 'D2/A2', '4': 'D3', '5': 'D4/SDA', '6': 'D5/SCL', '7': 'D6/TX',
+                '8': '5V', '9': 'GND', '10': '3V3', '11': 'D10', '12': 'D9', '13': 'D8', '14': 'D7/RX'},
+         'K1': {'1': 'コイル', '16': 'コイル', '4': 'COM1(ANT)', '6': 'NC1(受信)', '8': 'NO1(送信)',
+                '13': 'COM2(+12V)', '11': 'NC2(RX12V)', '9': 'NO2(TX12V)'},
+         'U8': {'3': 'VIN(1)', '2': 'GND', '1': 'VOUT(3)'},
+         'J1': {'1': 'ANT 芯線', '2': 'GND 編組'}, 'J2': {'1': '+12V', '2': 'GND'},
+         'J3': {'1': 'VR1 上(R17)', '2': 'VR1 中(AGC)', '3': 'GND'}, 'J5': {'1': 'VR2 上(AF)', '2': 'VR2 中', '3': 'GND'},
+         'J6': {'1': 'SP+', '2': 'GND'}, 'J7': {'1': '+5V', '2': 'MIC', '3': 'PTT', '4': 'GND'},
+         'J8': {'1': 'SDA', '2': 'SCL', '3': 'GND'}, 'J9': {'1': 'LED K(Q20)', '2': 'LED A(R72)'},
+         'J10': {'1': 'ENC A(D3)', '2': 'ENC B(D1)', '3': 'SW(D9)', '4': 'GND'},
+         'J11': {'1': 'GND', '2': 'TX(D6)→LCD RX', '3': 'RX(D7)←LCD TX', '4': '+5V'},
+         'J12': {'1': 'LED A(R80)', '2': 'GND'}}
+
+
+def netname(n):
+    if not n or n.startswith('unconnected'):
+        return '－'
+    n = n.lstrip('/')
+    return n[5:-1] if n.startswith('Net-(') else n
+
+
+def pinlabel(f, p):
+    if f['ref'] in LABEL:
+        return LABEL[f['ref']].get(p['n'], p['n'])
+    if f['ref'].startswith('J'):
+        return netname(p.get('net', ''))
+    fn = (p.get('fn') or '').split('_')[0]
+    return fn if fn and fn != p['n'] else netname(p.get('net', ''))
+
+
+fig2 = plt.figure(figsize=(PW * MM, PH * MM))
+ax = fig2.add_axes([LM / PW, (PH - TM - BH) / PH, BW / PW, BH / PH])
+ax.set_xlim(BX0, BX1); ax.set_ylim(BY1, BY0); ax.axis('off')
+for e in board['edge']:
+    shape(ax, e, 'black', 0.6)
+for f in board['fps']:
+    key = f['ref'] in KEY
+    for s in f['fab']:
+        shape(ax, s, '#333333' if key else '#cccccc', 0.35 if key else 0.25)
+    for p in f['pads']:
+        if key:
+            pad(ax, p)
+        else:
+            x, y = p['c']
+            ax.add_patch(Circle((x, y), max(p['sz']) / 2, fc='none', ec='#cccccc', lw=0.2))
+    if not key:
+        continue
+    (x0, y0), (x1, y1) = f['bbox']; cx, cy = (x0 + x1) / 2, (y0 + y1) / 2
+    ax.text(cx, cy, 'U7 (XIAO)' if f['ref'] == 'U7' else f['ref'], ha='center', va='center', fontsize=4.5,
+            color='#b00020', fontproperties=BOLD, zorder=21, bbox=dict(fc='white', ec='none', alpha=0.7, pad=0.1))
+    pxs = [p['c'][0] for p in f['pads']]; pys = [p['c'][1] for p in f['pads']]
+    col = len(f['pads']) > 1 and max(pxs) - min(pxs) < 0.5      # 縦 1 列 → 右に横書き
+    row = len(f['pads']) > 1 and max(pys) - min(pys) < 0.5      # 横 1 列 → 上に縦書き
+    for p in f['pads']:
+        x, y = p['c']; dx, dy = x - cx, y - cy; r = max(p['sz']) / 2 + 0.25
+        t = pinlabel(f, p)
+        if col: dx, dy = 1, 0
+        if row: dx, dy = 0, -1
+        if abs(dx) >= abs(dy):
+            ax.text(x + (r if dx >= 0 else -r), y, t, ha='left' if dx >= 0 else 'right', va='center',
+                    fontsize=2.4, color='#1f2d6b', zorder=22)
+        else:
+            ax.text(x, y + (r if dy >= 0 else -r), t, ha='center', va='top' if dy >= 0 else 'bottom', rotation=90,
+                    fontsize=2.4, color='#1f2d6b', zorder=22)
+ov = fig2.add_axes([0, 0, 1, 1]); ov.set_xlim(0, PW); ov.set_ylim(PH, 0); ov.axis('off'); ov.patch.set_alpha(0)
+ov.plot([LM, LM + 100], [yb, yb], color='black', lw=0.8)
+for k in range(0, 101, 10):
+    ov.plot([LM + k, LM + k], [yb, yb - (2.5 if k % 50 == 0 else 1.5)], color='black', lw=0.5)
+ov.text(LM + 50, yb + 4, '100 mm', ha='center', fontsize=7)
+ov.text(LM, 12, 'PSN_TRX_XIAO_ESP32C3-V2　原寸確認図（2）主な部品のピン名・信号名（部品面から見た図、1:1）', fontsize=10, fontproperties=BOLD)
+ov.text(LM, 18, f'{VER}。1 ページ目と同じく 100% で印刷する。赤字の部品のパッドの横にピン名（IC・モジュール）または信号名（コネクタ）を書いた。', fontsize=7)
+ov.text(LM, 22.5, '□ のパッドが 1 番ピン。実物を当てたとき、1 番ピンの向きと信号の並びが合っているかを確かめる。', fontsize=7)
+notes2 = [
+    'U7 XIAO: 上の列が右から D0〜D6、下の列が右から 5V・GND・3V3・D10・D9・D8・D7（USB は右辺側、部品面を上）。',
+    'U6 Si5351 モジュール: 1 VDDO・2 SCL・3 SDA・4 GND・5〜7 CLK0〜2・8 VDD（秋月の資料の上面図を 180° 回した向き）。',
+    'J4 AE-ADS1015: VIN・GND・SCL・SDA・ADR・ALT・A0〜A3（□ が VIN）。U8 R-78E: □ がモジュールの 1 番（VIN）。',
+    'K1 G5V-2: コイル 1・16、COM 4・13、NC 6・11（受信側）、NO 8・9（送信側）。Q19 RD06HVF1: □ = G、中 = S（タブ）、右 = D。',
+    'コネクタは信号名: J1 アンテナ（芯線・編組）、J2 電源（+12V・GND）、J7 マイク（+5V・MIC・PTT・GND）、J11 表示器（GND・TX・RX・+5V）など。',
+]
+for i, t in enumerate(notes2):
+    ov.text(LM, yb + 14 + i * 5.2, t, fontsize=6.6)
 with PdfPages(OUT, metadata={'Title': 'PSN_TRX_XIAO_ESP32C3-V2 原寸確認図', 'Author': 'JA6FUF'}) as pdf:
     pdf.savefig(fig)
+    pdf.savefig(fig2)
 print('saved', OUT, f'{BW:.2f} x {BH:.2f} mm')
