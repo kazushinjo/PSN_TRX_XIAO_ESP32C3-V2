@@ -89,7 +89,7 @@ Q19 のタブを基板図の上側（HS1 側）に向け、タブの M3 穴で�
 
 ## シミュレーション結果（ngspice）
 
-回路図のネットリストから定数を直接読み込み、KiCad 同梱の ngspice（libngspice）で計算した結果です（V2 Ver 1.1、2026-11-05）。スクリプトと全結果は [`kicad/sim/`](kicad/sim/) にあり、`./run.sh` で再計算できます（結果は `kicad/sim/results.txt`）。トランジスタはデータシートの代表値から作った簡易モデルなので、実機では測定で確認してください。
+回路図のネットリストから定数を直接読み込み、KiCad 同梱の ngspice（libngspice）で計算した結果です（V2 Ver 1.3、2026-11-11 に再計算）。項目ごとの説明と実機で確かめる点をまとめた報告書は [`docs/PSN_TRX_シミュレーション結果.md`](docs/PSN_TRX_シミュレーション結果.md)（PDF 版 `docs/PSN_TRX_シミュレーション結果.pdf`）。スクリプトと全結果は [`kicad/sim/`](kicad/sim/) にあり、`./run.sh` で再計算できます（結果は `kicad/sim/results.txt`）。トランジスタはデータシートの代表値から作った簡易モデルなので、実機では測定で確認してください。
 
 ### PA 出力 LPF（5 素子 → 7 素子＋2 倍波トラップ）
 
@@ -136,13 +136,13 @@ PA 出力のスペクトル。PA（RD06HVF1、シングル AB 級）自身の高
 | DC-DC 入力フィルタ | 共振 16kHz のピーク 1.5〜4.1Ω。R-78E の負性入力抵抗より十分小さく安定 |
 | AGC | PWM の平均 0.55〜0.80V でゲートが 4.0V → 0.1〜0.2V。RF 増幅（Q3）−15.7dB ＋ IF 増幅（Q7）−15.5dB で計 約 −31dB |
 
-### 送信 I/Q の位相差（Ver 2.0）
+### 送信 I/Q の位相差
 
 AF の周波数を 100〜3200Hz でスキャンし、I と Q の位相差の 90° からのずれ（上）、振幅差（中）、そこから決まる逆側帯波の抑圧（下）を計算したもの。U7 の FIR はファームウェアと同じ係数（int16 に丸めた後）、その後ろの RC〜変調器入力は ngspice で計算しています（`kicad/sim/iq_scan.py`）。FIR は I 側が左右対称・Q 側が逆対称の係数なので位相差はちょうど 90° になり、抑圧は振幅のわずかなリップルで決まります。RC がずれたときのずれは周波数に比例する（遅延の差になる）ので、`iqd`（遅延差）・`iqa`（利得差）でほぼ打ち消せます。3.3kHz より上は FIR の阻止域（出力がほぼ 0）なので表示していません。
 
 ![送信 I/Q の位相差](docs/images/iq_phase_scan.png)
 
-### 不要側波帯の抑圧比（Ver 2.0）
+### 不要側波帯の抑圧比
 
 上は音声周波数ごとの抑圧比、下は試験トーン 1kHz（`tone 1000`、USB）を送信したときにスペクトラムアナライザで見える形です（`kicad/sim/sideband.py`）。部品が定数どおりなら約 70dB、RC が I/Q で ±3% ずれても `iqd`・`iqa` の補正で約 50〜60dB。ただし RF 側（Si5351 の 2 出力・変調器）に 1°・0.1dB のずれがあるだけで約 39dB になり、実機の抑圧比はほぼ RF 側で決まります（RF 側は計算に含めていないので、参考の線として重ねています）。
 
@@ -173,7 +173,7 @@ kicad/
   bom.csv                 - 部品表（kicad-cli で回路図から出力した CSV）
   bom_purchase.csv        - 購入用部品表（購入先・型番・販売コード・入数・価格、UTF-8 CSV）
   make_bom_purchase.py    - bom.csv から bom_purchase.csv を作り BOM.md に購入先を入れるスクリプト
-  sim/                    - ngspice によるアナログ部の計算（run.sh → results.txt、iq_scan.py → I/Q 位相差のグラフ）
+  sim/                    - ngspice によるアナログ部の計算（run.sh → results.txt、iq_scan.py・sideband.py → I/Q 位相差・抑圧比のグラフ）
   production/             - JLCPCB 提出用（ガーバー zip・CPL・BOM・提出資料）
 PSN_TRX_XIAO_ESP32C3/
   PSN_TRX_XIAO_ESP32C3.ino - XIAO ESP32C3 のスケッチ（VFO・表示・S メーター・AGC）
@@ -182,10 +182,11 @@ docs/
   PSN_TRX_VFO改造仕様書.docx  - VFO 仕様書（Si5351・XIAO の接続、局発・BFO、送信 I/Q、PA）
   PSN_TRX_組み立て説明書.docx  - 組み立て説明書（部品の取り付け・配線・調整の流れ）
   PSN_TRX_評価試験報告書.docx  - 評価試験報告書（ERC・DRC・配線長・計算・シミュレーション）
+  PSN_TRX_シミュレーション結果.md / .pdf - アナログ部シミュレーションの報告書（kicad/sim の結果を項目ごとにまとめたもの）
   PSN_TRX_回路図論理検証レポート.docx - 回路図の論理検証（信号の流れ・ファームウェアとの照合・確認事項）
   PSN_TRX_部品実装図.pdf      - 部品実装図（全体図・ブロック別 13 ページ・調整箇所）
   PSN_TRX_間違いやすい部品形.pdf - 間違いやすい部品の部品形（寸法・ピン名・つながる信号入り、9 ページ。PNG は images/fp_check/）
-  tools/                      - 部品実装図（make_parts_layout.py）・間違いやすい部品形（make_fp_check.py）・docx（make_docx.py）を作るスクリプト
+  tools/                      - 部品実装図（make_parts_layout.py）・間違いやすい部品形（make_fp_check.py）・docx（make_docx.py）・シミュレーション報告書の PDF（make_sim_report_pdf.py）を作るスクリプト
   images/                     - README の図（PA 出力 LPF の特性・PA 出力のスペクトル・送信 I/Q の位相差）
 ```
 

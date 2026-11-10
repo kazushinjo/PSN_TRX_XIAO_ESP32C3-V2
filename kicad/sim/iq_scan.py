@@ -1,4 +1,4 @@
-"""送信 AF の I/Q 位相差を周波数スキャンしてグラフにする（Ver 2.0）
+"""送信 AF の I/Q 位相差を周波数スキャンしてグラフにする（V2）
 
   U7 の複素 FIR（tx_dsp.cpp と同じ作り方・同じ int16 量子化）× PDM 出力〜変調器入力のアナログ部（ngspice）で、
   I と Q の位相差が 90° からどれだけずれるか、振幅差、そこから決まる逆側帯波の抑圧を 100〜4000 Hz で求める。
@@ -74,9 +74,9 @@ def main():
     cI, cQ = fir(iqd, iqa)
     cases = [
         ('FIR だけ（U7 の計算）', fI, fQ, 'C0', '-'),
-        ('FIR＋アナログ部（定数どおり）', fI * nI, fQ * nQ, 'C103', '-'),
+        ('FIR＋アナログ部（定数どおり）', fI * nI, fQ * nQ, 'C2', '-'),
         ('RC が I +3%・Q −3%（補正なし）', fI * mI, fQ * mQ, 'C3', '--'),
-        (f'同上を iqd {iqd:+.2f}・iqa {iqa:+.2f} で補正', cI * mI, cQ * mQ, 'C102', '-'),
+        (f'同上を iqd {iqd:+.2f}・iqa {iqa:+.2f} で補正', cI * mI, cQ * mQ, 'C1', '-'),
     ]
     fp = '/System/Library/Fonts/ヒラギノ角ゴシック W3.ttc'
     if os.path.exists(fp):
@@ -99,7 +99,7 @@ def main():
     ax[2].axhline(40, color='k', lw=0.8, ls=':'); ax[2].text(120, 41, '40 dB', fontsize=9)
     ax[2].set_xlabel('音声周波数 [Hz]（灰色は通過域 300〜2700 Hz）'); ax[2].set_xlim(F[0], F[-1])
     ax[0].legend(fontsize=9, loc='upper center')
-    fig.suptitle('PSN_TRX Ver 2.0 送信 AF の I/Q 位相差（シミュレーション）')
+    fig.suptitle('PSN_TRX-V2 送信 AF の I/Q 位相差（シミュレーション）')
     fig.tight_layout()
     out = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'iq_scan.png')
     fig.savefig(out, dpi=110); print('→', out)

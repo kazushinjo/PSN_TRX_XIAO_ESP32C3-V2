@@ -1,4 +1,4 @@
-"""不要側波帯（逆側帯波）の抑圧比をグラフにする（Ver 2.0）
+"""不要側波帯（逆側帯波）の抑圧比をグラフにする（V2）
 
   上: 音声周波数ごとの抑圧比（iq_scan.py と同じ計算: U7 の複素 FIR × PDM 出力〜変調器入力のアナログ部）
   下: 1 kHz の試験トーン（tone 1000、USB）を送信したときの、搬送波付近のスペクトルの見え方
@@ -31,9 +31,9 @@ def main():
     cI, cQ = s.fir(iqd, iqa)
     rf = 10 ** (0.1 / 20) * np.exp(1j * math.radians(1.0))     # RF 側 1°・0.1 dB
     cases = [
-        ('定数どおり（FIR＋アナログ部）', fI * nI, fQ * nQ, 'C103', '-'),
+        ('定数どおり（FIR＋アナログ部）', fI * nI, fQ * nQ, 'C2', '-'),
         ('RC が I +3%・Q −3%（iqd・iqa の補正なし）', fI * mI, fQ * mQ, 'C3', '--'),
-        (f'同上を iqd {iqd:+.2f} µs・iqa {iqa:+.2f} dB で補正', cI * mI, cQ * mQ, 'C102', '-'),
+        (f'同上を iqd {iqd:+.2f} µs・iqa {iqa:+.2f} dB で補正', cI * mI, cQ * mQ, 'C1', '-'),
         ('参考: さらに RF 側に 1°・0.1 dB のずれ', cI * mI * rf, cQ * mQ, 'C0', ':'),
     ]
     fp = '/System/Library/Fonts/ヒラギノ角ゴシック W3.ttc'
@@ -76,7 +76,7 @@ def main():
     a.set_title('試験トーン 1 kHz（tone 1000、USB）を送信したときのスペクトル', fontsize=11)
     a.grid(True, alpha=0.4); a.legend(fontsize=8.5, loc='upper right', bbox_to_anchor=(1, 0.78))
 
-    fig.suptitle('PSN_TRX Ver 2.0 不要側波帯の抑圧比（シミュレーション）', fontsize=13)
+    fig.suptitle('PSN_TRX-V2 不要側波帯の抑圧比（シミュレーション）', fontsize=13)
     fig.text(0.01, 0.005, '計算: U7 の複素 FIR（tx_dsp.cpp と同じ係数）× PDM 出力〜変調器入力（ngspice）。'
              '搬送波の漏れと RF 側のずれ（参考の線を除く）は含まない。', fontsize=8, color='0.35')
     fig.tight_layout(rect=(0, 0.02, 1, 0.98))
