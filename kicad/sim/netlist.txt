@@ -89,8 +89,8 @@ C88 0.01u 1=Net-(Q18-B) 2=Net-(L13-AA)
 C89 0.01u 1=Net-(Q18-E) 2=GND
 C90 15p 1=Net-(L14-SA) 2=/TX12V
 C91 0.01u 1=/TX12V 2=GND
-C92 100pF 1=Net-(L14-AA) 2=Net-(C92-Pad2)
-C93 22pF 1=Net-(Q19-G) 2=GND
+C92 150pF 1=Net-(L14-AA) 2=Net-(C92-Pad2)
+C93 33pF 1=Net-(C92-Pad2) 2=GND
 C94 0.001u 1=Net-(Q19-D) 2=Net-(C94-Pad2)
 C95 0.1uF 1=/TX12V 2=GND
 C96 100u 1=/TX12V 2=GND
@@ -145,7 +145,7 @@ L11 1mH 1/1_1=Net-(C81-Pad2) 2/2_2=Net-(C73-Pad2)
 L12 7T50 1/SA_1=Net-(D4-A) 2/CT_2=GND 3/SB_3=Net-(D5-K) 4/AA_4=Net-(L12-AA) 5/AB_5=GND
 L13 7T50 1/SA_1=Net-(L13-SA) 2/CT_2=unconnected-(L13-CT-Pad2) 3/SB_3=/TX12V 4/AA_4=Net-(L13-AA) 5/AB_5=GND
 L14 7T50 1/SA_1=Net-(L14-SA) 2/CT_2=unconnected-(L14-CT-Pad2) 3/SB_3=/TX12V 4/AA_4=Net-(L14-AA) 5/AB_5=GND
-L15 47nH 1/1_1=Net-(C92-Pad2) 2/2_2=Net-(Q19-G)
+L15 270nH 1/1_1=Net-(C92-Pad2) 2/2_2=Net-(Q19-G)
 L16 T-50-10 9T/0.6mm 1/1_1=Net-(C99-Pad1) 2/2_2=Net-(C94-Pad2)
 L17 T-50-10 10T/0.6mm 1/1_1=Net-(C99-Pad1) 2/2_2=Net-(C101-Pad1)
 L18 T-30-6 8T/0.4mm 1/1_1=Net-(C101-Pad1) 2/2_2=Net-(C100-Pad1)

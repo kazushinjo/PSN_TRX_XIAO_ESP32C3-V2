@@ -29,7 +29,7 @@ BOLD = fm.FontProperties(fname=FW6)
 
 board = json.load(open(sys.argv[1]))
 OUT = sys.argv[2]
-VER = 'V2 Ver 1.3　2026-11-08'
+VER = 'V2 Ver 1.4　2026-11-11'
 MM = 1 / 25.4
 PW, PH = 210.0, 297.0            # A4 縦 [mm]
 
@@ -118,7 +118,7 @@ notes = [
     '□ K1 G5V-2（穴 φ1.0）　□ U8 R-78E5.0（3 ピン、四角が Vin）　□ TC1〜TC4 TMCV01（足の間隔 6.3）',
     '□ HS1 放熱器 17PB046（脚 2 本 30mm、Q19 側のつば 7mm が L15・L16 に当たらない）と Q19 RD06HVF1',
     '□ L3・L12〜L14 FCZ コイル（足 5 本＋ケースの爪 2 本）　□ VR3〜VR6 GF063P・VR7 3266W　□ 電解コンデンサ（ピッチ 2.0／2.5）',
-    '□ C8・C17・C19・C21・C66〜C69・C76〜C79（5mm ピッチ品を 2.5mm の穴へ寄せる）　□ L15 47nH（縦置き 2.54）　□ RFC1（横置き 15.24）',
+    '□ C8・C17・C19・C21・C66〜C69・C76〜C79（5mm ピッチ品を 2.5mm の穴へ寄せる）　□ L15 270nH（縦置き 2.54）　□ RFC1（横置き 15.24）',
 ]
 for i, t in enumerate(notes):
     ov.text(LM, yb + 14 + i * 5.2, t, fontsize=6.6)

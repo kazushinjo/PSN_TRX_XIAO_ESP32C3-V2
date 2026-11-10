@@ -37,7 +37,7 @@ OUT = sys.argv[3]
 PNGDIR = sys.argv[4] if len(sys.argv) > 4 else None
 
 TITLE = 'PSN_TRX_XIAO_ESP32C3-V2　部品実装図'
-SUB = '基板 134.1 × 129.7 mm / 4層 / リード部品＋表面実装 2 点（U1・U2 NJM2594V）　V2 Ver 1.3　2026-11-08'
+SUB = '基板 134.1 × 129.7 mm / 4層 / リード部品＋表面実装 2 点（U1・U2 NJM2594V）　V2 Ver 1.4　2026-11-11'
 COPPER = '#c8762f'
 FAB = '#333333'
 FAINT = '#c8c8c8'
@@ -219,7 +219,7 @@ def shade(col):
 
 pages_total = 1 + len(blocks) + 1
 A4 = (11.69, 8.27)
-pdf = PdfPages(OUT, metadata={'Title': 'PSN_TRX_XIAO_ESP32C3-V2 部品実装図 V2 Ver 1.3', 'Author': 'JA6FUF'})
+pdf = PdfPages(OUT, metadata={'Title': 'PSN_TRX_XIAO_ESP32C3-V2 部品実装図 V2 Ver 1.4', 'Author': 'JA6FUF'})
 # ---- 1. 全体図
 fig = plt.figure(figsize=A4)
 header(fig, '全体図', 1, pages_total)

@@ -6,7 +6,7 @@
 	(paper "A0")
 	(title_block
 		(title "50Mhz PSN トランシーバ")
-		(rev "V2 Ver 1.3")
+		(rev "V2 Ver 1.4")
 	)
 	(lib_symbols
 		(symbol "Amplifier_Operational:LM2904"
@@ -9546,12 +9546,6 @@
 		(uuid "5a953164-e472-485a-84cd-1c23bdfe5ab3")
 	)
 	(junction
-		(at 345.44 468.63)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "5eab0739-cabf-4b50-803c-bc2ee981a895")
-	)
-	(junction
 		(at 725.17 109.22)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -10273,6 +10267,52 @@
 	)
 	(wire
 		(pts
+			(xy 355.6 468.63) (xy 358.14 468.63)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3b094469-60f8-4101-b624-e673987705bc")
+	)
+	(wire
+		(pts
+			(xy 358.14 468.63) (xy 359.41 468.63)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d20418ed-b7d1-41ac-add1-7414ccf3279b")
+	)
+	(wire
+		(pts
+			(xy 358.14 468.63) (xy 358.14 473.71)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "84000047-9ac8-43f8-b60f-d1801c7f8ab9")
+	)
+	(wire
+		(pts
+			(xy 358.14 481.33) (xy 358.14 485.14)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c1573c26-6347-4d08-b774-6a03bbcd4e5c")
+	)
+	(junction
+		(at 358.14 468.63)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "5b8eb1da-f7e6-4af6-81b4-fabf03725eb3")
+	)
+	(wire
+		(pts
 			(xy 152.4 294.64) (xy 152.4 297.18)
 		)
 		(stroke
@@ -10390,16 +10430,6 @@
 			(type default)
 		)
 		(uuid "011bed5a-fb0e-4460-b47a-bae203707be7")
-	)
-	(wire
-		(pts
-			(xy 345.44 481.33) (xy 345.44 485.14)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "01be15f7-63d3-401c-bc0a-52eab81e9302")
 	)
 	(wire
 		(pts
@@ -10693,16 +10723,6 @@
 	)
 	(wire
 		(pts
-			(xy 364.49 468.63) (xy 367.03 468.63)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "0ea54076-427a-4b00-872c-298574bb02fb")
-	)
-	(wire
-		(pts
 			(xy 185.42 147.32) (xy 198.12 147.32)
 		)
 		(stroke
@@ -10840,16 +10860,6 @@
 			(type default)
 		)
 		(uuid "14db6f85-a56d-4476-a6bb-84902994fffb")
-	)
-	(wire
-		(pts
-			(xy 345.44 473.71) (xy 345.44 468.63)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "15539048-6cfd-4c52-870a-eedc73936832")
 	)
 	(wire
 		(pts
@@ -14290,16 +14300,6 @@
 			(type default)
 		)
 		(uuid "a1ebdbd8-f138-4cc8-8c1b-3e3a867f2647")
-	)
-	(wire
-		(pts
-			(xy 356.87 468.63) (xy 355.6 468.63)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "a234bcb0-b94e-4975-af20-b2c428b69c65")
 	)
 	(wire
 		(pts
@@ -18199,7 +18199,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 345.44 477.52 0)
+		(at 358.14 477.52 0)
 		(mirror y)
 		(unit 1)
 		(body_style 1)
@@ -18210,7 +18210,7 @@
 		(dnp no)
 		(uuid "0889ef82-7520-4d79-9780-ced72dcca8e8")
 		(property "Reference" "C93"
-			(at 341.63 474.98 0)
+			(at 354.33 474.98 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -18219,8 +18219,8 @@
 				)
 			)
 		)
-		(property "Value" "22pF"
-			(at 351.79 474.726 0)
+		(property "Value" "33pF"
+			(at 364.49 474.726 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -18230,7 +18230,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
-			(at 345.44 477.52 0)
+			(at 358.14 477.52 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -18241,7 +18241,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 345.44 477.52 0)
+			(at 358.14 477.52 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -18252,7 +18252,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 345.44 477.52 0)
+			(at 358.14 477.52 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -18445,7 +18445,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 345.44 485.14 0)
+		(at 358.14 485.14 0)
 		(mirror y)
 		(unit 1)
 		(body_style 1)
@@ -18456,7 +18456,7 @@
 		(dnp no)
 		(uuid "09717655-b2f5-444c-af83-d2efcd39ff06")
 		(property "Reference" "#PWR25"
-			(at 345.44 488.95 0)
+			(at 358.14 488.95 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -18467,7 +18467,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 348.996 485.394 0)
+			(at 361.696 485.394 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -18478,7 +18478,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 345.44 485.14 0)
+			(at 358.14 485.14 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -18489,7 +18489,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 345.44 485.14 0)
+			(at 358.14 485.14 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -18500,7 +18500,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 345.44 485.14 0)
+			(at 358.14 485.14 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -37715,7 +37715,7 @@
 				)
 			)
 		)
-		(property "Value" "47nH"
+		(property "Value" "270nH"
 			(at 352.298 465.074 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -49058,7 +49058,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 360.68 468.63 270)
+		(at 363.22 468.63 270)
 		(mirror x)
 		(unit 1)
 		(body_style 1)
@@ -49069,7 +49069,7 @@
 		(dnp no)
 		(uuid "d362c7cd-a31e-4914-af46-c702b2a50df9")
 		(property "Reference" "C92"
-			(at 361.696 461.518 90)
+			(at 364.236 461.518 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -49078,8 +49078,8 @@
 				)
 			)
 		)
-		(property "Value" "100pF"
-			(at 360.172 464.312 90)
+		(property "Value" "150pF"
+			(at 362.712 464.312 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -49089,7 +49089,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
-			(at 360.68 468.63 0)
+			(at 363.22 468.63 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -49100,7 +49100,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 360.68 468.63 0)
+			(at 363.22 468.63 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -49111,7 +49111,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 360.68 468.63 0)
+			(at 363.22 468.63 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)

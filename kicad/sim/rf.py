@@ -51,7 +51,7 @@ def pa_lpf():
         print(f" {k:.2f} {coss*1e12:3.0f}p | {kt:.2f}  |  {tc2*1e12:5.2f}  |  {tc1*1e12:4.0f}   |   {rl:5.1f}    |  {il:5.2f}   | {h[0]:6.1f} | {h[1]:6.1f} | {h[2]:6.1f} | {hu:6.1f}")
 
 def pa_input():
-    """L14 リンク（50Ω と仮定）→ C92 → L15 → ゲート（C93、R69→VR7 ワイパー、Ciss/Crss/gm）"""
+    """L14 リンク（50Ω と仮定）→ C92 →（C93 で GND へ、V2 Ver 1.4）→ L15 → ゲート（R69→VR7 ワイパー、Ciss/Crss/gm）。部品のつながりは回路図のネットのまま"""
     print('PA 入力: 50Ω 源から見た不整合損失（VR7 は Idq に合わせた位置を 0.3〜0.7 で振る）')
     for gm, pos, vs in itertools.product([0.3, 1.0], [0.3, 0.7], [12]):
         net = f"""pain

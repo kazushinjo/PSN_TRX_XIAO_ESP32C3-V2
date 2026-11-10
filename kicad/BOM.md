@@ -107,8 +107,8 @@
 | C66, C67, C68, C69 | 3300p | `C_Disc_D5.0mm_W2.5mm_P2.50mm` | 4 | 秋月電子 | RDE5C1H332J0K1H03B（108120） | U7 の PDM 出力の 2 段 RC の C（C66・C67 が I、C68・C69 が Q）。I と Q で値がそろうよう同じ袋のものを使う。残ったずれはファームウェアの iqd・iqa で補正 |
 | C76, C77, C78, C79 | 47PF | `C_Disc_D5.0mm_W2.5mm_P2.50mm` | 4 | 秋月電子 | RDE5C1H470J0K1H03B（108045） |  |
 | C80, C81 | 0.001u | `C_Disc_D5.0mm_W2.5mm_P2.50mm` | 2 | 秋月電子 | RD15N102J1HL2L-10（104062） |  |
-| C92 | 100pF | `C_Disc_D5.0mm_W2.5mm_P5.00mm` | 1 | 秋月電子 | RDE5C1H101J0K1H03B（108063） |  |
-| C93 | 22pF | `C_Disc_D5.0mm_W2.5mm_P5.00mm` | 1 | 秋月電子 | RDE5C1H220J0K1H03B（108094） |  |
+| C92 | 150pF | `C_Disc_D5.0mm_W2.5mm_P5.00mm` | 1 | 秋月電子 | RDE5C1H151J0K1H03B（108104） | PA 入力整合（V2 Ver 1.4 で 100pF から変更） |
+| C93 | 33pF | `C_Disc_D5.0mm_W2.5mm_P5.00mm` | 1 | 秋月電子 | RDE5C1H330J0K1H03B（108096） | PA 入力整合。C92 と L15 の間から GND へ（V2 Ver 1.4 でゲート側から移し、22pF から変更） |
 | C94 | 0.001u | `C_Disc_D5.0mm_W2.5mm_P5.00mm` | 1 | 秋月電子 | RDE5C1H102J0K1H03B（108114） | PA 出力 DC カット |
 | C95, C97 | 0.1uF | `C_Disc_D5.0mm_W2.5mm_P5.00mm` | 2 | 秋月電子 | RDER72E104K2K1H03B（110147） |  |
 | C98 | 39p | `C_Disc_D5.0mm_W2.5mm_P5.00mm` | 1 | 秋月電子 | RDE5C1H390J0K1H03B（108097） | PA 出力 LPF のドレイン側シャント、NP0。Q19 の出力容量（Coss 約 18〜25pF）と配線容量が並列に入る分を差し引いた値（2026-10-17 に 33p→39p） |
@@ -158,7 +158,7 @@
 | L7 | 15mH | `L_AL0510-153K_Vertical` | 1 | 秋月電子 | AL0510-153K（111407） | マイク AF ローパス |
 | L8, L9 | 100nH | `L_AL0510-153K_Vertical` | 2 | DigiKey／Mouser（要確認） | 100nH アキシャル（AL0510 相当） | L8/L9: Si5351 CLK0/CLK1 出力 LPF。代替に空芯可（φ0.6mm 線を φ4.4mm 芯に 5 回巻き・巻き幅 約3.9mm で約100nH、伸縮で調整。L8 と L9 は軸を 90° ずらす） |
 | L10, L11 | 1mH | `L_AL0510-153K_Vertical` | 2 | 秋月電子 | AL0510-102K（111367） | L11: 平衡変調器 AF 注入 |
-| L15 | 47nH | `L_Axial_L9.5mm_D4.0mm_P2.54mm_Vertical_Fastron_SMCC` | 1 | DigiKey／Mouser（要確認） | Fastron SMCC 系 47nH | PA 入力整合。縦置き 2.54mm（本体は 1 番の穴の上に立て、2 番 = Q19 ゲート側へ足を折り返す。放熱器のつばの内側。V2 Ver 1.3 で横置き 12.7mm から変更） |
+| L15 | 270nH | `L_Axial_L9.5mm_D4.0mm_P2.54mm_Vertical_Fastron_SMCC` | 1 | DigiKey／Mouser（要確認） | Fastron SMCC-R27K-02（0.27µH ±10%、Q 45、0.11Ω、1.4A） | PA 入力整合（V2 Ver 1.4 で 47nH から変更）。縦置き 2.54mm（本体は 1 番の穴の上に立て、2 番 = Q19 ゲート側へ足を折り返す。放熱器のつばの内側。V2 Ver 1.3 で横置き 12.7mm から変更） |
 | L16 | T-50-10 9T/0.6mm | `L_T50_2pin_Vertical` | 1 | 秋月電子 | T-50-10（111948） | 9 回巻き（約 0.25µH）。PA 出力 7 素子 LPF のドレイン側 |
 | L17 | T-50-10 10T/0.6mm | `L_T50_2pin_Vertical` | 1 | 秋月電子 | T-50-10（111948） | 10 回巻き（約 0.31µH）。PA 出力 7 素子 LPF の中央 |
 | L18 | T-30-6 8T/0.4mm | `L_T30_2pin_Vertical` | 1 | 秋月電子 | T-30-6（116458） | 0.4mm 線 8 回巻き（約 0.23µH）。2 倍波トラップ（C100∥TC4 と 101MHz で直列共振） |
