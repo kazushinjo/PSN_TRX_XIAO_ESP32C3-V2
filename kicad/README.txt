@@ -1,4 +1,4 @@
-PSN_TRX_XIAO_ESP32C3-V2 完全KiCadプロジェクト（V2 Ver 1.3）
+PSN_TRX_XIAO_ESP32C3-V2 完全KiCadプロジェクト（V2 Ver 1.4）
 
 【このフォルダの開き方】
 1. KiCad 10 のプロジェクトマネージャで「ファイルを開く」→ PSN_TRX.kicad_pro を選択
