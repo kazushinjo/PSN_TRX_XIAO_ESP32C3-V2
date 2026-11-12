@@ -5457,6 +5457,145 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "PSN_TRX:RX12V"
+			(power global)
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "#PWR"
+				(at 0 -3.81 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "RX12V"
+				(at 0 3.556 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Power symbol creates a global label with name \"RX12V\"（受信中の 12V、K1 で切替）"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "global power"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "RX12V_0_1"
+				(polyline
+					(pts
+						(xy -0.762 1.27) (xy 0 2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 2.54) (xy 0.762 1.27)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 0) (xy 0 2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "RX12V_1_1"
+				(pin power_in line
+					(at 0 0 90)
+					(length 0)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "PSN_TRX:Seeeduino_XIAO_Socket"
 			(pin_names
 				(offset 1.5)
@@ -8450,145 +8589,6 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "PSN_TRX:RX12V"
-			(power global)
-			(pin_numbers
-				(hide yes)
-			)
-			(pin_names
-				(offset 0)
-				(hide yes)
-			)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(in_pos_files yes)
-			(duplicate_pin_numbers_are_jumpers no)
-			(property "Reference" "#PWR"
-				(at 0 -3.81 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Value" "RX12V"
-				(at 0 3.556 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" ""
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Datasheet" ""
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Description" "Power symbol creates a global label with name \"RX12V\"（受信中の 12V、K1 で切替）"
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "ki_keywords" "global power"
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(symbol "RX12V_0_1"
-				(polyline
-					(pts
-						(xy -0.762 1.27) (xy 0 2.54)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0 2.54) (xy 0.762 1.27)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0 0) (xy 0 2.54)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-			)
-			(symbol "RX12V_1_1"
-				(pin power_in line
-					(at 0 0 90)
-					(length 0)
-					(name ""
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(embedded_fonts no)
-		)
 		(symbol "power:GND"
 			(power global)
 			(pin_numbers
@@ -9001,7 +9001,7 @@
 	)
 	(text "IF 増幅は Q7・Q6（2SK192A カスコード）。R18 は Q6 のソース抵抗"
 		(exclude_from_sim no)
-		(at 529.59 200.66 0)
+		(at 519.938 199.898 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -9202,24 +9202,6 @@
 			(justify left bottom)
 		)
 		(uuid "fb9dd0b9-db84-4085-b0d4-32a97f622f8c")
-	)
-	(junction
-		(at 152.4 294.64)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "62d9e823-8b30-410f-86df-cd40f5dbf95a")
-	)
-	(junction
-		(at 157.48 294.64)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "fe32b262-dd8d-492d-ae45-fc7cebddd3e9")
-	)
-	(junction
-		(at 165.1 294.64)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "5bf13f41-69d1-4df3-8999-666114b9a1ef")
 	)
 	(junction
 		(at 839.47 124.46)
@@ -9546,19 +9528,37 @@
 		(uuid "5a953164-e472-485a-84cd-1c23bdfe5ab3")
 	)
 	(junction
+		(at 358.14 468.63)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "5b8eb1da-f7e6-4af6-81b4-fabf03725eb3")
+	)
+	(junction
+		(at 165.1 294.64)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "5bf13f41-69d1-4df3-8999-666114b9a1ef")
+	)
+	(junction
 		(at 725.17 109.22)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "5f1f0725-37ea-4169-8f20-8c26db205e58")
 	)
 	(junction
-		(at 742.95 603.25)
+		(at 152.4 294.64)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "62d9e823-8b30-410f-86df-cd40f5dbf95a")
+	)
+	(junction
+		(at 742.95 610.87)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "639aaa62-4743-43d9-a52b-a98deb2a0d45")
 	)
 	(junction
-		(at 603.25 162.56)
+		(at 594.36 210.82)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "65e4d146-580d-4b2c-9710-daaa40b9f2b6")
@@ -9790,6 +9790,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "94faa40d-ddf1-4902-b29a-81013191c471")
+	)
+	(junction
+		(at 636.27 210.82)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "957fe511-bd51-4b10-8313-28c2ca1054e4")
 	)
 	(junction
 		(at 769.62 716.28)
@@ -10194,12 +10200,6 @@
 		(uuid "fce80742-1025-4473-a7ff-e2822593250c")
 	)
 	(junction
-		(at 608.33 167.64)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "fd7d13fd-3c24-4d19-ae6b-8fc57f2651e8")
-	)
-	(junction
 		(at 669.29 593.09)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -10210,6 +10210,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "fe1d00fd-9db1-454e-bf26-651949a649bc")
+	)
+	(junction
+		(at 157.48 294.64)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "fe32b262-dd8d-492d-ae45-fc7cebddd3e9")
 	)
 	(junction
 		(at 619.76 361.95)
@@ -10264,112 +10270,6 @@
 	(no_connect
 		(at 725.17 195.58)
 		(uuid "fcc3d6c0-72dc-4e75-9113-0d023a5d1183")
-	)
-	(wire
-		(pts
-			(xy 355.6 468.63) (xy 358.14 468.63)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "3b094469-60f8-4101-b624-e673987705bc")
-	)
-	(wire
-		(pts
-			(xy 358.14 468.63) (xy 359.41 468.63)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "d20418ed-b7d1-41ac-add1-7414ccf3279b")
-	)
-	(wire
-		(pts
-			(xy 358.14 468.63) (xy 358.14 473.71)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "84000047-9ac8-43f8-b60f-d1801c7f8ab9")
-	)
-	(wire
-		(pts
-			(xy 358.14 481.33) (xy 358.14 485.14)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "c1573c26-6347-4d08-b774-6a03bbcd4e5c")
-	)
-	(junction
-		(at 358.14 468.63)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "5b8eb1da-f7e6-4af6-81b4-fabf03725eb3")
-	)
-	(wire
-		(pts
-			(xy 152.4 294.64) (xy 152.4 297.18)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "53396341-8858-472c-ab24-4f45aa63ee82")
-	)
-	(wire
-		(pts
-			(xy 157.48 294.64) (xy 157.48 297.18)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "dbdcc995-b878-4c60-90ad-d063b5ca46e8")
-	)
-	(wire
-		(pts
-			(xy 165.1 294.64) (xy 165.1 297.18)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "08cf7ce8-1967-420f-bdd5-04e090df54df")
-	)
-	(wire
-		(pts
-			(xy 165.1 304.8) (xy 167.64 304.8)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "1e85cb19-cca7-44fe-89eb-43e0c34ddadc")
-	)
-	(wire
-		(pts
-			(xy 167.64 307.34) (xy 165.1 307.34)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "4823df38-b4a2-4a4b-a477-458fcebfd213")
-	)
-	(wire
-		(pts
-			(xy 165.1 307.34) (xy 165.1 309.88)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "03b2c1f7-cf0c-4189-ba68-1f387887f11e")
 	)
 	(wire
 		(pts
@@ -10450,6 +10350,16 @@
 			(type default)
 		)
 		(uuid "022d34a9-d777-4ba9-b815-c4c2fa5593f6")
+	)
+	(wire
+		(pts
+			(xy 165.1 307.34) (xy 165.1 309.88)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "03b2c1f7-cf0c-4189-ba68-1f387887f11e")
 	)
 	(wire
 		(pts
@@ -10560,6 +10470,16 @@
 			(type default)
 		)
 		(uuid "087c6e21-7a90-4e37-be5d-9f2e39029f6e")
+	)
+	(wire
+		(pts
+			(xy 165.1 294.64) (xy 165.1 297.18)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "08cf7ce8-1967-420f-bdd5-04e090df54df")
 	)
 	(wire
 		(pts
@@ -10893,13 +10813,23 @@
 	)
 	(wire
 		(pts
-			(xy 593.09 542.29) (xy 566.42 542.29)
+			(xy 581.66 542.29) (xy 566.42 542.29)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
 		(uuid "19f1203f-68e9-435d-94ba-354a1f59a568")
+	)
+	(wire
+		(pts
+			(xy 566.42 563.88) (xy 566.42 556.26)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1a7c9262-24ff-4f60-a0ac-46a6bf713c04")
 	)
 	(wire
 		(pts
@@ -11023,6 +10953,16 @@
 	)
 	(wire
 		(pts
+			(xy 165.1 304.8) (xy 167.64 304.8)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1e85cb19-cca7-44fe-89eb-43e0c34ddadc")
+	)
+	(wire
+		(pts
 			(xy 377.19 137.16) (xy 384.81 137.16)
 		)
 		(stroke
@@ -11070,16 +11010,6 @@
 			(type default)
 		)
 		(uuid "217e9f70-b785-4403-9529-65bc597d5abf")
-	)
-	(wire
-		(pts
-			(xy 608.33 162.56) (xy 608.33 167.64)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "21a0208a-1269-45c2-aa43-f43d9653d2a9")
 	)
 	(wire
 		(pts
@@ -11143,6 +11073,16 @@
 	)
 	(wire
 		(pts
+			(xy 554.99 563.88) (xy 554.99 556.26)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "23a44348-1e41-4454-b242-6782e6a9b573")
+	)
+	(wire
+		(pts
 			(xy 524.51 491.49) (xy 524.51 494.03)
 		)
 		(stroke
@@ -11183,7 +11123,7 @@
 	)
 	(wire
 		(pts
-			(xy 608.33 535.94) (xy 608.33 588.01)
+			(xy 589.28 535.94) (xy 589.28 588.01)
 		)
 		(stroke
 			(width 0)
@@ -11333,7 +11273,7 @@
 	)
 	(wire
 		(pts
-			(xy 345.44 468.63) (xy 330.2 468.63)
+			(xy 330.2 468.63) (xy 347.98 468.63)
 		)
 		(stroke
 			(width 0)
@@ -11623,6 +11563,16 @@
 	)
 	(wire
 		(pts
+			(xy 636.27 210.82) (xy 636.27 711.2)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "381f1dd9-8eff-4692-812a-20ec6bdc1396")
+	)
+	(wire
+		(pts
 			(xy 853.44 605.79) (xy 855.98 605.79)
 		)
 		(stroke
@@ -11713,6 +11663,16 @@
 	)
 	(wire
 		(pts
+			(xy 355.6 468.63) (xy 358.14 468.63)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3b094469-60f8-4101-b624-e673987705bc")
+	)
+	(wire
+		(pts
 			(xy 684.53 618.49) (xy 684.53 593.09)
 		)
 		(stroke
@@ -11743,7 +11703,7 @@
 	)
 	(wire
 		(pts
-			(xy 554.99 535.94) (xy 608.33 535.94)
+			(xy 554.99 535.94) (xy 589.28 535.94)
 		)
 		(stroke
 			(width 0)
@@ -11863,7 +11823,7 @@
 	)
 	(wire
 		(pts
-			(xy 588.01 165.1) (xy 590.55 165.1)
+			(xy 579.12 213.36) (xy 581.66 213.36)
 		)
 		(stroke
 			(width 0)
@@ -12000,6 +11960,16 @@
 			(type default)
 		)
 		(uuid "47b0d4e8-2a77-4406-accc-a900c293b1c0")
+	)
+	(wire
+		(pts
+			(xy 167.64 307.34) (xy 165.1 307.34)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4823df38-b4a2-4a4b-a477-458fcebfd213")
 	)
 	(wire
 		(pts
@@ -12303,6 +12273,16 @@
 	)
 	(wire
 		(pts
+			(xy 152.4 294.64) (xy 152.4 297.18)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "53396341-8858-472c-ab24-4f45aa63ee82")
+	)
+	(wire
+		(pts
 			(xy 612.14 176.53) (xy 542.29 176.53)
 		)
 		(stroke
@@ -12593,7 +12573,7 @@
 	)
 	(wire
 		(pts
-			(xy 624.84 588.01) (xy 656.59 588.01)
+			(xy 612.14 588.01) (xy 656.59 588.01)
 		)
 		(stroke
 			(width 0)
@@ -12643,7 +12623,7 @@
 	)
 	(wire
 		(pts
-			(xy 755.65 586.74) (xy 690.88 586.74)
+			(xy 755.65 575.31) (xy 690.88 575.31)
 		)
 		(stroke
 			(width 0)
@@ -13023,7 +13003,7 @@
 	)
 	(wire
 		(pts
-			(xy 542.29 173.99) (xy 608.33 173.99)
+			(xy 542.29 173.99) (xy 636.27 173.99)
 		)
 		(stroke
 			(width 0)
@@ -13153,7 +13133,7 @@
 	)
 	(wire
 		(pts
-			(xy 617.22 624.84) (xy 593.09 624.84)
+			(xy 604.52 624.84) (xy 581.66 624.84)
 		)
 		(stroke
 			(width 0)
@@ -13263,7 +13243,7 @@
 	)
 	(wire
 		(pts
-			(xy 690.88 586.74) (xy 690.88 600.71)
+			(xy 690.88 575.31) (xy 690.88 600.71)
 		)
 		(stroke
 			(width 0)
@@ -13533,6 +13513,16 @@
 	)
 	(wire
 		(pts
+			(xy 855.98 571.5) (xy 855.98 576.58)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "83a58523-23cd-4fa1-a740-40760d6ae07b")
+	)
+	(wire
+		(pts
 			(xy 412.75 137.16) (xy 420.37 137.16)
 		)
 		(stroke
@@ -13540,6 +13530,16 @@
 			(type default)
 		)
 		(uuid "83b5830d-2296-4eef-9de3-18f146f5f06d")
+	)
+	(wire
+		(pts
+			(xy 358.14 468.63) (xy 358.14 473.71)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "84000047-9ac8-43f8-b60f-d1801c7f8ab9")
 	)
 	(wire
 		(pts
@@ -13573,7 +13573,7 @@
 	)
 	(wire
 		(pts
-			(xy 590.55 165.1) (xy 590.55 167.64)
+			(xy 581.66 213.36) (xy 581.66 215.9)
 		)
 		(stroke
 			(width 0)
@@ -13613,16 +13613,6 @@
 	)
 	(wire
 		(pts
-			(xy 742.95 603.25) (xy 745.49 603.25)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "86d4ba56-08f3-4058-82e2-bcb78c624e50")
-	)
-	(wire
-		(pts
 			(xy 656.59 712.47) (xy 656.59 703.58)
 		)
 		(stroke
@@ -13643,7 +13633,7 @@
 	)
 	(wire
 		(pts
-			(xy 588.01 160.02) (xy 593.09 160.02)
+			(xy 579.12 208.28) (xy 584.2 208.28)
 		)
 		(stroke
 			(width 0)
@@ -14103,16 +14093,6 @@
 	)
 	(wire
 		(pts
-			(xy 608.33 167.64) (xy 636.27 167.64)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "9ba857f9-7f5c-4537-8dc5-d154f41dc632")
-	)
-	(wire
-		(pts
 			(xy 257.81 518.16) (xy 266.7 518.16)
 		)
 		(stroke
@@ -14293,16 +14273,6 @@
 	)
 	(wire
 		(pts
-			(xy 345.44 468.63) (xy 347.98 468.63)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "a1ebdbd8-f138-4cc8-8c1b-3e3a867f2647")
-	)
-	(wire
-		(pts
 			(xy 433.07 431.8) (xy 474.98 431.8)
 		)
 		(stroke
@@ -14383,7 +14353,7 @@
 	)
 	(wire
 		(pts
-			(xy 608.33 588.01) (xy 617.22 588.01)
+			(xy 589.28 588.01) (xy 604.52 588.01)
 		)
 		(stroke
 			(width 0)
@@ -14530,16 +14500,6 @@
 			(type default)
 		)
 		(uuid "ac7a653a-5166-4903-b9d1-7e76d017b0fe")
-	)
-	(wire
-		(pts
-			(xy 608.33 173.99) (xy 608.33 167.64)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "ac81c5b8-82b2-4c88-a3d4-248e03943afa")
 	)
 	(wire
 		(pts
@@ -15013,6 +14973,16 @@
 	)
 	(wire
 		(pts
+			(xy 358.14 481.33) (xy 358.14 485.14)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c1573c26-6347-4d08-b774-6a03bbcd4e5c")
+	)
+	(wire
+		(pts
 			(xy 433.07 490.22) (xy 433.07 492.76)
 		)
 		(stroke
@@ -15453,7 +15423,7 @@
 	)
 	(wire
 		(pts
-			(xy 603.25 162.56) (xy 608.33 162.56)
+			(xy 594.36 210.82) (xy 636.27 210.82)
 		)
 		(stroke
 			(width 0)
@@ -15583,7 +15553,7 @@
 	)
 	(wire
 		(pts
-			(xy 588.01 162.56) (xy 603.25 162.56)
+			(xy 579.12 210.82) (xy 594.36 210.82)
 		)
 		(stroke
 			(width 0)
@@ -15630,6 +15600,16 @@
 			(type default)
 		)
 		(uuid "d1c6b497-66f8-4bf9-a6d3-9060eb7fffcc")
+	)
+	(wire
+		(pts
+			(xy 358.14 468.63) (xy 359.41 468.63)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d20418ed-b7d1-41ac-add1-7414ccf3279b")
 	)
 	(wire
 		(pts
@@ -15803,6 +15783,16 @@
 	)
 	(wire
 		(pts
+			(xy 157.48 294.64) (xy 157.48 297.18)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "dbdcc995-b878-4c60-90ad-d063b5ca46e8")
+	)
+	(wire
+		(pts
 			(xy 554.99 535.94) (xy 554.99 548.64)
 		)
 		(stroke
@@ -15823,7 +15813,7 @@
 	)
 	(wire
 		(pts
-			(xy 755.65 520.7) (xy 755.65 586.74)
+			(xy 755.65 520.7) (xy 755.65 575.31)
 		)
 		(stroke
 			(width 0)
@@ -16133,7 +16123,7 @@
 	)
 	(wire
 		(pts
-			(xy 593.09 542.29) (xy 593.09 624.84)
+			(xy 581.66 542.29) (xy 581.66 624.84)
 		)
 		(stroke
 			(width 0)
@@ -16293,7 +16283,7 @@
 	)
 	(wire
 		(pts
-			(xy 636.27 167.64) (xy 636.27 711.2)
+			(xy 636.27 173.99) (xy 636.27 210.82)
 		)
 		(stroke
 			(width 0)
@@ -16513,7 +16503,7 @@
 	)
 	(wire
 		(pts
-			(xy 624.84 624.84) (xy 645.16 624.84)
+			(xy 612.14 624.84) (xy 645.16 624.84)
 		)
 		(stroke
 			(width 0)
@@ -16631,6 +16621,16 @@
 		)
 		(uuid "ff7cbd85-73e3-4eb4-9aa3-2c24a9681695")
 	)
+	(label "TX12V"
+		(at 199.39 297.18 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "2cf2a09b-47e0-4bc7-b247-42b70d4c5d96")
+	)
 	(label "PSN_I_OUT"
 		(at 666.75 624.84 0)
 		(effects
@@ -16650,16 +16650,6 @@
 			(justify left bottom)
 		)
 		(uuid "a6f64eac-a493-426b-b60c-f7087b6cfc18")
-	)
-	(label "TX12V"
-		(at 199.39 297.18 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "2cf2a09b-47e0-4bc7-b247-42b70d4c5d96")
 	)
 	(label "PTT"
 		(at 134.62 279.4 90)
@@ -20588,6 +20578,83 @@
 		)
 	)
 	(symbol
+		(lib_id "power:+5V")
+		(at 855.98 571.5 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "140942ef-9e62-4c5b-bcd2-c7ba5cdef945")
+		(property "Reference" "#PWR200"
+			(at 855.98 575.31 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "+5V"
+			(at 857.504 568.198 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 855.98 571.5 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 855.98 571.5 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 855.98 571.5 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "6143e126-e30f-4ccb-8e46-0957f5b573b6")
+		)
+		(instances
+			(project "PSN_TRX"
+				(path "/50835569-93ad-4c8c-aafc-424a6a3761ef"
+					(reference "#PWR200")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:C")
 		(at 519.43 392.43 0)
 		(unit 1)
@@ -22370,93 +22437,6 @@
 		)
 	)
 	(symbol
-		(lib_id "power:+5V")
-		(at 855.98 571.5 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "140942ef-9e62-4c5b-bcd2-c7ba5cdef945")
-		(property "Reference" "#PWR200"
-			(at 855.98 575.31 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "+5V"
-			(at 857.504 568.198 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 855.98 571.5 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 855.98 571.5 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" ""
-			(at 855.98 571.5 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "6143e126-e30f-4ccb-8e46-0957f5b573b6")
-		)
-		(instances
-			(project "PSN_TRX"
-				(path "/50835569-93ad-4c8c-aafc-424a6a3761ef"
-					(reference "#PWR200")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(wire
-		(pts
-			(xy 855.98 571.5) (xy 855.98 576.58)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "83a58523-23cd-4fa1-a740-40760d6ae07b")
-	)
-	(symbol
 		(lib_id "Device:R")
 		(at 433.07 486.41 0)
 		(unit 1)
@@ -23361,6 +23341,87 @@
 			(project "PSN_TRX"
 				(path "/50835569-93ad-4c8c-aafc-424a6a3761ef"
 					(reference "Q19")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 157.48 300.99 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "2268e474-9574-405e-b959-41fc5cec975c")
+		(property "Reference" "C110"
+			(at 160.02 299.72 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "0.01u"
+			(at 160.02 302.26 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm"
+			(at 157.48 300.99 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 157.48 300.99 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "+12V 入力のパスコン（高い周波数用、J2 のすぐ横）"
+			(at 157.48 300.99 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "1673a6c7-5fe2-4fa3-bd95-031399c33978")
+		)
+		(pin "2"
+			(uuid "cf929f99-d5b4-42fa-9d44-344a8bab1282")
+		)
+		(instances
+			(project "PSN_TRX"
+				(path "/50835569-93ad-4c8c-aafc-424a6a3761ef"
+					(reference "C110")
 					(unit 1)
 				)
 			)
@@ -24349,7 +24410,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 554.99 556.26 0)
+		(at 554.99 563.88 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -24359,7 +24420,7 @@
 		(dnp no)
 		(uuid "2bc8be6d-c734-458a-81a1-77bf4ce36ec6")
 		(property "Reference" "#PWR52"
-			(at 554.99 562.61 0)
+			(at 554.99 570.23 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -24370,7 +24431,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 554.99 560.07 0)
+			(at 554.99 567.69 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -24381,7 +24442,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 554.99 556.26 0)
+			(at 554.99 563.88 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -24392,7 +24453,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 554.99 556.26 0)
+			(at 554.99 563.88 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -24403,7 +24464,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 554.99 556.26 0)
+			(at 554.99 563.88 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -24420,6 +24481,84 @@
 			(project "PSN_TRX"
 				(path "/50835569-93ad-4c8c-aafc-424a6a3761ef"
 					(reference "#PWR52")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 152.4 304.8 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "2bfc32b4-cc75-41eb-bf01-1499417b5057")
+		(property "Reference" "#PWR197"
+			(at 152.4 311.15 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GND"
+			(at 156.464 305.054 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 152.4 304.8 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 152.4 304.8 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 152.4 304.8 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "bfe3a2c7-5293-4b19-9acc-7860d226a7cb")
+		)
+		(instances
+			(project "PSN_TRX"
+				(path "/50835569-93ad-4c8c-aafc-424a6a3761ef"
+					(reference "#PWR197")
 					(unit 1)
 				)
 			)
@@ -25249,7 +25388,7 @@
 	)
 	(symbol
 		(lib_id "Device:R")
-		(at 745.49 607.06 0)
+		(at 742.95 614.68 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -25259,7 +25398,7 @@
 		(dnp no)
 		(uuid "3061a7ea-e3a9-4ca3-aee5-c4a6a03e1e4d")
 		(property "Reference" "R50"
-			(at 748.03 605.79 0)
+			(at 745.49 613.41 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -25270,7 +25409,7 @@
 			)
 		)
 		(property "Value" "1k"
-			(at 748.03 608.33 0)
+			(at 745.49 615.95 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -25281,7 +25420,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical"
-			(at 745.49 607.06 0)
+			(at 742.95 614.68 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -25292,7 +25431,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 745.49 607.06 0)
+			(at 742.95 614.68 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -25303,7 +25442,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 745.49 607.06 0)
+			(at 742.95 614.68 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -27344,6 +27483,84 @@
 	)
 	(symbol
 		(lib_id "power:GND")
+		(at 165.1 309.88 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "3ef4acc0-782c-4c82-918a-60d3fee58ba6")
+		(property "Reference" "#PWR199"
+			(at 165.1 316.23 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GND"
+			(at 169.164 310.134 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 165.1 309.88 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 165.1 309.88 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 165.1 309.88 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "a0b1dea5-6654-4087-8e3d-f9fecc775f53")
+		)
+		(instances
+			(project "PSN_TRX"
+				(path "/50835569-93ad-4c8c-aafc-424a6a3761ef"
+					(reference "#PWR199")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
 		(at 758.19 374.65 0)
 		(unit 1)
 		(body_style 1)
@@ -29150,7 +29367,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 590.55 167.64 0)
+		(at 581.66 215.9 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -29160,7 +29377,7 @@
 		(dnp no)
 		(uuid "4ac820e3-83eb-4a61-9e8e-4c1f211e4a1f")
 		(property "Reference" "#PWR146"
-			(at 590.55 172.72 0)
+			(at 581.66 220.98 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -29171,7 +29388,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 590.55 172.72 0)
+			(at 581.66 220.98 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -29182,7 +29399,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 590.55 172.72 0)
+			(at 581.66 220.98 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -29193,7 +29410,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 590.55 172.72 0)
+			(at 581.66 220.98 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -29204,7 +29421,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 590.55 172.72 0)
+			(at 581.66 220.98 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -29228,7 +29445,7 @@
 	)
 	(symbol
 		(lib_id "Device:R")
-		(at 593.09 156.21 180)
+		(at 584.2 204.47 180)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -29238,7 +29455,7 @@
 		(dnp no)
 		(uuid "4bf20386-3fe2-4981-8c7b-829c5db59821")
 		(property "Reference" "R17"
-			(at 595.63 154.94 0)
+			(at 586.74 203.2 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -29249,7 +29466,7 @@
 			)
 		)
 		(property "Value" "20k"
-			(at 595.63 157.48 0)
+			(at 586.74 205.74 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -29260,7 +29477,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical"
-			(at 593.09 156.21 0)
+			(at 584.2 204.47 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -29271,7 +29488,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 593.09 156.21 0)
+			(at 584.2 204.47 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -29282,7 +29499,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 593.09 156.21 0)
+			(at 584.2 204.47 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -29293,7 +29510,7 @@
 			)
 		)
 		(property "ki_description" "G2バイアス下"
-			(at 593.09 156.21 0)
+			(at 584.2 204.47 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -31900,7 +32117,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 603.25 166.37 0)
+		(at 594.36 214.63 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -31910,7 +32127,7 @@
 		(dnp no)
 		(uuid "675036e0-c1f3-47ab-bdb0-b401ba9da10b")
 		(property "Reference" "C22"
-			(at 600.71 165.1 0)
+			(at 591.82 213.36 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -31921,7 +32138,7 @@
 			)
 		)
 		(property "Value" "0.01u"
-			(at 600.71 167.64 0)
+			(at 591.82 215.9 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -31932,7 +32149,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm"
-			(at 603.25 166.37 0)
+			(at 594.36 214.63 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -31943,7 +32160,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 603.25 166.37 0)
+			(at 594.36 214.63 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -31954,7 +32171,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 603.25 166.37 0)
+			(at 594.36 214.63 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -31965,7 +32182,7 @@
 			)
 		)
 		(property "ki_description" "L4一次GND"
-			(at 603.25 166.37 0)
+			(at 594.36 214.63 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -34180,6 +34397,84 @@
 	)
 	(symbol
 		(lib_id "power:GND")
+		(at 157.48 304.8 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "7627c4b3-b9e8-4f3e-b880-738613bb414c")
+		(property "Reference" "#PWR198"
+			(at 157.48 311.15 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GND"
+			(at 161.544 305.054 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 157.48 304.8 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 157.48 304.8 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 157.48 304.8 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "6f367353-a184-4868-b6a4-df0459b19f5d")
+		)
+		(instances
+			(project "PSN_TRX"
+				(path "/50835569-93ad-4c8c-aafc-424a6a3761ef"
+					(reference "#PWR198")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
 		(at 759.46 735.33 0)
 		(unit 1)
 		(body_style 1)
@@ -35270,7 +35565,7 @@
 	)
 	(symbol
 		(lib_id "PSN_TRX:RX12V")
-		(at 593.09 152.4 0)
+		(at 584.2 200.66 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -35280,7 +35575,7 @@
 		(dnp no)
 		(uuid "7d1d380e-ff7e-4128-b855-cd6da41e20a6")
 		(property "Reference" "#PWR145"
-			(at 593.09 147.32 0)
+			(at 584.2 195.58 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -35291,7 +35586,7 @@
 			)
 		)
 		(property "Value" "RX12V"
-			(at 593.09 147.32 0)
+			(at 584.2 195.58 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -35301,7 +35596,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 593.09 147.32 0)
+			(at 584.2 195.58 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -35312,7 +35607,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 593.09 147.32 0)
+			(at 584.2 195.58 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -35323,7 +35618,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 593.09 147.32 0)
+			(at 584.2 195.58 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -36972,560 +37267,6 @@
 			(project "PSN_TRX"
 				(path "/50835569-93ad-4c8c-aafc-424a6a3761ef"
 					(reference "J2")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:C")
-		(at 152.4 300.99 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "c3a15317-afc3-4090-b82a-0f53c9e5f72b")
-		(property "Reference" "C109"
-			(at 154.94 299.72 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "0.1u"
-			(at 154.94 302.26 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm"
-			(at 152.4 300.99 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 152.4 300.99 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "+12V 入力のパスコン（J2 のすぐ横）"
-			(at 152.4 300.99 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "3447d48c-150e-4197-9c6b-a961b4e7e32e")
-		)
-		(pin "2"
-			(uuid "21fc7376-d706-4237-b72c-d894970832d8")
-		)
-		(instances
-			(project "PSN_TRX"
-				(path "/50835569-93ad-4c8c-aafc-424a6a3761ef"
-					(reference "C109")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:C")
-		(at 157.48 300.99 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "2268e474-9574-405e-b959-41fc5cec975c")
-		(property "Reference" "C110"
-			(at 160.02 299.72 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "0.01u"
-			(at 160.02 302.26 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm"
-			(at 157.48 300.99 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 157.48 300.99 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "+12V 入力のパスコン（高い周波数用、J2 のすぐ横）"
-			(at 157.48 300.99 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "1673a6c7-5fe2-4fa3-bd95-031399c33978")
-		)
-		(pin "2"
-			(uuid "cf929f99-d5b4-42fa-9d44-344a8bab1282")
-		)
-		(instances
-			(project "PSN_TRX"
-				(path "/50835569-93ad-4c8c-aafc-424a6a3761ef"
-					(reference "C110")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R")
-		(at 165.1 300.99 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "c0ac114e-98cb-4f76-803c-32f26cce167d")
-		(property "Reference" "R80"
-			(at 169.418 299.466 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "10k"
-			(at 169.418 301.752 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical"
-			(at 165.1 300.99 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 165.1 300.99 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "電源 LED の電流制限（+12V から約 1mA）"
-			(at 165.1 300.99 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "0596e3ce-0096-4135-8a87-b9e6dfe72c98")
-		)
-		(pin "2"
-			(uuid "6e14c644-5c2f-4474-96ce-5e0c83417e36")
-		)
-		(instances
-			(project "PSN_TRX"
-				(path "/50835569-93ad-4c8c-aafc-424a6a3761ef"
-					(reference "R80")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector_Generic:Conn_01x02")
-		(at 172.72 304.8 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "9940a3af-0370-4ecb-8fb1-b52a8e5489ef")
-		(property "Reference" "J12"
-			(at 172.72 300.8 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "POWER-LED"
-			(at 164.846 300.736 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical"
-			(at 172.72 304.8 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 172.72 304.8 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "電源 LED（ふた上面）へ。1 = アノード側（R80 経由 +12V）、2 = GND"
-			(at 172.72 304.8 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "43ad9067-64d2-438d-a0b6-f57cca06a05f")
-		)
-		(pin "2"
-			(uuid "5d49c422-9fed-48b0-a18f-3233037e9baf")
-		)
-		(instances
-			(project "PSN_TRX"
-				(path "/50835569-93ad-4c8c-aafc-424a6a3761ef"
-					(reference "J12")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 152.4 304.8 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "2bfc32b4-cc75-41eb-bf01-1499417b5057")
-		(property "Reference" "#PWR197"
-			(at 152.4 311.15 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "GND"
-			(at 156.464 305.054 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 152.4 304.8 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 152.4 304.8 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" ""
-			(at 152.4 304.8 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "bfe3a2c7-5293-4b19-9acc-7860d226a7cb")
-		)
-		(instances
-			(project "PSN_TRX"
-				(path "/50835569-93ad-4c8c-aafc-424a6a3761ef"
-					(reference "#PWR197")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 157.48 304.8 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "7627c4b3-b9e8-4f3e-b880-738613bb414c")
-		(property "Reference" "#PWR198"
-			(at 157.48 311.15 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "GND"
-			(at 161.544 305.054 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 157.48 304.8 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 157.48 304.8 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" ""
-			(at 157.48 304.8 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "6f367353-a184-4868-b6a4-df0459b19f5d")
-		)
-		(instances
-			(project "PSN_TRX"
-				(path "/50835569-93ad-4c8c-aafc-424a6a3761ef"
-					(reference "#PWR198")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 165.1 309.88 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "3ef4acc0-782c-4c82-918a-60d3fee58ba6")
-		(property "Reference" "#PWR199"
-			(at 165.1 316.23 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "GND"
-			(at 169.164 310.134 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 165.1 309.88 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 165.1 309.88 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" ""
-			(at 165.1 309.88 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "a0b1dea5-6654-4087-8e3d-f9fecc775f53")
-		)
-		(instances
-			(project "PSN_TRX"
-				(path "/50835569-93ad-4c8c-aafc-424a6a3761ef"
-					(reference "#PWR199")
 					(unit 1)
 				)
 			)
@@ -41586,6 +41327,85 @@
 		)
 	)
 	(symbol
+		(lib_id "Connector_Generic:Conn_01x02")
+		(at 172.72 304.8 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "9940a3af-0370-4ecb-8fb1-b52a8e5489ef")
+		(property "Reference" "J12"
+			(at 172.72 300.8 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "POWER-LED"
+			(at 164.846 300.736 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical"
+			(at 172.72 304.8 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 172.72 304.8 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "電源 LED（ふた上面）へ。1 = アノード側（R80 経由 +12V）、2 = GND"
+			(at 172.72 304.8 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "43ad9067-64d2-438d-a0b6-f57cca06a05f")
+		)
+		(pin "2"
+			(uuid "5d49c422-9fed-48b0-a18f-3233037e9baf")
+		)
+		(instances
+			(project "PSN_TRX"
+				(path "/50835569-93ad-4c8c-aafc-424a6a3761ef"
+					(reference "J12")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Transistor_BJT:Q_NPN_ECB")
 		(at 956.31 119.38 0)
 		(unit 1)
@@ -42173,7 +41993,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 603.25 170.18 0)
+		(at 594.36 218.44 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -42183,7 +42003,7 @@
 		(dnp no)
 		(uuid "9f66dbda-927f-4d91-ad3b-d66138cc8d95")
 		(property "Reference" "#PWR144"
-			(at 603.25 175.26 0)
+			(at 594.36 223.52 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -42194,7 +42014,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 603.25 175.26 0)
+			(at 594.36 223.52 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -42205,7 +42025,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 603.25 175.26 0)
+			(at 594.36 223.52 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -42216,7 +42036,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 603.25 175.26 0)
+			(at 594.36 223.52 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -42227,7 +42047,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 603.25 175.26 0)
+			(at 594.36 223.52 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -43154,7 +42974,7 @@
 			)
 		)
 		(property "Value" "0.01u"
-			(at 607.06 552.704 0)
+			(at 571.754 555.752 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -43460,7 +43280,7 @@
 	)
 	(symbol
 		(lib_id "Connector_Generic:Conn_01x03")
-		(at 582.93 162.56 0)
+		(at 574.04 210.82 0)
 		(mirror y)
 		(unit 1)
 		(body_style 1)
@@ -43471,7 +43291,7 @@
 		(dnp no)
 		(uuid "aa2ef1a1-f0df-4fa2-832c-82b31b6c804e")
 		(property "Reference" "J3"
-			(at 580.39 157.48 0)
+			(at 571.5 205.74 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -43482,7 +43302,7 @@
 			)
 		)
 		(property "Value" "Volume"
-			(at 580.39 167.64 0)
+			(at 576.58 217.932 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -43493,7 +43313,7 @@
 			)
 		)
 		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical"
-			(at 582.93 162.56 0)
+			(at 574.04 210.82 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -43504,7 +43324,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 582.93 162.56 0)
+			(at 574.04 210.82 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -43515,7 +43335,7 @@
 			)
 		)
 		(property "Description" "Generic connector, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"
-			(at 582.93 162.56 0)
+			(at 574.04 210.82 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -45887,6 +45707,85 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:R")
+		(at 165.1 300.99 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "c0ac114e-98cb-4f76-803c-32f26cce167d")
+		(property "Reference" "R80"
+			(at 169.418 299.466 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "10k"
+			(at 169.418 301.752 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical"
+			(at 165.1 300.99 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 165.1 300.99 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "電源 LED の電流制限（+12V から約 1mA）"
+			(at 165.1 300.99 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "0596e3ce-0096-4135-8a87-b9e6dfe72c98")
+		)
+		(pin "2"
+			(uuid "6e14c644-5c2f-4474-96ce-5e0c83417e36")
+		)
+		(instances
+			(project "PSN_TRX"
+				(path "/50835569-93ad-4c8c-aafc-424a6a3761ef"
+					(reference "R80")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "PSN_TRX:L_7T50_CT")
 		(at 501.65 488.95 0)
 		(unit 1)
@@ -46327,6 +46226,87 @@
 			(project "PSN_TRX"
 				(path "/50835569-93ad-4c8c-aafc-424a6a3761ef"
 					(reference "R72")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 152.4 300.99 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "c3a15317-afc3-4090-b82a-0f53c9e5f72b")
+		(property "Reference" "C109"
+			(at 154.94 299.72 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "0.1u"
+			(at 154.94 302.26 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm"
+			(at 152.4 300.99 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 152.4 300.99 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "+12V 入力のパスコン（J2 のすぐ横）"
+			(at 152.4 300.99 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "3447d48c-150e-4197-9c6b-a961b4e7e32e")
+		)
+		(pin "2"
+			(uuid "21fc7376-d706-4237-b72c-d894970832d8")
+		)
+		(instances
+			(project "PSN_TRX"
+				(path "/50835569-93ad-4c8c-aafc-424a6a3761ef"
+					(reference "C109")
 					(unit 1)
 				)
 			)
@@ -47074,7 +47054,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 745.49 618.49 0)
+		(at 742.95 626.11 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -47084,7 +47064,7 @@
 		(dnp no)
 		(uuid "c739e9b9-2a18-411a-8ace-10cb8d952965")
 		(property "Reference" "#PWR103"
-			(at 746.21 615.58 0)
+			(at 743.67 623.2 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -47095,7 +47075,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 746.21 624.77 0)
+			(at 743.67 632.39 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -47106,7 +47086,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 745.49 618.49 0)
+			(at 742.95 626.11 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -47117,7 +47097,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 745.49 618.49 0)
+			(at 742.95 626.11 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -47128,7 +47108,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 745.49 618.49 0)
+			(at 742.95 626.11 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -48481,7 +48461,7 @@
 	)
 	(symbol
 		(lib_id "Device:C_Polarized")
-		(at 621.03 624.84 270)
+		(at 608.33 624.84 270)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -48491,7 +48471,7 @@
 		(dnp no)
 		(uuid "d106fa04-adb9-427d-b96e-16df7a9cc19b")
 		(property "Reference" "C71"
-			(at 623.316 619.76 90)
+			(at 610.616 619.76 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -48501,7 +48481,7 @@
 			)
 		)
 		(property "Value" "1u"
-			(at 618.49 619.76 90)
+			(at 605.79 619.76 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -48511,7 +48491,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_THT:CP_Radial_D5.0mm_P2.00mm"
-			(at 621.03 624.84 0)
+			(at 608.33 624.84 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -48522,7 +48502,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 621.03 624.84 0)
+			(at 608.33 624.84 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -48533,7 +48513,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 621.03 624.84 0)
+			(at 608.33 624.84 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -48544,7 +48524,7 @@
 			)
 		)
 		(property "ki_description" "L7バイパス"
-			(at 621.03 624.84 0)
+			(at 608.33 624.84 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -49622,7 +49602,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 566.42 556.26 0)
+		(at 566.42 563.88 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -49632,7 +49612,7 @@
 		(dnp no)
 		(uuid "d6bac9c9-bb8c-4be6-8e5b-1856ba7d60a9")
 		(property "Reference" "#PWR53"
-			(at 566.42 562.61 0)
+			(at 566.42 570.23 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -49643,7 +49623,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 566.42 560.07 0)
+			(at 566.42 567.69 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -49654,7 +49634,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 566.42 556.26 0)
+			(at 566.42 563.88 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -49665,7 +49645,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 566.42 556.26 0)
+			(at 566.42 563.88 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -49676,7 +49656,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 566.42 556.26 0)
+			(at 566.42 563.88 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -50105,7 +50085,7 @@
 	)
 	(symbol
 		(lib_id "Device:C_Polarized")
-		(at 621.03 588.01 270)
+		(at 608.33 588.01 270)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -50115,7 +50095,7 @@
 		(dnp no)
 		(uuid "daaf1b53-2136-4a36-ab3f-c378e42b97c2")
 		(property "Reference" "C73"
-			(at 623.316 582.93 90)
+			(at 610.616 582.93 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -50125,7 +50105,7 @@
 			)
 		)
 		(property "Value" "1u"
-			(at 618.49 582.93 90)
+			(at 605.79 582.93 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -50135,7 +50115,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_THT:CP_Radial_D5.0mm_P2.00mm"
-			(at 621.03 588.01 0)
+			(at 608.33 588.01 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -50146,7 +50126,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 621.03 588.01 0)
+			(at 608.33 588.01 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -50157,7 +50137,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 621.03 588.01 0)
+			(at 608.33 588.01 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -50168,7 +50148,7 @@
 			)
 		)
 		(property "ki_description" "L7バイパス"
-			(at 621.03 588.01 0)
+			(at 608.33 588.01 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -51468,7 +51448,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 745.49 614.68 0)
+		(at 742.95 622.3 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -51478,7 +51458,7 @@
 		(dnp no)
 		(uuid "e3753a77-a012-442e-b1bc-caabced3a2ac")
 		(property "Reference" "C63"
-			(at 748.03 613.41 0)
+			(at 745.49 621.03 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -51489,7 +51469,7 @@
 			)
 		)
 		(property "Value" "10u"
-			(at 748.03 615.95 0)
+			(at 745.49 623.57 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -51500,7 +51480,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_THT:CP_Radial_D5.0mm_P2.00mm"
-			(at 745.49 614.68 0)
+			(at 742.95 622.3 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -51511,7 +51491,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 745.49 614.68 0)
+			(at 742.95 622.3 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -51522,7 +51502,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 745.49 614.68 0)
+			(at 742.95 622.3 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -51533,7 +51513,7 @@
 			)
 		)
 		(property "ki_description" "C98系入力"
-			(at 708.66 601.98 0)
+			(at 706.12 609.6 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
