@@ -9001,7 +9001,7 @@
 	)
 	(text "IF 増幅は Q7・Q6（2SK192A カスコード）。R18 は Q6 のソース抵抗"
 		(exclude_from_sim no)
-		(at 519.938 199.898 0)
+		(at 480.06 194.818 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -9232,12 +9232,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "0c5a2c20-c257-417f-b292-51896e09a758")
-	)
-	(junction
-		(at 628.65 139.7)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "0f68941a-9a95-47bd-b0c4-e6d26a5c4c6f")
 	)
 	(junction
 		(at 334.01 121.92)
@@ -10152,6 +10146,12 @@
 		(uuid "f3c4be2d-c52c-42ec-9a1e-55abcccfd39b")
 	)
 	(junction
+		(at 552.45 187.96)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "f418f971-cfc4-48e6-99e8-3531ac7b2ad4")
+	)
+	(junction
 		(at 740.41 637.54)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -10303,16 +10303,6 @@
 	)
 	(wire
 		(pts
-			(xy 610.87 127) (xy 610.87 132.08)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "0106fb4d-1bd9-4e75-a34f-bb594a8ad21b")
-	)
-	(wire
-		(pts
 			(xy 659.13 637.54) (xy 652.78 637.54)
 		)
 		(stroke
@@ -10360,6 +10350,16 @@
 			(type default)
 		)
 		(uuid "03b2c1f7-cf0c-4189-ba68-1f387887f11e")
+	)
+	(wire
+		(pts
+			(xy 582.93 208.28) (xy 579.12 208.28)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "03ce8db6-8fe3-4ca6-9d83-8bb783f21d21")
 	)
 	(wire
 		(pts
@@ -10920,16 +10920,6 @@
 			(type default)
 		)
 		(uuid "1c746f60-47aa-4de8-95ac-863cde80a544")
-	)
-	(wire
-		(pts
-			(xy 610.87 127) (xy 612.14 127)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "1cb86d7c-6049-4f89-9b06-bcc60254e1eb")
 	)
 	(wire
 		(pts
@@ -11863,16 +11853,6 @@
 	)
 	(wire
 		(pts
-			(xy 571.5 160.02) (xy 571.5 119.38)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "4570fc4e-db7b-4fe3-a312-951acff66122")
-	)
-	(wire
-		(pts
 			(xy 373.38 509.27) (xy 382.27 509.27)
 		)
 		(stroke
@@ -12753,7 +12733,7 @@
 	)
 	(wire
 		(pts
-			(xy 552.45 160.02) (xy 571.5 160.02)
+			(xy 552.45 160.02) (xy 623.57 160.02)
 		)
 		(stroke
 			(width 0)
@@ -12870,16 +12850,6 @@
 			(type default)
 		)
 		(uuid "687e31ac-6fb7-4d6b-94c9-f049d7053c38")
-	)
-	(wire
-		(pts
-			(xy 618.49 124.46) (xy 623.57 124.46)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "6893a499-60f5-4265-812d-dbc1d61d9b40")
 	)
 	(wire
 		(pts
@@ -13173,6 +13143,16 @@
 	)
 	(wire
 		(pts
+			(xy 563.88 203.2) (xy 563.88 200.66)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "76996b00-5ad2-406c-bd59-db74a23bb5f4")
+	)
+	(wire
+		(pts
 			(xy 645.16 568.96) (xy 656.59 568.96)
 		)
 		(stroke
@@ -13303,6 +13283,16 @@
 	)
 	(wire
 		(pts
+			(xy 552.45 201.93) (xy 552.45 195.58)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7d315b2f-9757-4ca0-9956-82b789e7dbb9")
+	)
+	(wire
+		(pts
 			(xy 839.47 491.49) (xy 839.47 468.63)
 		)
 		(stroke
@@ -13353,7 +13343,7 @@
 	)
 	(wire
 		(pts
-			(xy 612.14 127) (xy 612.14 176.53)
+			(xy 612.14 132.08) (xy 612.14 176.53)
 		)
 		(stroke
 			(width 0)
@@ -13493,16 +13483,6 @@
 	)
 	(wire
 		(pts
-			(xy 628.65 142.24) (xy 624.84 142.24)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "82c480fc-9f00-4cde-87ec-b05849374ccf")
-	)
-	(wire
-		(pts
 			(xy 327.66 417.83) (xy 327.66 431.8)
 		)
 		(stroke
@@ -13563,7 +13543,7 @@
 	)
 	(wire
 		(pts
-			(xy 600.71 132.08) (xy 610.87 132.08)
+			(xy 600.71 132.08) (xy 612.14 132.08)
 		)
 		(stroke
 			(width 0)
@@ -13630,16 +13610,6 @@
 			(type default)
 		)
 		(uuid "87ddc442-ea54-4bc1-86b7-8107fae1cc33")
-	)
-	(wire
-		(pts
-			(xy 579.12 208.28) (xy 584.2 208.28)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "88cf1d89-6c25-4855-8dab-6f0a4366343d")
 	)
 	(wire
 		(pts
@@ -13803,7 +13773,7 @@
 	)
 	(wire
 		(pts
-			(xy 618.49 119.38) (xy 618.49 124.46)
+			(xy 623.57 160.02) (xy 623.57 124.46)
 		)
 		(stroke
 			(width 0)
@@ -14323,16 +14293,6 @@
 	)
 	(wire
 		(pts
-			(xy 624.84 142.24) (xy 624.84 187.96)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "a444942a-08b8-41aa-9d50-6b8a95b49379")
-	)
-	(wire
-		(pts
 			(xy 227.33 463.55) (xy 227.33 518.16)
 		)
 		(stroke
@@ -14460,16 +14420,6 @@
 			(type default)
 		)
 		(uuid "aaefda67-1358-412f-9831-2ff5dccc828d")
-	)
-	(wire
-		(pts
-			(xy 571.5 119.38) (xy 618.49 119.38)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "ab087d41-0215-4a14-b8fb-73681441d10c")
 	)
 	(wire
 		(pts
@@ -14633,16 +14583,6 @@
 	)
 	(wire
 		(pts
-			(xy 628.65 139.7) (xy 628.65 142.24)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "afe3ae78-d51e-4a83-b1a4-e050c63b22e6")
-	)
-	(wire
-		(pts
 			(xy 129.54 193.04) (xy 132.08 193.04)
 		)
 		(stroke
@@ -14723,6 +14663,16 @@
 	)
 	(wire
 		(pts
+			(xy 563.88 187.96) (xy 563.88 193.04)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b3076030-89b4-46e5-878c-8967e82177b1")
+	)
+	(wire
+		(pts
 			(xy 256.54 463.55) (xy 260.35 463.55)
 		)
 		(stroke
@@ -14770,6 +14720,16 @@
 			(type default)
 		)
 		(uuid "b46b56fb-fde0-479e-83a7-fc6da0f21538")
+	)
+	(wire
+		(pts
+			(xy 582.93 204.47) (xy 582.93 208.28)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b5c40b37-68bc-4077-a55f-147a84d9bd60")
 	)
 	(wire
 		(pts
@@ -15393,7 +15353,7 @@
 	)
 	(wire
 		(pts
-			(xy 618.49 139.7) (xy 628.65 139.7)
+			(xy 552.45 187.96) (xy 563.88 187.96)
 		)
 		(stroke
 			(width 0)
@@ -15990,16 +15950,6 @@
 			(type default)
 		)
 		(uuid "e555f819-03c4-4ce4-90f6-b27035112951")
-	)
-	(wire
-		(pts
-			(xy 624.84 187.96) (xy 552.45 187.96)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "e5debeff-e14d-4a49-a8b8-6588faa3cbb7")
 	)
 	(wire
 		(pts
@@ -29445,7 +29395,7 @@
 	)
 	(symbol
 		(lib_id "Device:R")
-		(at 584.2 204.47 180)
+		(at 582.93 200.66 180)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -29455,7 +29405,7 @@
 		(dnp no)
 		(uuid "4bf20386-3fe2-4981-8c7b-829c5db59821")
 		(property "Reference" "R17"
-			(at 586.74 203.2 0)
+			(at 585.47 199.39 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -29466,7 +29416,7 @@
 			)
 		)
 		(property "Value" "20k"
-			(at 586.74 205.74 0)
+			(at 585.47 201.93 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -29477,7 +29427,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical"
-			(at 584.2 204.47 0)
+			(at 582.93 200.66 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -29488,7 +29438,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 584.2 204.47 0)
+			(at 582.93 200.66 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -29499,7 +29449,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 584.2 204.47 0)
+			(at 582.93 200.66 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -29510,7 +29460,7 @@
 			)
 		)
 		(property "ki_description" "G2バイアス下"
-			(at 584.2 204.47 0)
+			(at 582.93 200.66 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -35565,7 +35515,7 @@
 	)
 	(symbol
 		(lib_id "PSN_TRX:RX12V")
-		(at 584.2 200.66 0)
+		(at 582.93 196.85 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -35575,7 +35525,7 @@
 		(dnp no)
 		(uuid "7d1d380e-ff7e-4128-b855-cd6da41e20a6")
 		(property "Reference" "#PWR145"
-			(at 584.2 195.58 0)
+			(at 582.93 191.77 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -35586,7 +35536,7 @@
 			)
 		)
 		(property "Value" "RX12V"
-			(at 584.2 195.58 0)
+			(at 582.93 191.77 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -35596,7 +35546,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 584.2 195.58 0)
+			(at 582.93 191.77 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -35607,7 +35557,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 584.2 195.58 0)
+			(at 582.93 191.77 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -35618,7 +35568,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 584.2 195.58 0)
+			(at 582.93 191.77 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -36132,7 +36082,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 618.49 147.32 0)
+		(at 552.45 201.93 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -36142,7 +36092,7 @@
 		(dnp no)
 		(uuid "7e552a9e-3e9a-43bd-aa29-c7705aa3d03c")
 		(property "Reference" "#PWR142"
-			(at 618.49 152.4 0)
+			(at 552.45 207.01 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -36153,7 +36103,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 618.49 152.4 0)
+			(at 552.45 207.01 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -36164,7 +36114,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 618.49 152.4 0)
+			(at 552.45 207.01 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -36175,7 +36125,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 618.49 152.4 0)
+			(at 552.45 207.01 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -36186,7 +36136,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 618.49 152.4 0)
+			(at 552.45 207.01 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -37707,7 +37657,7 @@
 	)
 	(symbol
 		(lib_id "Device:R")
-		(at 618.49 143.51 0)
+		(at 552.45 191.77 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -37717,7 +37667,7 @@
 		(dnp no)
 		(uuid "8abb0452-46e6-4876-884c-b0f1f1e2d529")
 		(property "Reference" "R18"
-			(at 621.03 142.24 0)
+			(at 554.99 190.5 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -37728,7 +37678,7 @@
 			)
 		)
 		(property "Value" "100"
-			(at 621.03 144.78 0)
+			(at 554.99 193.04 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -37739,7 +37689,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical"
-			(at 618.49 143.51 0)
+			(at 552.45 191.77 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -37750,7 +37700,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 618.49 143.51 0)
+			(at 552.45 191.77 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -37761,7 +37711,7 @@
 			)
 		)
 		(property "Description" "IF 増幅カスコード下段 Q6（2SK192A-BL）のソース抵抗。47〜150Ω の範囲で電流を合わせる（BL ランクは 100Ω で 4.6〜10.5mA）"
-			(at 618.49 143.51 0)
+			(at 552.45 191.77 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -37772,7 +37722,7 @@
 			)
 		)
 		(property "ki_description" "G2バイアス上"
-			(at 618.49 143.51 0)
+			(at 552.45 191.77 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -41581,7 +41531,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 628.65 147.32 0)
+		(at 563.88 203.2 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -41591,7 +41541,7 @@
 		(dnp no)
 		(uuid "9d1bd69f-f50c-4294-924e-4d660a870d36")
 		(property "Reference" "#PWR143"
-			(at 628.65 152.4 0)
+			(at 563.88 208.28 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -41602,7 +41552,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 628.65 152.4 0)
+			(at 563.88 208.28 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -41613,7 +41563,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 628.65 152.4 0)
+			(at 563.88 208.28 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -41624,7 +41574,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 628.65 152.4 0)
+			(at 563.88 208.28 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -41635,7 +41585,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 628.65 152.4 0)
+			(at 563.88 208.28 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -45138,7 +45088,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 628.65 143.51 0)
+		(at 563.88 196.85 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -45148,7 +45098,7 @@
 		(dnp no)
 		(uuid "ba01d92f-7029-4ef4-bc44-523a5eab6c1f")
 		(property "Reference" "C23"
-			(at 631.19 142.24 0)
+			(at 566.42 195.58 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -45159,7 +45109,7 @@
 			)
 		)
 		(property "Value" "0.01u"
-			(at 631.19 144.78 0)
+			(at 566.42 198.12 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -45170,7 +45120,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm"
-			(at 628.65 143.51 0)
+			(at 563.88 196.85 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -45181,7 +45131,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 628.65 143.51 0)
+			(at 563.88 196.85 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -45192,7 +45142,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 628.65 143.51 0)
+			(at 563.88 196.85 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -45203,7 +45153,7 @@
 			)
 		)
 		(property "ki_description" "Q13ソースGND"
-			(at 628.65 143.51 0)
+			(at 563.88 196.85 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
