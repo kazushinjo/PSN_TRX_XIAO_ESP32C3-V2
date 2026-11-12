@@ -54,6 +54,18 @@ Seeed Studio XIAO ESP32C3 ─ メインコントローラ
 1W PA: RD06HVF1 (N-ch RF MOSFET) @ 12V, Class AB
 ```
 
+## 基板パターン
+
+基板は 134.0 × 129.6mm の 4 層（内層 1 = GND ベタ、内層 2 = 電源ベタ）。下の図は V2 Ver 1.4 の基板（`kicad/PSN_TRX.kicad_pcb`）から KiCad 10 の `kicad-cli pcb export svg` で出力した。
+
+### 表面（部品面、F.Cu とシルク）
+
+![基板パターン 表面](docs/images/pcb_top.png)
+
+### 裏面（はんだ面、B.Cu とシルク、裏から見た向き）
+
+![基板パターン 裏面](docs/images/pcb_bottom.png)
+
 ## 1W パワーアンプ（Q19）
 
 前段（2SC1815 等）の出力（約 20〜30mW）を増幅する終段アンプ。
