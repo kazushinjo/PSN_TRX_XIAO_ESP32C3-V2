@@ -92,7 +92,7 @@ bezel_hole = 3.4;            // ふたのベゼル固定ねじ穴（M3）
 lcd_c = [20 + bezel[0] / 2, 47 + bezel[1] / 2];  // LCD・ベゼル中心（ベゼル左端 X=20（2026-11-18 に 26 → 20。下の列とは別に決める）、前端 Y=47。手前に MIC・PHN、奥は放熱器の手前まで）
 
 // LCD の右（基板の外側、X > 169 のふた裏は空いている）に縦 1 列（同じ X）: 奥から RF・VOL・TUNE
-col_x   = 179;
+col_x   = 172;   // 2026-11-18 に 179 → 172（7mm 左へ。つまみの本体は基板の部品の上）
 // 電源スイッチと電源 LED は LCD の窓の下の列（左寄り。DC ジャック・ヒューズ・基板の J2 と同じ左側で、電源線をケースの左側だけに通す）
 // LCD の窓の手前に横 1 列、X 85.5 を中心に左右対称の等間隔: 左から POWER・ON（電源 LED）・MIC・PHN（LCD の窓は 2026-11-06 にこの列とは別に右へ寄せた）
 //   間隔 24mm = MIC のつば（φ20）と PHN のプラグ（φ8）の間に指が入る 10mm を取った値（4 個で窓の幅 74.5mm に収まる）
@@ -122,7 +122,7 @@ assert(afv_c[1] + afv_knob / 2 + 4 + 2 <= rfg_c[1] - rfg_knob / 2 - 1, "VOL の�
 assert(rfg_c[1] + rfg_knob / 2 + 4.5 + 2 <= D - 3, "RF の文字がふたの縁にかかる");
 assert(lcd_c[0] + bezel[0] / 2 + knob_gap <= enc_c[0] - enc_knob / 2, "ベゼルと TUNE つまみの隙間が 5mm 未満");
 for (c = [[enc_c, enc_body], [afv_c, afv_body], [rfg_c, rfg_body]])
-    assert(c[0][0] - c[1] / 2 >= bx + pcb_v + 1, "上面部品のふた裏の本体が基板の上にかかる");
+    assert(c[0][0] - c[1] / 2 >= bx + pcb_v + 1 || H - lid_t - 12 >= bz + pcb_t + 14 + 2, "上面部品のふた裏の本体と基板の部品（高さ 14mm）の隙間が 2mm 未満");
 // 電源スイッチ・電源 LED（LCD の窓の下の列）
 assert(psw_c[0] + psw_body / 2 + 1 <= bx || psw_c[1] + psw_body / 2 + 1 <= by, "電源スイッチの本体が基板の上にかかる");
 assert(psw_c[1] - psw_body / 2 >= panel_inset + groove_w + 1, "電源スイッチの本体が前面パネルにかかる");
