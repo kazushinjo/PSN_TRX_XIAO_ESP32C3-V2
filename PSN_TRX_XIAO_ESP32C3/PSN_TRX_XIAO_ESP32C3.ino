@@ -342,7 +342,7 @@ void uiLine(char* buf, size_t len) {
   } else if (uiMode == UI_EDIT) {
     char v[24];
     menuText(menuIndex, editValue, v, sizeof(v));
-    snprintf(buf, len, "> %s  [PUSH=OK]", v);
+    snprintf(buf, len, "> %s [OK]", v);   // 28 ドットで t1 の幅（22 文字）に収める
   } else {
     snprintf(buf, len, "STEP: %s", stepLabels[stepIndex]);
   }
@@ -606,6 +606,27 @@ bool bfoCommand(String line) {
   return true;
 }
 
+// ---- 周波数の設定コマンド: freq（表示）/ freq <Hz>（設定して保存・LCD 更新）----
+bool freqCommand(String line) {
+  line.trim();
+  if (!line.startsWith("freq")) return false;
+  String arg = line.substring(4);
+  arg.trim();
+  if (arg.length()) {
+    long hz = arg.toInt();
+    if (hz < FREQ_MIN || hz > FREQ_MAX) {
+      Serial.printf("freq: %ld〜%ld Hz で指定\n", FREQ_MIN, FREQ_MAX);
+      return true;
+    }
+    currentFreq = hz;
+    applyFreq();
+    saveFreq();
+    updateDisplay();
+  }
+  Serial.printf("freq: %ld Hz\n", currentFreq);
+  return true;
+}
+
 // ---- ADS1015: A0 を連続変換（±4.096V、1600SPS）----
 void adsBegin() {
   Wire.beginTransmission(ADS1015_ADDR);
@@ -779,11 +800,11 @@ void loop() {
   while (Serial.available()) {
     char ch = Serial.read();
     if (ch == '\n' || ch == '\r') {
-      if (cmdLine.length() && !bfoCommand(cmdLine)) {
+      if (cmdLine.length() && !bfoCommand(cmdLine) && !freqCommand(cmdLine)) {
         if (dspCommand(cmdLine))
           applyFreq();                     // sb で側帯波を変えたら BFO・局発も合わせる
         else
-          Serial.println("コマンド: dsp / mic <dB> / out <%> / iqd <us> / iqa <dB> / sb usb|lsb / tone <Hz> / alc <dBFS>|off / w / bfo [usb|lsb <Hz>]");
+          Serial.println("コマンド: dsp / mic <dB> / out <%> / iqd <us> / iqa <dB> / sb usb|lsb / tone <Hz> / alc <dBFS>|off / w / bfo [usb|lsb <Hz>] / freq [<Hz>]");
       }
       cmdLine = "";
     } else if (cmdLine.length() < 40) cmdLine += ch;
