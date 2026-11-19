@@ -37406,7 +37406,7 @@
 				)
 			)
 		)
-		(property "Value" "270nH"
+		(property "Value" "330nH"
 			(at 352.298 465.074 90)
 			(show_name no)
 			(do_not_autoplace no)
