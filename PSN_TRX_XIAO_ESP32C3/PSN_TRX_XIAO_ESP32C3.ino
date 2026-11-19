@@ -225,6 +225,8 @@ int meterPos(float db) {
 
 // ---- Sメーター表示 ----
 float         smeterDb    = -60.0f;  // S9 = 0dB
+bool          smeterHold  = false;   // 表示の確認用: シリアルの smeter で表示を固定する
+float         smeterHoldDb = 0.0f;
 int           shownBar    = -1;
 char          shownText[12] = "";
 const char*   shownAgc    = nullptr;
@@ -627,6 +629,50 @@ bool freqCommand(String line) {
   return true;
 }
 
+// ---- RIT の設定コマンド: rit（表示）/ rit <Hz>（±9990、10Hz 単位。保存しない）----
+bool ritCommand(String line) {
+  line.trim();
+  if (!line.startsWith("rit")) return false;
+  String arg = line.substring(3);
+  arg.trim();
+  if (arg.length()) {
+    long hz = arg.toInt();
+    if (hz < -RIT_MAX || hz > RIT_MAX) {
+      Serial.printf("rit: -%d〜%d Hz で指定\n", RIT_MAX, RIT_MAX);
+      return true;
+    }
+    ritHz = hz / RIT_STEP * RIT_STEP;
+    applyFreq();
+    updateDisplay();
+  }
+  Serial.printf("rit: %+ld Hz\n", ritHz);
+  return true;
+}
+
+// ---- Sメーター表示の固定（表示の確認用）: smeter s7 / smeter s9+20 / smeter off ----
+bool smeterCommand(String line) {
+  line.trim();
+  if (!line.startsWith("smeter")) return false;
+  String arg = line.substring(6);
+  arg.trim();
+  arg.toLowerCase();
+  if (arg == "off") {
+    smeterHold = false;
+  } else if (arg.startsWith("s")) {
+    int s = arg.substring(1).toInt();
+    int plus = arg.indexOf('+');
+    if (s < 0 || s > 9) {
+      Serial.println("smeter: s0〜s9、s9+10〜s9+60、off で指定");
+      return true;
+    }
+    smeterHoldDb = (s - 9) * 6.0f + (plus > 0 ? arg.substring(plus + 1).toInt() : 0);
+    smeterHold = true;
+  }
+  if (smeterHold) Serial.printf("smeter: %.0f dB に固定（S9 = 0dB）\n", smeterHoldDb);
+  else            Serial.println("smeter: 測定値を表示");
+  return true;
+}
+
 // ---- ADS1015: A0 を連続変換（±4.096V、1600SPS）----
 void adsBegin() {
   Wire.beginTransmission(ADS1015_ADDR);
@@ -795,16 +841,17 @@ void loop() {
     processBlock();
   }
 
-  // 設定コマンド（送信音声: dsp / mic / out / iqd / iqa / sb / tone / alc / w、受信: bfo）
+  // 設定コマンド（送信音声: dsp / mic / out / iqd / iqa / sb / tone / alc / w、受信: bfo、表示: freq / rit / smeter）
   static String cmdLine;
   while (Serial.available()) {
     char ch = Serial.read();
     if (ch == '\n' || ch == '\r') {
-      if (cmdLine.length() && !bfoCommand(cmdLine) && !freqCommand(cmdLine)) {
+      if (cmdLine.length() && !bfoCommand(cmdLine) && !freqCommand(cmdLine) &&
+          !ritCommand(cmdLine) && !smeterCommand(cmdLine)) {
         if (dspCommand(cmdLine))
           applyFreq();                     // sb で側帯波を変えたら BFO・局発も合わせる
         else
-          Serial.println("コマンド: dsp / mic <dB> / out <%> / iqd <us> / iqa <dB> / sb usb|lsb / tone <Hz> / alc <dBFS>|off / w / bfo [usb|lsb <Hz>] / freq [<Hz>]");
+          Serial.println("コマンド: dsp / mic <dB> / out <%> / iqd <us> / iqa <dB> / sb usb|lsb / tone <Hz> / alc <dBFS>|off / w / bfo [usb|lsb <Hz>] / freq [<Hz>] / rit [<Hz>] / smeter s7|s9+20|off");
       }
       cmdLine = "";
     } else if (cmdLine.length() < 40) cmdLine += ch;
@@ -825,12 +872,13 @@ void loop() {
     } else {
       alcLevelDb = -60.0f;
       char text[12], amt[16] = "";
-      smeterText(smeterDb, text, sizeof(text));
+      float db = smeterHold ? smeterHoldDb : smeterDb;
+      smeterText(db, text, sizeof(text));
       if (agcMode != AGC_OFF) {
         int g = (int)(agcCtl * AGC_RANGE_DB / 1000.0f + 0.5f);
         snprintf(amt, sizeof(amt), g > 0 ? "AGC -%ddB" : "AGC %ddB", g);
       }
-      updateMeter(meterPos(smeterDb), text, agcLabels[agcMode], amt);
+      updateMeter(meterPos(db), text, agcLabels[agcMode], amt);
     }
     if (!txNow) Serial.printf("rssi %.0f mV  agc %.0f  S %.1f dB\n", rssiMv, agcCtl, smeterDb);
   }
