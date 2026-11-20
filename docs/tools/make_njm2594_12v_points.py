@@ -56,14 +56,11 @@ ov = (80, 20, 137, 137)
 ov_marks = [
     (RED, 198.0, 151.69, 'J2 +12V', 178, 145),
     (BLK, 203.08, 151.69, 'J2 GND', 202, 139.5),
-    (RED, 187.69, 29.09, 'U4-3 入力', 160, 37),
-    (RED, 187.69, 31.64, 'U4-1 出力', 160, 43),
-    (RED, 177.4, 51.93, 'C55 +', 165, 58),
 ]
 ov_body = (box(95.5, 57.5, 106, 80, 'K1', BLU, 3.2, 95.5, 56) +
            box(105.5, 44.5, 109.5, 52.2, 'U1', BLK, 3.2, 110, 54) +
            box(128, 40, 132, 47.8, 'U2', BLK, 3.2, 133, 45) +
-           box(179.5, 27.5, 189.5, 33.5, 'U4・C50', BLK, 3.2, 165, 25.5) +
+           box(174, 26, 193, 54, 'U4・C50・C55', RED, 3.2, 150, 25) + box(174, 26, 193, 54, '右下の拡大図', RED, 2.6, 165, 58.5) +
            box(84, 50, 112, 81, '右の拡大図', PUR, 2.6, 84, 86) +
            marks(ov_marks, 3.2))
 
@@ -78,18 +75,36 @@ k_marks = [
     (ORG, 88.19, 68.64, 'L19-1（送信 LPF）', 84, 81),
     (PUR, 108.19, 68.12, 'D1 帯側（コイル）', 106.5, 57.5),
 ]
-kz_body = marks(k_marks, 1.25)
+kz_body = marks(k_marks, 1.6)
 
-SC1, SC2 = 6.0, 22.0
+uz = (172, 25, 24, 31)
+SC3 = 13.0
+u_marks = [
+    (RED, 187.69, 29.09, 'U4-3 入力（RX12V）', 190.5, 26.8),
+    (BLK, 187.69, 30.36, 'U4-2 GND', 190.5, 34.2),
+    (RED, 187.69, 31.64, 'U4-1 出力（5V）', 190.5, 38.6),
+    (RED, 183.19, 30.39, 'C50 +', 174, 37.5),
+    (BLK, 181.19, 30.39, 'C50 −', 172.6, 27.6),
+    (RED, 177.4, 51.93, 'C55 +', 181, 54.5),
+    (BLK, 177.4, 49.93, 'C55 −', 181, 46.5),
+]
+uz_body = marks(u_marks, 1.6)
+
+SC1, SC2 = 6.0, 16.0
 W1, H1 = ov[2] * SC1, ov[3] * SC1
 W2, H2 = kz[2] * SC2 + 260, kz[3] * SC2
+UW, UH = uz[2] * SC3 + 230, uz[3] * SC3
 FONT = 'font-family="Hiragino Sans, Hiragino Kaku Gothic ProN, sans-serif"'
-W, H = W1 + 20 + W2, max(H1, H2) + 50
+W, H = W1 + 20 + max(W2, UW + 260), max(H1, H2 + 20 + UH) + 10
 legend = [
-    (GRN, '受信: K1-13 と 11、J1 と D2 がつながる'),
-    (ORG, '送信（D1 帯側に +12V）: K1-13 と 9、J1 と L19 がつながる'),
+    (GRN, '受信: K1-13 と 11、'),
+    (GRN, '　J1 と D2 がつながる'),
+    (ORG, '送信（D1 帯側に +12V）:'),
+    (ORG, '　K1-13 と 9、J1 と L19'),
+    (ORG, '　がつながる'),
 ]
-lg = ''.join(f'<text x="{W1+20}" y="{H2+80+k*26}" font-size="17" font-weight="bold" fill="{c}">{t}</text>'
+LX, LY = W1 + 20 + UW + 20, 40 + H2 + 60
+lg = ''.join(f'<text x="{LX}" y="{LY+k*26}" font-size="16" font-weight="bold" fill="{c}">{t}</text>'
              for k, (c, t) in enumerate(legend))
 out = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H+60}" viewBox="0 -10 {W} {H+60}" {FONT}>
 <rect x="0" y="-10" width="{W}" height="{H+60}" fill="#fff"/>
@@ -102,8 +117,13 @@ out = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H+60}" vi
 <rect x="{kz[0]}" y="{kz[1]}" width="{kz[2]}" height="{kz[3]}" fill="none" stroke="{PUR}" stroke-width="0.2"/>
 {kz_body}</svg>
 {lg}
-<text x="{W1+20}" y="{H2+80+2*26+6}" font-size="14" fill="#333">基板表面（部品面）から見た図</text>
+<text x="{LX}" y="{LY+5*26+10}" font-size="14" fill="#333">基板表面（部品面）から見た図</text>
+<svg x="{W1+20}" y="{40+H2+20}" width="{UW}" height="{UH}" viewBox="{uz[0]} {uz[1]} {uz[2]+230/SC3} {uz[3]}">
+<rect x="{uz[0]}" y="{uz[1]}" width="{uz[2]+230/SC3}" height="{uz[3]}" fill="#fff"/>
+<svg x="{uz[0]}" y="{uz[1]}" width="{uz[2]}" height="{uz[3]}" viewBox="{uz[0]} {uz[1]} {uz[2]} {uz[3]}">{LAYERS}</svg>
+<rect x="{uz[0]}" y="{uz[1]}" width="{uz[2]}" height="{uz[3]}" fill="none" stroke="{RED}" stroke-width="0.2"/>
+{uz_body}</svg>
 </svg>'''
 open(f'{S}/points12.svg', 'w').write(out)
 subprocess.run(['rsvg-convert', '-z', '1.3', f'{S}/points12.svg', '-o',
-                os.path.join(ROOT, 'manual', 'images', 'njm2594-test-12v-points.png')], check=True)
+                os.environ.get('OUT', os.path.join(ROOT, 'manual', 'images', 'njm2594-test-12v-points.png'))], check=True)
