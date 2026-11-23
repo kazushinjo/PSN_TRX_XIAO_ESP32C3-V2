@@ -262,9 +262,9 @@ AGC は設定モードの **AGC** で切り替えます（4.4 参照）。
   | t2 | 328 | 256 | 148 | 32 | 0 | 12 | 機種名 |
 
   > **画面データ（.HMI）について**
-  > - 画面データは [`nextion/PSN_TRX.tft`](../PSN_TRX_XIAO_ESP32C3/nextion/PSN_TRX.tft)（LCD に書き込むファイル）と [`nextion/PSN_TRX.HMI`](../PSN_TRX_XIAO_ESP32C3/nextion/PSN_TRX.HMI)（Nextion Editor で編集する元ファイル）です。.tft を microSD に入れて LCD に書き込めばそのまま使えます。LCD が NX4832K035（Enhanced）のときは [`nextion/PSN_TRX_K035.tft`](../PSN_TRX_XIAO_ESP32C3/nextion/PSN_TRX_K035.tft) を書き込みます（.tft は機種ごとに別で、取り違えると書き込めません）。作り方と書き込み方は [`nextion/画面データ作成手順.md`](../PSN_TRX_XIAO_ESP32C3/nextion/画面データ作成手順.md) を見てください。
+  > - 画面データは、Nextion NX4832K035 用が [`nextion/PSN_TRX_K035.tft`](../PSN_TRX_XIAO_ESP32C3/nextion/PSN_TRX_K035.tft)（LCD に書き込むファイル）と [`nextion/PSN_TRX_K035.HMI`](../PSN_TRX_XIAO_ESP32C3/nextion/PSN_TRX_K035.HMI)（Nextion Editor で編集する元ファイル）です。.tft を microSD に入れて LCD に書き込めばそのまま使えます（.tft は機種ごとに別で、取り違えると書き込めません。NX4832T035 用は使う予定がないので 2026-11-23 に削除）。作り方と書き込み方は [`nextion/画面データ作成手順.md`](../PSN_TRX_XIAO_ESP32C3/nextion/画面データ作成手順.md) を見てください。
   > - **t6（AGC の量）は 2026-10-21 のファームウェアから使っています。** それより前に作った画面データには t6 がないので、上の表のとおり追加して LCD に書き込み直してください（t6 がなくても AGC の量が出ないだけで、ほかの表示は動きます）。
-  > - 見た目が同じ TJC の LCD（TJC4832T135 など）は、エディタと画面データに互換性がないので、この画面データは使えません。TJC4832T135 用の画面データ [`nextion/PSN_TRX_TJC.tft`](../PSN_TRX_XIAO_ESP32C3/nextion/PSN_TRX_TJC.tft)（元ファイル `PSN_TRX_TJC.HMI`、USART HMI で編集）を書き込めば、スケッチは変えずに使えます（[`nextion/画面データ作成手順.md`](../PSN_TRX_XIAO_ESP32C3/nextion/画面データ作成手順.md) の 9 章）。
+  > - 見た目が同じ TJC の LCD（TJC4832T135 など）は、エディタと画面データに互換性がないので、この画面データは使えません。TJC4832T135 用の画面データ [`nextion/PSN_TRX_TJC.tft`](../PSN_TRX_XIAO_ESP32C3/nextion/PSN_TRX_TJC.tft)（元ファイル `PSN_TRX_TJC.HMI`、**古い版の USART HMI 1.67.6** で編集・出力。1.68.2 で出すと横向きの画面が崩れる）を書き込めば、スケッチは変えずに使えます（[`nextion/画面データ作成手順.md`](../PSN_TRX_XIAO_ESP32C3/nextion/画面データ作成手順.md) の 9 章）。
   > - Nextion Editor のシミュレータ（Debug）で表示を確かめる場合も、画面データに t6 が必要です。
 
   送信中はメーターの針がマイク入力のピークを示します（ALC の効き始め = S9 の位置、赤い +dB の目盛り = ALC が絞った量）。LCD との通信は起動時にスケッチが 9600bps から 115200bps に切り替えます（LCD の設定は変えない）。
