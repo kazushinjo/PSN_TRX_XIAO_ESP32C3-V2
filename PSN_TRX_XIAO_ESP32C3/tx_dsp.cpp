@@ -301,12 +301,36 @@ void dspBegin(uint8_t pTx, uint8_t pQ, uint8_t pI, uint32_t fAgc, uint8_t bAgc) 
   pinMode(pinTx, INPUT);                    // R79（10 kΩ）で 3.3 V に引き上げ済み
   pinMode(pinQ, OUTPUT);
   digitalWrite(pinQ, LOW);
-  ledcAttach(pinI, agcFreq, agcBits);
+  // ESP32-C3 の LEDC は初期値が XTAL（40 MHz）で、12 ビットでは約 9.8 kHz までしか出せず
+  // 19.5 kHz の AGC PWM が作れない（ledc: ... can not be achieved）。APB（80 MHz）に切り替える
+  ledcSetClockSource(LEDC_USE_APB_CLK);
+  if (!ledcAttach(pinI, agcFreq, agcBits)) Serial.println("dsp: AGC の PWM を設定できない");
   ledcWrite(pinI, 0);
   for (int i = 0; i < 1024; i++) sineTab[i] = (int16_t)lrintf(32767 * sinf(2 * M_PI * i / 1024));
   loadSettings();
   buildFilter();
-  startAdc();
+  // ADC と送信の I2S が同じ GDMA の組（0 番）を使うと、送信開始で I2S の DMA 割り込みが取れず
+  // （intr_alloc: No free interrupt inputs for DMA_CH0）止まる。先に I2S を一度作って 0 番を押さえ、
+  // ADC を 1 番に回してから I2S を消す（送信のたびに作る I2S は空いた 0 番を使う）
+  {
+    i2s_chan_handle_t tmp = nullptr;
+    i2s_chan_config_t cc = I2S_CHANNEL_DEFAULT_CONFIG(I2S_NUM_0, I2S_ROLE_MASTER);
+    i2s_pdm_tx_config_t pc = {
+      .clk_cfg = I2S_PDM_TX_CLK_DAC_DEFAULT_CONFIG(FS),
+      .slot_cfg = I2S_PDM_TX_SLOT_DAC_DEFAULT_CONFIG(I2S_DATA_BIT_WIDTH_16BIT, I2S_SLOT_MODE_STEREO),
+      .gpio_cfg = {
+        .clk = I2S_GPIO_UNUSED,
+        .dout = I2S_GPIO_UNUSED,
+        .dout2 = I2S_GPIO_UNUSED,
+        .invert_flags = { .clk_inv = false },
+      },
+    };
+    bool ok = i2s_new_channel(&cc, &tmp, nullptr) == ESP_OK &&
+              i2s_channel_init_pdm_tx_mode(tmp, &pc) == ESP_OK;
+    startAdc();
+    if (tmp) i2s_del_channel(tmp);
+    if (!ok) Serial.println("dsp: I2S の先取りに失敗");
+  }
   xTaskCreate(dspTask, "dsp", 4096, nullptr, configMAX_PRIORITIES - 2, nullptr);
 }
 

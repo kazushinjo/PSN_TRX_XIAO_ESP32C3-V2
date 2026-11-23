@@ -728,6 +728,7 @@ void processBlock() {
 // ============================================================
 void setup() {
   Serial.begin(115200);
+  Serial.setTxTimeoutMs(0);    // USB をつないだまま PC で読んでいないとき、書き込みで待たされて全体が遅くなるのを防ぐ
 
   pinMode(ENC_A,  INPUT_PULLUP);
   pinMode(ENC_B,  INPUT_PULLUP);
@@ -777,6 +778,8 @@ void loop() {
   if (tx != txNow) {
     txNow = tx;
     applyFreq();
+    Serial.printf("%s %lu ms\n", tx ? "tx: 送信" : "tx: 受信", now);
+    lastMeterMs = 0;                        // LCD の表示（TX・ALC メーター）をすぐ切り替える
   }
 
   int cnt = encCount;
