@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 # Copyright (C) 2026 JA6FUF (kazushinjo)
 """
-Nextion NX4832T035 用の背景画像（480x320、アナログ S メーターの目盛り入り）を作る。
+Nextion NX4832K035 用の背景画像（480x320、アナログ S メーターの目盛り入り）を作る。
   python3 make_background.py  → background.png（Nextion Editor でピクチャ 0 として取り込み、page0 の背景 sta=image, pic=0 にする）
 目盛りの位置はスケッチの METER_* 定数と同じ値にすること。
 必要: Pillow

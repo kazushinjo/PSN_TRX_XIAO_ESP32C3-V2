@@ -72390,7 +72390,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "NX4832T035"
+		(property "Value" "NX4832K035"
 			(at 0 10 0)
 			(layer "F.Fab")
 			(hide yes)

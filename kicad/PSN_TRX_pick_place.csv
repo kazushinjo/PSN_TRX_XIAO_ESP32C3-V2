@@ -129,7 +129,7 @@ Ref,Val,Package,PosX,PosY,Rot,Side
 "J8","I2C_OUT-LCD","PinHeader_1x03_P2.54mm_Vertical",203.117500,-86.855000,180.000000,top
 "J9","TX-ON-LED","PinHeader_1x02_P2.54mm_Vertical",164.500000,-29.185000,90.000000,top
 "J10","Encoder","PinHeader_1x04_P2.54mm_Vertical",212.325000,-83.680000,0.000000,top
-"J11","NX4832T035","PinHeader_1x04_P2.54mm_Vertical",212.325000,-107.175000,0.000000,top
+"J11","NX4832K035","PinHeader_1x04_P2.54mm_Vertical",212.325000,-107.175000,0.000000,top
 "J12","POWER-LED","PinHeader_1x02_P2.54mm_Vertical",186.500000,-152.185000,90.000000,top
 "K1","G5V-2 DC12","Relay_DPDT_Omron_G5V-2_D1.0mm",96.755000,-59.867500,0.000000,top
 "L1","T30-6 11T/2T","L_T30_3pin_Vertical",96.440000,-52.885000,0.000000,top

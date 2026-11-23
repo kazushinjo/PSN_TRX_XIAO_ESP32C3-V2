@@ -13,7 +13,7 @@
  *   Sメーター・AGC は IF 増幅（Q6・Q7）の出力を Q8 で増幅して AD8307 で測り、ADS1015（I2C 0x48、A0）で読む
  *
  * ---- コンパイル時ディスプレイ選択 ----
- *   #define USE_NEXTION_DISPLAY  → Nextion NX4832T035  Serial1: D6(TX) D7(RX)
+ *   #define USE_NEXTION_DISPLAY  → Nextion NX4832K035（TJC4832T135_011 も可）  Serial1: D6(TX) D7(RX)
  *   コメントアウト               → SSD1306 OLED I2C: D4(SDA) D5(SCL)
  *
  * ---- Nextion 画面構成 (Nextion Editor で作成) ----
@@ -385,7 +385,7 @@ void smeterText(float db, char* buf, size_t len) {
 }
 
 // ============================================================
-// Nextion NX4832T035 ドライバ
+// Nextion NX4832K035 ドライバ
 // ============================================================
 #ifdef USE_NEXTION_DISPLAY
 

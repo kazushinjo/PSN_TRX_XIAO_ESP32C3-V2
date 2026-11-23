@@ -128,7 +128,7 @@ J7 MIC-IN 1/Pin_1_1=+5V 2/Pin_2_2=Net-(J7-Pin_2) 3/Pin_3_3=/PTT 4/Pin_4_4=GND
 J8 I2C_OUT-LCD 1/SDA_1=Net-(J4-SDA) 2/SCL_2=Net-(J4-SCL) 3/GND_3=GND
 J9 TX-ON-LED 1/Pin_1_1=Net-(J9-Pin_1) 2/Pin_2_2=Net-(J9-Pin_2)
 J10 Encoder 1/Pin_1_1=Net-(J10-Pin_1) 2/Pin_2_2=Net-(J10-Pin_2) 3/Pin_3_3=Net-(J10-Pin_3) 4/Pin_4_4=GND
-J11 NX4832T035 1/Pin_1_1=GND 2/Pin_2_2=Net-(J11-Pin_2) 3/Pin_3_3=Net-(J11-Pin_3) 4/Pin_4_4=+5V
+J11 NX4832K035 1/Pin_1_1=GND 2/Pin_2_2=Net-(J11-Pin_2) 3/Pin_3_3=Net-(J11-Pin_3) 4/Pin_4_4=+5V
 J12 POWER-LED 1/Pin_1_1=Net-(J12-Pin_1) 2/Pin_2_2=GND
 K1 G5V-2 DC12 1=GND 11=RX12V 13=/+12V 16=Net-(D1-K) 4=Net-(J1-Pin_1) 6=Net-(D2-K) 8=Net-(C102-Pad1) 9=/TX12V
 L1 T30-6 11T/2T 1/1_1=Net-(Q2-G) 2/TAP_2=Net-(D2-K) 3/3_3=GND

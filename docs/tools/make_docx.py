@@ -207,7 +207,7 @@ def logic_report():
     D.t(['項目', 'ファームウェア', '回路図', '判定'], [
         ('I2C', 'Wire.begin()（XIAO 既定 D4 = SDA、D5 = SCL）', 'D4 → U6.3・J4 SDA・J8.1、D5 → U6.2・J4 SCL・J8.2', '一致'),
         ('エンコーダ', 'D3 = A、D1 = B、D9 = SW（内部プルアップ）', 'J10.1/2/3 = D3/D1/D9、J10.4 = GND', '一致'),
-        ('表示器', 'NX4832T035: Serial1 9600 → 115200bps（起動時に切り替え）、TX = D6、RX = D7', 'J11.2 = D6、J11.3 = D7、J11.4 = +5V、J11.1 = GND', '一致'),
+        ('表示器', 'NX4832K035: Serial1 9600 → 115200bps（起動時に切り替え）、TX = D6、RX = D7', 'J11.2 = D6、J11.3 = D7、J11.4 = +5V、J11.1 = GND', '一致'),
         ('Si5351（送信）', '25MHz 水晶、PLLA = f × 16、CLK0/CLK1 を ÷16、CLK1 の位相 16（90°）、8mA', 'U6 CLK0 → C74、CLK1 → C75', '一致'),
         ('Si5351（受信）', 'CLK0 = 表示周波数 + RIT − BFO（PLLA、×20）、CLK2 = BFO（PLLB、×64）、CLK1 は止める', 'CLK0 → C74 → … → Q4 → L3 → U1、CLK2 → R19・R20 → U2', '一致'),
         ('S メーター', 'ADS1015（0x48）の A0 を 2ms ごとに読み、16ms のピークから AGC・S メーターを計算', 'U3（AD8307）OUT → J4.7（A0）、J4.5（ADDR）= GND → 0x48', '一致'),
@@ -474,7 +474,7 @@ def vfo_spec():
     D.t(['項目', '内容'], [
         ('IDE', 'Arduino IDE（ESP32 Arduino コア）'), ('ボード', 'XIAO_ESP32C3'),
         ('スケッチ', 'PSN_TRX_XIAO_ESP32C3/PSN_TRX_XIAO_ESP32C3.ino（送信 I/Q は tx_dsp.cpp / tx_dsp.h）'),
-        ('表示器の選択', '#define USE_NEXTION_DISPLAY（標準: NX4832T035）。コメントアウトで SSD1306 OLED'),
+        ('表示器の選択', '#define USE_NEXTION_DISPLAY（標準: NX4832K035）。コメントアウトで SSD1306 OLED'),
     ])
     D.h('6.2 必要なライブラリ', 2)
     D.t(['ライブラリ', '作者', '用途'], [
@@ -739,7 +739,7 @@ def assembly():
         ('J8', 'I2C_OUT-LCD', '1: SDA / 2: SCL / 3: GND', 'OLED を使うときだけ（電源は 3.3V を別に）。Nextion 表示器では使わない'),
         ('J9', 'TX-ON-LED', '1: LED のカソード側 / 2: LED のアノード側（R72 1k から TX12V）', '上面の送信表示 LED1（3mm、TX、φ3.0 穴、RF ゲインのつまみの後ろ）。J9 は基板の右側の辺の前寄り'),
         ('J10', 'Encoder', '1: A（D3）/ 2: B（D1）/ 3: SW（D9）/ 4: GND', '上面のロータリーエンコーダ（押しスイッチ付き）。ケーブルは MIC と反対の向き（ケースの右奥）へ出す'),
-        ('J11', 'NX4832T035', '1: GND / 2: TX（D6）/ 3: RX（D7）/ 4: +5V', 'LCD NX4832T035（3.5 インチ）。J11.2 → LCD の RX、J11.3 → LCD の TX'),
+        ('J11', 'NX4832K035', '1: GND / 2: TX（D6）/ 3: RX（D7）/ 4: +5V', 'LCD NX4832K035（3.5 インチ）。J11.2 → LCD の RX、J11.3 → LCD の TX'),
         ('J12', 'POWER-LED', '1: LED のアノード側（R80 10kΩ 経由 +12V）/ 2: GND', 'ふた上面の電源 LED（LCD の窓の下、POWER の右）（3mm、高輝度品。電流は約 1mA）'),
     ])
     D.h('5.2 電源の系統（後面 → 電源スイッチ → 基板）', 2)

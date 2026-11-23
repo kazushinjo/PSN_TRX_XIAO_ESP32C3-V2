@@ -26,7 +26,7 @@ Si5351 の CLK0（0°）/ CLK1（90°）二相出力を直接バランスドモ�
 | CLK1 出力 | 送信中だけ 90° → C75・LPF（L9）・VR4 → バランスドモジュレーター 2（D6/D7） |
 | CLK2 出力（V2） | 受信中だけ BFO（約 12MHz、PLLB）→ R19・R20 → U2。USB はフィルタの通過域の下端の外、LSB は上端の外（シリアルの `bfo usb <Hz>` / `bfo lsb <Hz>` で合わせて保存） |
 | チューニングステップ | 10Hz / 100Hz / 1kHz / 10kHz / 100kHz |
-| 表示 | Nextion NX4832T035（3.5 インチ シリアル LCD、標準）または OLED SSD1306 128×64（コンパイル時に選択） |
+| 表示 | Nextion NX4832K035（3.5 インチ シリアル LCD、標準。TJC4832T135_011 も可）または OLED SSD1306 128×64（コンパイル時に選択） |
 | 周波数記憶 | NVS（電源 OFF 後も保持） |
 | S メーター・AGC | V2: IF 増幅（Q6・Q7）の出力を Q8 で増幅して AD8307（対数検波、25mV/dB）で測り、ADS1015（秋月 AE-ADS1015、I2C 0x48）で XIAO が読む。AGC は Q21 で RF 増幅 Q3・IF 増幅 Q7 のゲートを下げる（FAST / SLOW / OFF）。調整値はスケッチの RSSI_S9_MV・AGC_TARGET_MV |
 | RIT | ±9.99 kHz・10 Hz 刻み、送信中は自動で外す（送信検出を使うため基板 Ver 1.3 から。Ver 2.0 から送信検出は D0） |
@@ -42,7 +42,7 @@ Seeed Studio XIAO ESP32C3 ─ メインコントローラ
 │   ├── CLK1  送信中だけ 90° → バランスドモジュレーター 2（D6/D7）
 │   └── CLK2  受信中だけ BFO → R19・R20 → U2（積検波）
 ├── ADS1015 モジュール（I2C 0x48）─ A0 = AD8307 の出力（S メーター・AGC）
-├── Nextion NX4832T035 LCD（D6/D7 UART）または OLED（D4/D5 I2C）
+├── Nextion NX4832K035 LCD（D6/D7 UART）または OLED（D4/D5 I2C）
 ├── ロータリーエンコーダ（A=D3, B=D1, SW=D9）
 ├── A2: 送信中のマイク音声（U5A → C65・R52、R73/R74 で 1.65V バイアス）→ 複素 FIR で I/Q を作る
 │        （V2 では受信音は来ない）

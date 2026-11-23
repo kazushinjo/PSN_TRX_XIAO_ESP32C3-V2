@@ -16,7 +16,7 @@
 | 受信方式 | SSB シングルスーパー（IF 12MHz、水晶 6 個のラダーフィルタ、積検波） |
 | 送信出力 | 約 1 W（12 V 時、終段 RD06HVF1） |
 | 周波数ステップ | 10 Hz / 100 Hz / 1 kHz / 10 kHz / 100 kHz |
-| 周波数表示 | 3.5 インチ LCD Nextion NX4832T035（480×320、Nextion シリアル HMI） |
+| 周波数表示 | 3.5 インチ LCD Nextion NX4832K035（480×320、Nextion シリアル HMI） |
 | 周波数記憶 | 最後に使った周波数・ステップ・AGC を自動で保存（電源を切っても保持、RIT は電源を入れると 0） |
 | RIT | ±9.99 kHz（10 Hz 刻み）、送信中は自動で外す |
 | S メーター・AGC | IF 増幅の出力を対数検波（AD8307）で測って S メーター表示、AGC は FAST / SLOW / OFF |
@@ -36,7 +36,7 @@
 
 | 表示 | 名称 | はたらき |
 |---|---|---|
-| （ベゼルの表示窓） | LCD（Nextion NX4832T035） | 周波数・ステップ・機種名・S メーター・AGC・RIT を表示（送信中は ALC メーター） |
+| （ベゼルの表示窓） | LCD（Nextion NX4832K035） | 周波数・ステップ・機種名・S メーター・AGC・RIT を表示（送信中は ALC メーター） |
 | TUNE | チューニングダイヤル（ロータリーエンコーダ） | 回すと周波数が変わる。押すと設定モード（RIT・STEP・AGC）に入る |
 | VOL | 音量ボリューム | イヤホンの音量を調整 |
 | RF | RF ゲインボリューム | 受信感度（上限）を調整。右いっぱいで最大感度。AGC はこの位置を上限に働く |
@@ -241,7 +241,7 @@ AGC は設定モードの **AGC** で切り替えます（4.4 参照）。
 | 書き込み | ケースのふたを開け、XIAO の USB-C にパソコンを接続して書き込む |
 
 - 表示器は `#define USE_NEXTION_DISPLAY`（標準）で Nextion LCD、コメントアウトすると SSD1306 OLED になります。
-- LCD の画面データ（t0 = 周波数、t1 = ステップ、t2 = 機種名、背景のピクチャ 0 = S メーターの目盛り、t3 = S メーターの値、t4 = AGC 状態、t5 = RIT、t6 = AGC の量）は Nextion Editor で NX4832T035（480×320）の画面として作成し、LCD に書き込んでおきます。
+- LCD の画面データ（t0 = 周波数、t1 = ステップ、t2 = 機種名、背景のピクチャ 0 = S メーターの目盛り、t3 = S メーターの値、t4 = AGC 状態、t5 = RIT、t6 = AGC の量）は Nextion Editor で NX4832K035（480×320）の画面として作成し、LCD に書き込んでおきます。
 - LCD の画面配置（480×320、周波数は 52 ドット、ほかは 28 ドットのフォント）は次のとおりです。S メーターはアナログメーターで、目盛りは背景画像、針はスケッチが描きます。
 
   ![LCD の背景画像](../PSN_TRX_XIAO_ESP32C3/nextion/background.png)
@@ -262,7 +262,7 @@ AGC は設定モードの **AGC** で切り替えます（4.4 参照）。
   | t2 | 328 | 256 | 148 | 32 | 0 | 12 | 機種名 |
 
   > **画面データ（.HMI）について**
-  > - 画面データは、Nextion NX4832K035 用が [`nextion/PSN_TRX_K035.tft`](../PSN_TRX_XIAO_ESP32C3/nextion/PSN_TRX_K035.tft)（LCD に書き込むファイル）と [`nextion/PSN_TRX_K035.HMI`](../PSN_TRX_XIAO_ESP32C3/nextion/PSN_TRX_K035.HMI)（Nextion Editor で編集する元ファイル）です。.tft を microSD に入れて LCD に書き込めばそのまま使えます（.tft は機種ごとに別で、取り違えると書き込めません。NX4832T035 用は使う予定がないので 2026-11-23 に削除）。作り方と書き込み方は [`nextion/画面データ作成手順.md`](../PSN_TRX_XIAO_ESP32C3/nextion/画面データ作成手順.md) を見てください。
+  > - 画面データは、Nextion NX4832K035 用が [`nextion/PSN_TRX_K035.tft`](../PSN_TRX_XIAO_ESP32C3/nextion/PSN_TRX_K035.tft)（LCD に書き込むファイル）と [`nextion/PSN_TRX_K035.HMI`](../PSN_TRX_XIAO_ESP32C3/nextion/PSN_TRX_K035.HMI)（Nextion Editor で編集する元ファイル）です。.tft を microSD に入れて LCD に書き込めばそのまま使えます（.tft は機種ごとに別で、取り違えると書き込めません。NX4832K035 用は使う予定がないので 2026-11-23 に削除）。作り方と書き込み方は [`nextion/画面データ作成手順.md`](../PSN_TRX_XIAO_ESP32C3/nextion/画面データ作成手順.md) を見てください。
   > - **t6（AGC の量）は 2026-10-21 のファームウェアから使っています。** それより前に作った画面データには t6 がないので、上の表のとおり追加して LCD に書き込み直してください（t6 がなくても AGC の量が出ないだけで、ほかの表示は動きます）。
   > - 見た目が同じ TJC の LCD（TJC4832T135 など）は、エディタと画面データに互換性がないので、この画面データは使えません。TJC4832T135 用の画面データ [`nextion/PSN_TRX_TJC.tft`](../PSN_TRX_XIAO_ESP32C3/nextion/PSN_TRX_TJC.tft)（元ファイル `PSN_TRX_TJC.HMI`、**古い版の USART HMI 1.67.6** で編集・出力。1.68.2 で出すと横向きの画面が崩れる）を書き込めば、スケッチは変えずに使えます（[`nextion/画面データ作成手順.md`](../PSN_TRX_XIAO_ESP32C3/nextion/画面データ作成手順.md) の 9 章）。
   > - Nextion Editor のシミュレータ（Debug）で表示を確かめる場合も、画面データに t6 が必要です。

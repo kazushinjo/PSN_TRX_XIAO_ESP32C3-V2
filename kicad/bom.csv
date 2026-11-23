@@ -41,7 +41,7 @@
 "J8","I2C_OUT-LCD","Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical","1",""
 "J9","TX-ON-LED","Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical","1",""
 "J10","Encoder","Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical","1",""
-"J11","NX4832T035","Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical","1",""
+"J11","NX4832K035","Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical","1",""
 "J12","POWER-LED","Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical","1",""
 "K1","G5V-2 DC12","PSN_TRX:Relay_DPDT_Omron_G5V-2_D1.0mm","1",""
 "L1","T30-6 11T/2T","PSN_TRX:L_T30_3pin_Vertical","1",""
