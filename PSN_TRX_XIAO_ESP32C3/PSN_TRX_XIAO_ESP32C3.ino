@@ -405,12 +405,16 @@ void nxSetText(const char* component, const char* value) {
 void nxInit() {
   // ESP32C3: D6=GPIO21(TX), D7=GPIO20(RX)
   // 針の描画で送る量が増えるので 115200bps に上げる（LCD が既に 115200bps でも通るよう両方で送る）
+  // 通信速度を変えた直後の最初の命令は、頭にごみが付いて LCD に捨てられることがある
+  // （TJC は 1A = 命令エラーを返して無視する）。先に区切り（FF FF FF）だけを送ってごみを捨てさせる
   Serial1.begin(9600, SERIAL_8N1, D7, D6);
   delay(500);
+  nxSend("");
   nxSend("baud=115200");
   Serial1.flush();
   delay(100);
   Serial1.updateBaudRate(115200);
+  nxSend("");
   nxSend("baud=115200");
   delay(50);
   nxSend("page 0");
