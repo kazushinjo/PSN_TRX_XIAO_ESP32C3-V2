@@ -29,6 +29,8 @@
 #include <math.h>
 #include "esp_adc/adc_continuous.h"
 #include "driver/i2s_pdm.h"
+#include "esp_private/gdma.h"
+#include "soc/gpio_reg.h"
 
 #define MIC_ADC_CH   ADC_CHANNEL_4     // D2/A2 = GPIO4
 #define FS           16000             // 送信の処理と出力
@@ -78,6 +80,7 @@ static volatile int rxHead = 0, rxTail = 0;
 
 // 状態表示用（書くのは dspTask だけ）
 static uint32_t adcErrors = 0, clipCount = 0, txBlocks = 0;
+static uint32_t adcReads = 0, adcReadErr = 0, adcSamples = 0;   // 診断用（ADC の読み取り回数・失敗・サンプル数）
 static int32_t peakIn = 0, peakOut = 0;
 static volatile int32_t alcPeak = 0;  // ALC 前の入力ピーク（dspAlcLevelDb で読んで 0 に戻す）
 
@@ -210,6 +213,7 @@ static void dspTask(void *) {
   for (;;) {
     uint32_t got = 0;
     esp_err_t e = adc_continuous_read(adcH, raw, ADC_FRAME, &got, 50);
+    if (e == ESP_OK) { adcReads++; adcSamples += got / SOC_ADC_DIGI_RESULT_BYTES; } else adcReadErr++;
     bool tx = digitalRead(pinTx) == LOW;
     if (tx && !pdmOn) { pdmStart(); acc = cnt = 0; }
     if (!tx && pdmOn) { pdmStop(); acc = cnt = 0; }
@@ -309,27 +313,18 @@ void dspBegin(uint8_t pTx, uint8_t pQ, uint8_t pI, uint32_t fAgc, uint8_t bAgc) 
   for (int i = 0; i < 1024; i++) sineTab[i] = (int16_t)lrintf(32767 * sinf(2 * M_PI * i / 1024));
   loadSettings();
   buildFilter();
-  // ADC と送信の I2S が同じ GDMA の組（0 番）を使うと、送信開始で I2S の DMA 割り込みが取れず
-  // （intr_alloc: No free interrupt inputs for DMA_CH0）止まる。先に I2S を一度作って 0 番を押さえ、
-  // ADC を 1 番に回してから I2S を消す（送信のたびに作る I2S は空いた 0 番を使う）
+  // ESP32-C3 の GDMA は送受信が組（0 番・1 番…）になっていて、割り込みは組ごとに 1 本。
+  // ADC（受信方向）と送信の I2S（送信方向）が同じ 0 番の組に入ると割り込みを取り合い、
+  // 送信開始で止まる（intr_alloc: No free interrupt inputs for DMA_CH0）。
+  // 空の GDMA 受信チャネルで 0 番の組の受信方向を押さえてから ADC を始め、ADC を 1 番の組に回す
   {
-    i2s_chan_handle_t tmp = nullptr;
-    i2s_chan_config_t cc = I2S_CHANNEL_DEFAULT_CONFIG(I2S_NUM_0, I2S_ROLE_MASTER);
-    i2s_pdm_tx_config_t pc = {
-      .clk_cfg = I2S_PDM_TX_CLK_DAC_DEFAULT_CONFIG(FS),
-      .slot_cfg = I2S_PDM_TX_SLOT_DAC_DEFAULT_CONFIG(I2S_DATA_BIT_WIDTH_16BIT, I2S_SLOT_MODE_STEREO),
-      .gpio_cfg = {
-        .clk = I2S_GPIO_UNUSED,
-        .dout = I2S_GPIO_UNUSED,
-        .dout2 = I2S_GPIO_UNUSED,
-        .invert_flags = { .clk_inv = false },
-      },
-    };
-    bool ok = i2s_new_channel(&cc, &tmp, nullptr) == ESP_OK &&
-              i2s_channel_init_pdm_tx_mode(tmp, &pc) == ESP_OK;
+    gdma_channel_handle_t dummy = nullptr;
+    gdma_channel_alloc_config_t ac = {};
+    ac.direction = GDMA_CHANNEL_DIRECTION_RX;
+    bool ok = gdma_new_ahb_channel(&ac, &dummy) == ESP_OK;
     startAdc();
-    if (tmp) i2s_del_channel(tmp);
-    if (!ok) Serial.println("dsp: I2S の先取りに失敗");
+    if (dummy) gdma_del_channel(dummy);
+    if (!ok) Serial.println("dsp: GDMA の先取りに失敗");
   }
   xTaskCreate(dspTask, "dsp", 4096, nullptr, configMAX_PRIORITIES - 2, nullptr);
 }
@@ -368,6 +363,12 @@ void dspPrintStatus() {
   Serial.printf("dsp: %s / 入力ピーク %ld / 出力ピーク %ld / クリップ %lu / ADC あふれ %lu / 送信ブロック %lu / 係数シフト %d\n",
                 pdmOn ? "送信中" : "受信中", (long)peakIn, (long)peakOut, (unsigned long)clipCount,
                 (unsigned long)adcErrors, (unsigned long)txBlocks, coefShift);
+  {   // 診断用: D8・D10 に出している信号（GPIO マトリクス。15 = I2S PDM 1 本目、59 = 2 本目、45〜 = LEDC、128 = ふつうの出力）
+    uint32_t sq = REG_READ(GPIO_FUNC0_OUT_SEL_CFG_REG + 4 * digitalPinToGPIONumber(pinQ)) & 0xFF;
+    uint32_t si = REG_READ(GPIO_FUNC0_OUT_SEL_CFG_REG + 4 * digitalPinToGPIONumber(pinI)) & 0xFF;
+    Serial.printf("dsp: ピンの信号 D8(Q) = %lu / D10(I) = %lu\n", (unsigned long)sq, (unsigned long)si);
+  }
+  Serial.printf("dsp: ADC 読み取り %lu / 失敗 %lu / サンプル %lu\n", (unsigned long)adcReads, (unsigned long)adcReadErr, (unsigned long)adcSamples);
   peakIn = 0; peakOut = 0;
 }
 
