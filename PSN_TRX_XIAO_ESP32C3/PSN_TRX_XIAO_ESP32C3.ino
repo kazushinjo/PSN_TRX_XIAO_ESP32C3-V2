@@ -28,6 +28,11 @@
  *   送信中はメーターが ALC メーターになる: 針 = マイク入力のピーク（ALC の効き始め = S9 の位置、
  *        赤い +dB の目盛り = ALC が絞った量）、t3 = "ALC 6dB"（絞った量）/ "ALC OFF"
  *   t5 : RIT         ("RIT +0.25k"、RIT 0 のときは空欄)
+ *   追加表示（2026-11-25、画面データ（.tft）は変えずにスケッチだけで表示）:
+ *     バンド外の警告 : 送信する電波が SSB で出せる範囲（SSB_MIN_HZ〜SSB_MAX_HZ）から外れる周波数では t0 を赤にする
+ *     送信時間       : 送信中は t6 に "TX 0:42"。TX_WARN_SEC を超えると赤
+ *     ピークホールド : 受信中、直前のピークの位置に赤い短い線（針の先の部分）を PEAK_HOLD_MS 残す
+ *     ダイヤルロック : 設定モードの LOCK で ON/OFF。ON のときは t1 に "LOCK" が付き、ダイヤルで周波数が変わらない
  *   配置（480x320）: font0 = 24 ドット、font1 = 32 ドット（半角英数）、page0 の背景 = ピクチャ 0（sta=image）
  *     t0 (16,16)   448x40  font1 maxl16 | t1 (16,72)   320x32 font0 maxl32 | t5 (344,72) 120x32 font0 maxl12
  *     メーター面 (16,112) 305x181（背景画像、部品は置かない）
@@ -38,7 +43,7 @@
  *
  * ---- 操作 ----
  *   通常       : ダイヤル = 周波数、押す = 設定モードへ、長押し = RIT を 0 に戻す
- *   設定モード : ダイヤル = 機能を選ぶ（RIT / STEP / AGC / 戻る）、押す = その機能の値の変更へ
+ *   設定モード : ダイヤル = 機能を選ぶ（RIT / STEP / AGC / LOCK / 戻る）、押す = その機能の値の変更へ
  *   値の変更   : ダイヤル = 値を変える、押す = 確定して通常に戻る
  *   設定モード・値の変更中に長押し、または 15 秒操作なし = 取り消して通常に戻る
  *   機能を増やすときは menuItems[] に 1 行足し、menuEnter/menuTurn/menuText/menuCommit に処理を足す
@@ -146,6 +151,16 @@ Preferences prefs;
 #define FREQ_MAX     51000000L
 #define FREQ_DEFAULT 50500000L
 
+// ---- バンド外の警告（JARL のバンドプラン: 50.000〜50.100MHz は CW、SSB は 50.100MHz から）----
+// 送信する電波（USB は表示周波数〜+SSB_BW_HZ、LSB は −SSB_BW_HZ〜表示周波数）がこの範囲を出ると周波数を赤くする
+#define SSB_MIN_HZ   50100000L
+#define SSB_MAX_HZ   51000000L
+#define SSB_BW_HZ    3000L
+
+// ---- 送信時間・ピークホールド ----
+#define TX_WARN_SEC  180       // 送信時間がこれを超えると t6 を赤くする（0 = 赤くしない）
+#define PEAK_HOLD_MS 2000      // Sメーターのピークを残す時間
+
 long currentFreq = FREQ_DEFAULT;
 
 // ---- ステップ ----
@@ -164,13 +179,16 @@ int agcMode = AGC_FAST;
 // ---- RIT ----
 long ritHz = 0;                // 受信だけずらす量（電源投入時は 0）
 
+// ---- ダイヤルロック ----
+bool dialLock = false;         // true = ダイヤルで周波数を変えない（保存する）
+
 // ---- BFO（CLK2）----
 long bfoHz[2] = {BFO_USB_DEFAULT, BFO_LSB_DEFAULT};   // [0] = USB、[1] = LSB
 
 // ---- 設定モード ----
 enum UiMode { UI_NORMAL, UI_MENU, UI_EDIT };
-enum MenuId { MENU_RIT, MENU_STEP, MENU_AGC, MENU_EXIT, MENU_COUNT };
-const char* menuItems[MENU_COUNT] = {"RIT", "STEP", "AGC", "EXIT"};
+enum MenuId { MENU_RIT, MENU_STEP, MENU_AGC, MENU_LOCK, MENU_EXIT, MENU_COUNT };
+const char* menuItems[MENU_COUNT] = {"RIT", "STEP", "AGC", "LOCK", "EXIT"};
 UiMode        uiMode    = UI_NORMAL;
 int           menuIndex = MENU_RIT;
 long          editValue = 0;   // 値の変更中の仮の値（確定するまで本体の設定は変えない）
@@ -232,6 +250,11 @@ char          shownText[12] = "";
 const char*   shownAgc    = nullptr;
 unsigned long lastMeterMs = 0;
 float         alcLevelDb  = -60.0f;  // 送信中のマイク入力ピーク（ALC の効き始め = 0dB）
+float         peakDb      = -60.0f;  // Sメーターのピーク（ピークホールド）
+unsigned long peakMs      = 0;       // ピークを更新した時刻
+int           peakPos     = -1;      // ピークの印の位置 0〜1000（-1 = 出さない）
+int           shownPeak   = -1;
+unsigned long txStartMs   = 0;       // 送信を始めた時刻
 
 // ---- ISR ----
 void IRAM_ATTR encoderISR() {
@@ -300,6 +323,7 @@ void menuEnter(int id) {
     case MENU_RIT:  editValue = ritHz;     break;
     case MENU_STEP: editValue = stepIndex; break;
     case MENU_AGC:  editValue = agcMode;   break;
+    case MENU_LOCK: editValue = dialLock;  break;
   }
 }
 
@@ -317,6 +341,9 @@ void menuTurn(int id, int diff) {
     case MENU_AGC:
       editValue = ((editValue + diff) % AGC_MODES + AGC_MODES) % AGC_MODES;
       break;
+    case MENU_LOCK:
+      if (diff % 2) editValue = !editValue;
+      break;
   }
 }
 
@@ -325,6 +352,7 @@ void menuText(int id, long v, char* buf, size_t len) {
     case MENU_RIT:  snprintf(buf, len, "RIT: %+.2fkHz", v / 1000.0); break;
     case MENU_STEP: snprintf(buf, len, "STEP: %s", stepLabels[v]);   break;
     case MENU_AGC:  snprintf(buf, len, "%s", agcLabels[v]);          break;
+    case MENU_LOCK: snprintf(buf, len, "LOCK: %s", v ? "ON" : "OFF"); break;
     default:        snprintf(buf, len, "EXIT");                       break;
   }
 }
@@ -334,6 +362,7 @@ void menuCommit(int id) {
     case MENU_RIT:  ritHz     = editValue;      break;
     case MENU_STEP: stepIndex = (int)editValue; break;
     case MENU_AGC:  agcMode   = (int)editValue; break;
+    case MENU_LOCK: dialLock  = editValue != 0; break;
   }
 }
 
@@ -346,8 +375,15 @@ void uiLine(char* buf, size_t len) {
     menuText(menuIndex, editValue, v, sizeof(v));
     snprintf(buf, len, "> %s [OK]", v);   // 28 ドットで t1 の幅（22 文字）に収める
   } else {
-    snprintf(buf, len, "STEP: %s", stepLabels[stepIndex]);
+    snprintf(buf, len, "STEP: %s%s", stepLabels[stepIndex], dialLock ? "  LOCK" : "");
   }
+}
+
+// 送信する電波が SSB で出せる範囲から外れるか（側帯波で占有する側を見る）
+bool outOfBand(long f) {
+  long lo = dspLsb() ? f - SSB_BW_HZ : f;
+  long hi = dspLsb() ? f : f + SSB_BW_HZ;
+  return lo < SSB_MIN_HZ || hi > SSB_MAX_HZ;
 }
 
 void ritText(char* buf, size_t len) {
@@ -434,6 +470,12 @@ void updateDisplay() {
 
   char freqBuf[24];
   snprintf(freqBuf, sizeof(freqBuf), "%d.%03d.%03d MHz", mhz, khz, hz);
+  static int shownOut = -1;              // バンド外のとき赤（63488）、範囲内は白（65535）
+  int out = outOfBand(f);
+  if (out != shownOut) {
+    nxSend(out ? "t0.pco=63488" : "t0.pco=65535");
+    shownOut = out;
+  }
   nxSetText("t0", freqBuf);
 
   char line[40];
@@ -445,8 +487,17 @@ void updateDisplay() {
   nxSetText("t5", rit);
 }
 
+// 針の角度上の点（支点から r）
+void meterPoint(int pos, int r, int* x, int* y) {
+  float a = (METER_ANG_L + pos / 1000.0f * (METER_ANG_R - METER_ANG_L)) * PI / 180.0f;
+  *x = METER_PIV_X + (int)(r * cosf(a));
+  *y = METER_PIV_Y - (int)(r * sinf(a));
+}
+
 // 針を描く: メーター面を背景画像で描き直してから、黒い線 2 本（2 ドット幅）
-void drawNeedle(int pos) {
+// peak >= 0 のときは、ピークの位置に針の先と同じ長さの短い印（支点から METER_R1−25〜METER_R1、
+// 目盛りの円弧 R_ARC = 165 の内側）を赤い線 2 本で描く
+void drawNeedle(int pos, int peak) {
   char buf[48];
   snprintf(buf, sizeof(buf), "picq %d,%d,%d,%d,0", METER_X0, METER_Y0, METER_W, METER_H);
   nxSend(buf);
@@ -459,14 +510,26 @@ void drawNeedle(int pos) {
     snprintf(buf, sizeof(buf), "line %d,%d,%d,%d,0", x0 + dx, y0, x1 + dx, y1);
     nxSend(buf);
   }
+  if (peak >= 0) {
+    int px0, py0, px1, py1;
+    meterPoint(peak, METER_R1 - 25, &px0, &py0);
+    meterPoint(peak, METER_R1,      &px1, &py1);
+    for (int dx = 0; dx <= 1; dx++) {
+      snprintf(buf, sizeof(buf), "line %d,%d,%d,%d,63488", px0 + dx, py0, px1 + dx, py1);
+      nxSend(buf);
+    }
+  }
 }
 
 // 変わった項目だけ送る
 void updateMeter(int pos, const char* text, const char* agc, const char* agcAmt) {
   static char shownAmt[16] = "?";
-  if (pos / 4 != shownBar / 4 || shownBar < 0) {   // 0.4% 未満の変化では描き直さない
-    drawNeedle(pos);
+  static bool shownAmtRed = false;
+  if (pos / 4 != shownBar / 4 || shownBar < 0 ||   // 0.4% 未満の変化では描き直さない
+      peakPos / 4 != shownPeak / 4 || (peakPos < 0) != (shownPeak < 0)) {
+    drawNeedle(pos, peakPos);
     shownBar = pos;
+    shownPeak = peakPos;
   }
   if (strcmp(text, shownText) != 0) {
     nxSetText("t3", text);
@@ -477,6 +540,13 @@ void updateMeter(int pos, const char* text, const char* agc, const char* agcAmt)
     nxSend(strcmp(agc, "TX") == 0 ? "t4.pco=63488" : "t4.pco=65535");
     nxSetText("t4", agc);
     shownAgc = agc;
+  }
+  // 送信時間が TX_WARN_SEC を超えたら t6 を赤（63488）に
+  bool red = txNow && TX_WARN_SEC > 0 && millis() - txStartMs >= TX_WARN_SEC * 1000UL;
+  if (red != shownAmtRed) {
+    nxSend(red ? "t6.pco=63488" : "t6.pco=65535");
+    shownAmtRed = red;
+    shownAmt[0] = '?'; shownAmt[1] = '\0';      // 色を変えたら文字も送り直す
   }
   if (strcmp(agcAmt, shownAmt) != 0) {
     nxSetText("t6", agcAmt);
@@ -519,6 +589,10 @@ void updateDisplay() {
   oled.setTextSize(1);
   oled.setCursor(108, 10);
   oled.print("MHz");
+  if (outOfBand(f)) {                    // バンド外の警告
+    oled.setCursor(108, 20);
+    oled.print("OUT");
+  }
 
   oled.drawLine(0, 28, 127, 28, SSD1306_WHITE);
 
@@ -556,6 +630,7 @@ void saveFreq() {
   prefs.putLong("freq", currentFreq);
   prefs.putInt("step", stepIndex);
   prefs.putInt("agc", agcMode);
+  prefs.putBool("lock", dialLock);
   prefs.end();
 }
 
@@ -575,6 +650,7 @@ void loadFreq() {
   currentFreq = prefs.getLong("freq", FREQ_DEFAULT);
   stepIndex   = prefs.getInt("step", 2);
   agcMode     = prefs.getInt("agc", AGC_FAST);
+  dialLock    = prefs.getBool("lock", false);
   bfoHz[0]    = prefs.getLong("bfo_u", BFO_USB_DEFAULT);
   bfoHz[1]    = prefs.getLong("bfo_l", BFO_LSB_DEFAULT);
   prefs.end();
@@ -777,6 +853,7 @@ void loop() {
   bool tx = (digitalRead(TX_SENSE) == LOW);
   if (tx != txNow) {
     txNow = tx;
+    if (tx) txStartMs = now;
     applyFreq();
     Serial.printf("%s %lu ms\n", tx ? "tx: 送信" : "tx: 受信", now);
     lastMeterMs = 0;                        // LCD の表示（TX・ALC メーター）をすぐ切り替える
@@ -787,6 +864,7 @@ void loop() {
     int diff = cnt - lastCount;
     lastCount = cnt;
     if (uiMode == UI_NORMAL) {
+      if (dialLock) diff = 0;               // ダイヤルロック中は周波数を変えない
       currentFreq += (long)diff * stepValues[stepIndex];
       if (currentFreq < FREQ_MIN) currentFreq = FREQ_MIN;
       if (currentFreq > FREQ_MAX) currentFreq = FREQ_MAX;
@@ -855,8 +933,10 @@ void loop() {
     if (ch == '\n' || ch == '\r') {
       if (cmdLine.length() && !bfoCommand(cmdLine) && !freqCommand(cmdLine) &&
           !ritCommand(cmdLine) && !smeterCommand(cmdLine)) {
-        if (dspCommand(cmdLine))
+        if (dspCommand(cmdLine)) {
           applyFreq();                     // sb で側帯波を変えたら BFO・局発も合わせる
+          updateDisplay();                 // バンド外の判定も側帯波で変わる
+        }
         else
           Serial.println("コマンド: dsp / mic <dB> / out <%> / iqd <us> / iqa <dB> / sb usb|lsb / tone <Hz> / alc <dBFS>|off / w / bfo [usb|lsb <Hz>] / freq [<Hz>] / rit [<Hz>] / smeter s7|s9+20|off");
       }
@@ -875,12 +955,22 @@ void loop() {
       char text[12];
       if (dspAlcOn()) snprintf(text, sizeof(text), "ALC %ddB", alcLevelDb > 0 ? (int)(alcLevelDb + 0.5f) : 0);
       else            snprintf(text, sizeof(text), "ALC OFF");
-      updateMeter(meterPos(alcLevelDb), text, "TX", "");
+      unsigned long sec = (now - txStartMs) / 1000;
+      char txTime[16];
+      snprintf(txTime, sizeof(txTime), "TX %lu:%02lu", sec / 60, sec % 60);
+      peakPos = -1;                          // 送信中はピークの印を出さない
+      peakDb = -60.0f;
+      updateMeter(meterPos(alcLevelDb), text, "TX", txTime);
     } else {
       alcLevelDb = -60.0f;
       char text[12], amt[16] = "";
       float db = smeterHold ? smeterHoldDb : smeterDb;
       smeterText(db, text, sizeof(text));
+      // ピークホールド: 上がったらすぐ追い、PEAK_HOLD_MS 残してからゆっくり針に戻す
+      if (db >= peakDb) { peakDb = db; peakMs = now; }
+      else if (now - peakMs >= PEAK_HOLD_MS) peakDb += (db - peakDb) * 0.3f;
+      int pp = meterPos(peakDb), np = meterPos(db);
+      peakPos = (pp - np >= 8) ? pp : -1;    // 針とほぼ重なるときは出さない
       if (agcMode != AGC_OFF) {
         int g = (int)(agcCtl * AGC_RANGE_DB / 1000.0f + 0.5f);
         snprintf(amt, sizeof(amt), g > 0 ? "AGC -%ddB" : "AGC %ddB", g);
