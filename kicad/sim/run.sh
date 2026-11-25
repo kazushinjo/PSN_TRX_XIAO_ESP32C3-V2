@@ -15,6 +15,7 @@ python3 parsenet.py net.net net.json > netlist.txt
   echo; echo "## 受信部（V2: 12MHz の SSB スーパー。BPF・ラダーフィルタ・利得）"; python3 rx.py
   echo; echo "## 回路全体（受信: アンテナ → スピーカー、送信: 局発・変調器 → アンテナ）"; python3 full.py
   echo; python3 blocks.py
+  echo; python3 band.py
 } 2>&1 | grep -v -E '^\s*$|^stdout|^stderr' > results.txt
 rm -f net.net
 echo "results.txt に出力しました"

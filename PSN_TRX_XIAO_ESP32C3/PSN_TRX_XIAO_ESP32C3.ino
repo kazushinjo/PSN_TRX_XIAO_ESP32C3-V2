@@ -3,10 +3,10 @@
 //           LO (Si5351), RF/AF phasing, 1W PA, output LPF, power and control redesigned by JA6FUF
 /*
  * PSN TRX VFO - Seeed Studio XIAO ESP32C3 (RISC-V 32-bit 160MHz) + Si5351
- * 50.000 ~ 51.000 MHz (6m Band)
+ * 50.000 ~ 52.900 MHz (6m Band。52.90〜54.00MHz は実験・研究用なので出さない)
  *
  * ---- V2: 受信は 12MHz の SSB シングルスーパー ----
- *   受信中: CLK0 = 第 1 局発（表示周波数 + RIT − BFO、38〜39MHz、PLLA）→ Q4 → L3 → R8・R9 → U1
+ *   受信中: CLK0 = 第 1 局発（表示周波数 + RIT − BFO、38〜41MHz、PLLA）→ Q4 → L3 → R8・R9 → U1
  *           CLK2 = BFO（約 12MHz、PLLB）→ R19・R20 → U2（積検波）。CLK1 は止める
  *   送信中: CLK0（0°）・CLK1（90°）= 表示周波数（PSN 変調、従来どおり）。CLK2 は止める
  *           AM（sb am）では表示周波数 − DSP_AM_IF_HZ（4kHz）。DSP が局発 + 4kHz に搬送波を作る（tx_dsp.cpp）
@@ -31,7 +31,7 @@
  *        赤い +dB の目盛り = ALC が絞った量）、t3 = "ALC 6dB"（絞った量）/ "ALC OFF"
  *   t5 : RIT         ("RIT +0.25k"、RIT 0 のときは空欄)
  *   追加表示（2026-11-25、画面データ（.tft）は変えずにスケッチだけで表示）:
- *     バンド外の警告 : 送信する電波が SSB で出せる範囲（SSB_MIN_HZ〜SSB_MAX_HZ）から外れる周波数では t0 を赤にする
+ *     バンド外の警告 : 送信する電波がバンドプランの区分（SSB: SSB_MIN_HZ〜BAND_MAX_HZ、AM: AM_MIN_HZ〜BAND_MAX_HZ）から外れる周波数では t0 を赤にする
  *     送信時間       : 送信中は t6 に "TX 0:42"。TX_WARN_SEC を超えると赤
  *     ピークホールド : 受信中、直前のピークの位置に赤い短い線（針の先の部分）を PEAK_HOLD_MS 残す
  *     ダイヤルロック : 設定モードの LOCK で ON/OFF。ON のときは t1 に "LOCK" が付き、ダイヤルで周波数が変わらない
@@ -154,14 +154,17 @@ Preferences prefs;
 
 // ---- 周波数設定 ----
 #define FREQ_MIN     50000000L
-#define FREQ_MAX     51000000L
+#define FREQ_MAX     52900000L   // 52.90〜54.00MHz は実験・研究用の区分なので出さない
 #define FREQ_DEFAULT 50500000L
 
-// ---- バンド外の警告（JARL のバンドプラン: 50.000〜50.100MHz は CW、SSB は 50.100MHz から）----
+// ---- バンド外の警告（JARL のバンドプラン、令和 7 年 7 月 17 日施行）----
+//   50.00〜50.07MHz CW / 50.07〜51.00MHz 狭帯域（3kHz 以下、A3E を除く）の全電波型式 /
+//   51.00〜52.90MHz 全電波型式 / 52.90〜54.00MHz 全電波型式（実験・研究用）
 // 送信する電波（USB は表示周波数〜+SSB_BW_HZ、LSB は −SSB_BW_HZ〜表示周波数、AM は表示周波数 ± DSP_AM_BW_HZ）が
-// この範囲を出ると周波数を赤くする
-#define SSB_MIN_HZ   50100000L
-#define SSB_MAX_HZ   51000000L
+// SSB は SSB_MIN_HZ〜BAND_MAX_HZ、AM は AM_MIN_HZ〜BAND_MAX_HZ を出ると周波数を赤くする
+#define SSB_MIN_HZ   50070000L
+#define AM_MIN_HZ    51000000L
+#define BAND_MAX_HZ  52900000L
 #define SSB_BW_HZ    3000L
 
 // ---- 送信時間・ピークホールド ----
@@ -277,8 +280,8 @@ void IRAM_ATTR encoderISR() {
 }
 
 // ---- Si5351 ----
-#define QUAD_DIV 16            // 送信: 50MHz × 16 = 800〜816MHz（PLLA、CLK0・CLK1 の 90° 出力）
-#define LO_DIV   20            // 受信の局発: 38〜39MHz × 20 = 760〜780MHz（PLLA）
+#define QUAD_DIV 16            // 送信: 50〜52.9MHz × 16 = 800〜846MHz（PLLA、CLK0・CLK1 の 90° 出力）
+#define LO_DIV   20            // 受信の局発: 38〜41MHz × 20 = 760〜818MHz（PLLA）
 #define BFO_DIV  64            // BFO: 12MHz × 64 = 768MHz（PLLB）
 
 long shownBfo = -1;            // CLK2 に設定してある BFO（-1 = 未設定）
@@ -404,12 +407,12 @@ void uiLine(char* buf, size_t len) {
   }
 }
 
-// 送信する電波が SSB で出せる範囲から外れるか（側帯波で占有する側を見る）
+// 送信する電波がバンドプランの区分から外れるか（側帯波で占有する側を見る。AM は上下とも）
 bool outOfBand(long f) {
-  if (dspAm()) return f - DSP_AM_BW_HZ < SSB_MIN_HZ || f + DSP_AM_BW_HZ > SSB_MAX_HZ;
+  if (dspAm()) return f - DSP_AM_BW_HZ < AM_MIN_HZ || f + DSP_AM_BW_HZ > BAND_MAX_HZ;
   long lo = dspLsb() ? f - SSB_BW_HZ : f;
   long hi = dspLsb() ? f : f + SSB_BW_HZ;
-  return lo < SSB_MIN_HZ || hi > SSB_MAX_HZ;
+  return lo < SSB_MIN_HZ || hi > BAND_MAX_HZ;
 }
 
 void ritText(char* buf, size_t len) {
