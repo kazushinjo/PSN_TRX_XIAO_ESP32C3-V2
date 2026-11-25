@@ -503,6 +503,11 @@ def vfo_spec():
         ('ALC', 'FIR の前で、入力のピークが効き始め（初期値 −20dBFS）を超えた分だけ利得を下げる（すぐ追従、戻り約 0.26 秒）。送信中はメーターが ALC メーターになる'),
         ('シリアルのコマンド', '115200bps・改行あり。受信中は 0.1 秒ごとに「rssi … mV agc … S … dB」を出す。bfo（表示・設定）、dsp（表示）、mic・out・iqd・iqa・sb・tone・alc、w（保存）'),
     ])
+    D.p('LCD の表示例（PSN_TRX_K035.HMI を Nextion Editor のシミュレータで表示。S7・AGC の値は見本）。'
+        '上: AM モード（51.050.000MHz、AM の区分 51.000〜52.900MHz の中なので周波数は白、STEP の後ろに AM）。'
+        '下: バンド外の警告（AM で 50.620.000MHz。AM の電波 50.6175〜50.6225MHz が AM の区分の外なので周波数が赤。警告だけで送信は止めない）。')
+    D.img(os.path.join(DOCS, 'images', 'lcd_am.png'), 110)
+    D.img(os.path.join(DOCS, 'images', 'lcd_am_out_of_band.png'), 110)
 
     D.h('7. 注意事項')
     D.b('Si5351 モジュールの基準水晶が 25MHz 以外（27MHz など）のときは、si5351.init() の第 2 引数を変える。',
