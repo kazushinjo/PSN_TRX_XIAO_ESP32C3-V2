@@ -9,7 +9,8 @@
  *   out <%>      出力レベル（変調の深さ、5〜100 %）
  *   iqd <us>     I/Q の遅延補正（-20〜+20 µs。+ で I 側を遅らせる）
  *   iqa <dB>     I/Q の利得補正（-2〜+2 dB。+ で I 側を上げる）
- *   sb usb|lsb   側帯波（Q の符号を反転）
+ *   sb usb|lsb|am  側帯波（Q の符号を反転）。am で AM（A3E、下の説明）
+ *   amd <%>      AM の変調度（10〜100 %。ALC の効き始めのレベルでこの変調度になる）
  *   tone <Hz>    試験トーン（送信中にマイクの代わりに正弦波を出す。0 で止める。保存しない）
  *   alc <dBFS>   ALC の効き始め（-24〜0 dBFS）。alc off で止める（そのときはクリップの手前で振り切れの表示だけ）
  *   w            保存
@@ -23,6 +24,18 @@
  *   マイク利得のあと・複素 FIR の前で、入力のピークが効き始めのレベルを超えた分だけ利得を下げる
  *   （ピークにはすぐ追従、戻りは約 0.26 秒）。超えた分（= 絞った量）を dspAlcLevelDb() で返し、LCD に出す。
  *   RF 出力は見ていない。変調器への入力が過大になってひずむのを防ぐもの。
+ *
+ * ---- AM（sb am）----
+ *   I/Q の出力から変調器までは C70〜C73 でコンデンサ結合なので、直流を足して搬送波を作ることはできない。
+ *   そこで音声側で「(搬送波 + 音声) × cos(4 kHz)」（4 kHz = FS/4 なので 1, 0, −1, 0 を掛けるだけ）を作り、
+ *   複素 FIR（AM では中心 4 kHz・通過 1.5〜6.5 kHz）で I/Q にする。I/Q は 4 kHz 前後の交流だけになり、
+ *   送信局発 + 4 kHz に AM ができる。局発は表示周波数 − DSP_AM_IF_HZ にする（.ino の setTxClocks）。
+ *   iqd・iqa の補正はそのまま効く。音声は約 160 Hz〜2.5 kHz（−6 dB）。
+ *   変調度は ALC の効き始めのレベルで amd の値になり、それ以上にはならない（過変調で広がらないよう、超えた分は切る）。
+ *   出力の尖頭（変調のピーク）は SSB で out の値を全振幅のトーンで出したときと同じ。搬送波の電力はその 1/4。
+ *   送信開始は SSB と同じく 64 ms で中点まで上げてから、搬送波を 10 ms で立ち上げる（クリック防止）。
+ *   キャリアの漏れ（VR5・VR6 の残り）は表示周波数 − 4 kHz に出る。AM の受信機では 4 kHz のうなりになり得るので、
+ *   AM で使うときは VR5・VR6 を十分に合わせておく。I/Q のずれによる逆側の像は表示周波数 − 8 kHz 付近に出る。
  */
 #include "tx_dsp.h"
 #include <Preferences.h>
@@ -46,6 +59,12 @@
 #define MUTE_N       7200              // 送信開始から入力を無音にするサンプル数（0.45 秒）。TX12V でマイク系のバイアスが立ち上がる過渡（約 0.28 秒、部品のばらつき・温度で延びる分を見込む）を送らない
 #define RX_RING      1024              // 受信音の受け渡し（8 kHz で 128 ms）
 #define ALC_REL_SHIFT 12               // ALC の戻り（4096 サンプル = 約 0.26 秒の時定数）
+#define AM_CENTER    ((float)DSP_AM_IF_HZ)   // AM の複素 FIR の中心（= FS/4。dspTask の 1, 0, −1, 0 と合わせる）
+#define AM_CUT       ((float)DSP_AM_BW_HZ)   // AM の原型 LPF のカットオフ（音声の上限、−6 dB）
+#define AM_CARRIER   16000             // AM の搬送波の振幅（±32767 に対して。100 % 変調で尖頭 32000）
+#define AM_RISE_N    160               // AM の搬送波の立ち上がり（10 ms）
+#define AM_HPF_SHIFT 4                 // AM の音声の 1 次 HPF（約 160 Hz。ハムで搬送波が揺れないように）
+static_assert(DSP_AM_IF_HZ * 4 == FS, "AM の 4 kHz は FS/4（1, 0, -1, 0）で作っている");
 
 static uint8_t pinTx, pinQ, pinI, agcBits;
 static uint32_t agcFreq, agcDuty = 0;
@@ -54,6 +73,8 @@ static Preferences prefs;
 static struct {
   float micDb = 0.0f, outPct = 10.0f, iqDelayUs = 0.0f, iqGainDb = 0.0f;   // 出力 10 % で旧回路の変調器入力（マイク 1 Pa で約 13 mVrms）と同程度
   bool lsb = false;
+  bool am = false;                        // AM（sb am）。true のとき lsb は使わない
+  float amDepthPct = 80.0f;               // AM の変調度 [%]
   bool alcOn = true;
   float alcDb = -20.0f;                   // ALC の効き始め [dBFS]。出力 10 % で変調器ドライブ（Q15・Q16）の歪み約 1 %（−6 では 7〜8 %）
 } cfg;
@@ -68,6 +89,10 @@ static int16_t sineTab[1024];
 static uint32_t tonePhase = 0, toneInc = 0;
 static int32_t alcThr = 3277, alcEnv = 0;   // 効き始めのレベル（±32767 に対して）・入力のピーク追従
 static bool alcActive = true;
+static bool amOn = false;                   // AM（buildFilter で cfg.am を写す）
+static int32_t amScaleQ16 = 0;              // 音声 → 変調の振幅の倍率（Q16。ALC の効き始めのレベルで AM_CARRIER × 変調度）
+static int amPhase = 0, amRise = 0;         // 4 kHz の位相（0〜3）・送信開始からのサンプル数
+static int32_t amLp = 0;                    // AM の音声 HPF の低域分
 
 static adc_continuous_handle_t adcH = nullptr;
 static i2s_chan_handle_t txH = nullptr;
@@ -92,24 +117,25 @@ static float besselI0(float x) {
 }
 
 // 窓付き sinc の原型 LPF を、中心からの位置 t（サンプル、小数可）で求める
-static float protoLpf(float t) {
+static float protoLpf(float t, float fc) {
   const float c = (NTAP - 1) / 2.0f;
   float u = t / c;
   if (u <= -1 || u >= 1) return 0;
   float w = besselI0(KAISER_BETA * sqrtf(1 - u * u)) / besselI0(KAISER_BETA);
-  float x = 2 * F_CUT / FS;
+  float x = 2 * fc / FS;
   return ((t == 0) ? x : sinf(M_PI * x * t) / (M_PI * t)) * w;
 }
 
 static void buildFilter() {
-  const float c = (NTAP - 1) / 2.0f, w0 = 2 * M_PI * F_CENTER / FS;
-  const float dI = cfg.iqDelayUs * 1e-6f * FS, gI = powf(10, cfg.iqGainDb / 20), sQ = cfg.lsb ? -1 : 1;
+  const float c = (NTAP - 1) / 2.0f, w0 = 2 * M_PI * (cfg.am ? AM_CENTER : F_CENTER) / FS;
+  const float dI = cfg.iqDelayUs * 1e-6f * FS, gI = powf(10, cfg.iqGainDb / 20), sQ = (cfg.lsb && !cfg.am) ? -1 : 1;
+  const float cut = cfg.am ? AM_CUT : F_CUT;
   static float fI[NTAP], fQ[NTAP];
   float s1 = 0, s2 = 0;
   for (int n = 0; n < NTAP; n++) {
     float tI = n - c - dI, tQ = n - c;
-    fI[n] = 2 * gI * protoLpf(tI) * cosf(w0 * tI);
-    fQ[n] = 2 * sQ * protoLpf(tQ) * sinf(w0 * tQ);
+    fI[n] = 2 * gI * protoLpf(tI, cut) * cosf(w0 * tI);
+    fQ[n] = 2 * sQ * protoLpf(tQ, cut) * sinf(w0 * tQ);
     s1 += fabsf(fI[n]); s2 += fabsf(fQ[n]);
   }
   // 入力は ±32767。係数の絶対値の総和 × 32767 が int32 に収まるシフト量にする
@@ -123,6 +149,8 @@ static void buildFilter() {
   outGainQ8 = (int32_t)lrintf(256 * cfg.outPct / 100);
   alcThr = cfg.alcOn ? (int32_t)lrintf(32767 * powf(10, cfg.alcDb / 20)) : 32767;   // off のときは振り切れの基準
   alcActive = cfg.alcOn;
+  amOn = cfg.am;
+  amScaleQ16 = (int32_t)lrintf(65536.0f * AM_CARRIER * cfg.amDepthPct / 100 / alcThr);
   interrupts();
 }
 
@@ -178,6 +206,7 @@ static void pdmStart() {
   muteLeft = MUTE_N;
   for (int i = 0; i < NTAP * 2; i++) xbuf[i] = 0;
   alcEnv = 0;
+  amPhase = 0; amRise = 0; amLp = 0;
   pdmOn = true;
 }
 
@@ -252,6 +281,20 @@ static void dspTask(void *) {
       }
       int16_t xs = sat16(x);
       if (abs(xs) > peakIn) peakIn = abs(xs);
+      if (amOn) {
+        // AM: (搬送波 + 音声) × cos(4 kHz)。音声は ALC の効き始めのレベル（alcThr、ALC off なら全振幅）で amd の変調度
+        static const int8_t cos4[4] = {1, 0, -1, 0};
+        amLp += (xs - amLp) >> AM_HPF_SHIFT;          // 約 160 Hz 以下を落とす
+        int32_t m = (int32_t)(((int64_t)(xs - amLp) * amScaleQ16) >> 16);
+        int32_t c = AM_CARRIER;
+        if (amRise < RAMP_N + AM_RISE_N) {             // 中点へ上げ終わってから搬送波を立ち上げる
+          c = amRise > RAMP_N ? AM_CARRIER * (amRise - RAMP_N) / AM_RISE_N : 0;
+          amRise++;
+        }
+        if (m > c) m = c; else if (m < -c) m = -c;     // 100 % を超える変調は切る
+        xs = (int16_t)((c + m) * cos4[amPhase]);       // |c + m| ≦ 2 × AM_CARRIER = 32000
+        amPhase = (amPhase + 1) & 3;
+      }
       xbuf[xpos] = xs; xbuf[xpos + NTAP] = xs;
       if (++xpos >= NTAP) xpos = 0;
       const int16_t *xp = &xbuf[xpos];               // xp[0] が最も古い
@@ -282,6 +325,8 @@ static void loadSettings() {
   cfg.iqDelayUs = prefs.getFloat("dly", cfg.iqDelayUs);
   cfg.iqGainDb  = prefs.getFloat("gain", cfg.iqGainDb);
   cfg.lsb       = prefs.getBool("lsb", cfg.lsb);
+  cfg.am        = prefs.getBool("am", cfg.am);
+  cfg.amDepthPct = constrain(prefs.getFloat("amd", cfg.amDepthPct), 10, 100);
   cfg.alcOn     = prefs.getBool("alc", cfg.alcOn);
   cfg.alcDb     = prefs.getFloat("alcdb", cfg.alcDb);
   prefs.end();
@@ -294,6 +339,8 @@ static void saveSettings() {
   prefs.putFloat("dly", cfg.iqDelayUs);
   prefs.putFloat("gain", cfg.iqGainDb);
   prefs.putBool("lsb", cfg.lsb);
+  prefs.putBool("am", cfg.am);
+  prefs.putFloat("amd", cfg.amDepthPct);
   prefs.putBool("alc", cfg.alcOn);
   prefs.putFloat("alcdb", cfg.alcDb);
   prefs.end();
@@ -348,7 +395,9 @@ int dspReadRx(int16_t *buf, int maxn) {
   return n;
 }
 
-bool dspLsb() { return cfg.lsb; }
+bool dspLsb() { return cfg.lsb && !cfg.am; }
+
+bool dspAm() { return cfg.am; }
 
 void dspAgcWrite(uint32_t duty) {
   agcDuty = duty;
@@ -357,7 +406,8 @@ void dspAgcWrite(uint32_t duty) {
 
 void dspPrintStatus() {
   Serial.printf("dsp: マイク %+.1f dB / 出力 %.0f %% / I/Q 遅延 %+.2f us / I/Q 利得 %+.2f dB / %s / トーン %.0f Hz\n",
-                cfg.micDb, cfg.outPct, cfg.iqDelayUs, cfg.iqGainDb, cfg.lsb ? "LSB" : "USB", toneHz);
+                cfg.micDb, cfg.outPct, cfg.iqDelayUs, cfg.iqGainDb, cfg.am ? "AM" : cfg.lsb ? "LSB" : "USB", toneHz);
+  if (cfg.am) Serial.printf("dsp: AM 変調度 %.0f %%（搬送波 = 表示周波数、送信局発 = 表示 - %d Hz）\n", cfg.amDepthPct, DSP_AM_IF_HZ);
   if (cfg.alcOn) Serial.printf("dsp: ALC %+.1f dBFS から\n", cfg.alcDb);
   else           Serial.println("dsp: ALC off");
   Serial.printf("dsp: %s / 入力ピーク %ld / 出力ピーク %ld / クリップ %lu / ADC あふれ %lu / 送信ブロック %lu / 係数シフト %d\n",
@@ -384,7 +434,12 @@ bool dspCommand(String line) {
   else if (cmd == "out")  cfg.outPct = constrain(v, 5, 100);
   else if (cmd == "iqd")  cfg.iqDelayUs = constrain(v, -20, 20);
   else if (cmd == "iqa")  cfg.iqGainDb = constrain(v, -2, 2);
-  else if (cmd == "sb")   cfg.lsb = arg.startsWith("l") || arg.startsWith("L");
+  else if (cmd == "sb") {
+    arg.toLowerCase();
+    if (arg.startsWith("a")) cfg.am = true;
+    else { cfg.am = false; cfg.lsb = arg.startsWith("l"); }
+  }
+  else if (cmd == "amd")  cfg.amDepthPct = constrain(v, 10, 100);
   else if (cmd == "alc") {
     if (arg.startsWith("off") || arg.startsWith("OFF")) cfg.alcOn = false;
     else { cfg.alcOn = true; if (arg.length()) cfg.alcDb = constrain(v, -24, 0); }

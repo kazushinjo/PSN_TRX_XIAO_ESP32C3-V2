@@ -9,6 +9,8 @@
  *   受信中: CLK0 = 第 1 局発（表示周波数 + RIT − BFO、38〜39MHz、PLLA）→ Q4 → L3 → R8・R9 → U1
  *           CLK2 = BFO（約 12MHz、PLLB）→ R19・R20 → U2（積検波）。CLK1 は止める
  *   送信中: CLK0（0°）・CLK1（90°）= 表示周波数（PSN 変調、従来どおり）。CLK2 は止める
+ *           AM（sb am）では表示周波数 − DSP_AM_IF_HZ（4kHz）。DSP が局発 + 4kHz に搬送波を作る（tx_dsp.cpp）
+ *           AM の受信は USB（表示周波数に搬送波を合わせると、上側の側帯波が聞こえる）
  *   BFO は USB ではラダーフィルタの通過域の下端の外、LSB では上端の外に置く（bfo コマンドで合わせる）
  *   Sメーター・AGC は IF 増幅（Q6・Q7）の出力を Q8 で増幅して AD8307 で測り、ADS1015（I2C 0x48、A0）で読む
  *
@@ -33,6 +35,7 @@
  *     送信時間       : 送信中は t6 に "TX 0:42"。TX_WARN_SEC を超えると赤
  *     ピークホールド : 受信中、直前のピークの位置に赤い短い線（針の先の部分）を PEAK_HOLD_MS 残す
  *     ダイヤルロック : 設定モードの LOCK で ON/OFF。ON のときは t1 に "LOCK" が付き、ダイヤルで周波数が変わらない
+ *     AM             : sb am のときは t1 に "AM" が付く（搬送波を出すモードなので目立たせる）
  *   配置（480x320）: font0 = 24 ドット、font1 = 32 ドット（半角英数）、page0 の背景 = ピクチャ 0（sta=image）
  *     t0 (16,16)   448x40  font1 maxl16 | t1 (16,72)   320x32 font0 maxl32 | t5 (344,72) 120x32 font0 maxl12
  *     メーター面 (16,112) 305x181（背景画像、部品は置かない）
@@ -152,7 +155,8 @@ Preferences prefs;
 #define FREQ_DEFAULT 50500000L
 
 // ---- バンド外の警告（JARL のバンドプラン: 50.000〜50.100MHz は CW、SSB は 50.100MHz から）----
-// 送信する電波（USB は表示周波数〜+SSB_BW_HZ、LSB は −SSB_BW_HZ〜表示周波数）がこの範囲を出ると周波数を赤くする
+// 送信する電波（USB は表示周波数〜+SSB_BW_HZ、LSB は −SSB_BW_HZ〜表示周波数、AM は表示周波数 ± DSP_AM_BW_HZ）が
+// この範囲を出ると周波数を赤くする
 #define SSB_MIN_HZ   50100000L
 #define SSB_MAX_HZ   51000000L
 #define SSB_BW_HZ    3000L
@@ -276,8 +280,9 @@ long shownBfo = -1;            // CLK2 に設定してある BFO（-1 = 未設�
 
 long currentBfo() { return bfoHz[dspLsb() ? 1 : 0]; }
 
-// 送信: CLK0（0°）・CLK1（90°）= freq、CLK2 は止める
+// 送信: CLK0（0°）・CLK1（90°）= freq（AM では freq − DSP_AM_IF_HZ）、CLK2 は止める
 void setTxClocks(long freq) {
+  if (dspAm()) freq -= DSP_AM_IF_HZ;
   uint64_t f   = (uint64_t)freq * 100ULL;
   uint64_t pll = f * QUAD_DIV;
   si5351.output_enable(SI5351_CLK2, 0);
@@ -375,12 +380,13 @@ void uiLine(char* buf, size_t len) {
     menuText(menuIndex, editValue, v, sizeof(v));
     snprintf(buf, len, "> %s [OK]", v);   // 28 ドットで t1 の幅（22 文字）に収める
   } else {
-    snprintf(buf, len, "STEP: %s%s", stepLabels[stepIndex], dialLock ? "  LOCK" : "");
+    snprintf(buf, len, "STEP: %s%s%s", stepLabels[stepIndex], dialLock ? "  LOCK" : "", dspAm() ? "  AM" : "");
   }
 }
 
 // 送信する電波が SSB で出せる範囲から外れるか（側帯波で占有する側を見る）
 bool outOfBand(long f) {
+  if (dspAm()) return f - DSP_AM_BW_HZ < SSB_MIN_HZ || f + DSP_AM_BW_HZ > SSB_MAX_HZ;
   long lo = dspLsb() ? f - SSB_BW_HZ : f;
   long hi = dspLsb() ? f : f + SSB_BW_HZ;
   return lo < SSB_MIN_HZ || hi > SSB_MAX_HZ;
@@ -684,7 +690,7 @@ bool bfoCommand(String line) {
     saveBfo();
     applyFreq();
   }
-  Serial.printf("bfo: USB %ld Hz / LSB %ld Hz（今は %s）\n", bfoHz[0], bfoHz[1], dspLsb() ? "LSB" : "USB");
+  Serial.printf("bfo: USB %ld Hz / LSB %ld Hz（今は %s）\n", bfoHz[0], bfoHz[1], dspLsb() ? "LSB" : dspAm() ? "USB (AM)" : "USB");
   return true;
 }
 
@@ -926,7 +932,7 @@ void loop() {
     processBlock();
   }
 
-  // 設定コマンド（送信音声: dsp / mic / out / iqd / iqa / sb / tone / alc / w、受信: bfo、表示: freq / rit / smeter）
+  // 設定コマンド（送信音声: dsp / mic / out / iqd / iqa / sb / amd / tone / alc / w、受信: bfo、表示: freq / rit / smeter）
   static String cmdLine;
   while (Serial.available()) {
     char ch = Serial.read();
@@ -938,7 +944,7 @@ void loop() {
           updateDisplay();                 // バンド外の判定も側帯波で変わる
         }
         else
-          Serial.println("コマンド: dsp / mic <dB> / out <%> / iqd <us> / iqa <dB> / sb usb|lsb / tone <Hz> / alc <dBFS>|off / w / bfo [usb|lsb <Hz>] / freq [<Hz>] / rit [<Hz>] / smeter s7|s9+20|off");
+          Serial.println("コマンド: dsp / mic <dB> / out <%> / iqd <us> / iqa <dB> / sb usb|lsb|am / amd <%> / tone <Hz> / alc <dBFS>|off / w / bfo [usb|lsb <Hz>] / freq [<Hz>] / rit [<Hz>] / smeter s7|s9+20|off");
       }
       cmdLine = "";
     } else if (cmdLine.length() < 40) cmdLine += ch;
