@@ -399,6 +399,30 @@ bool dspLsb() { return cfg.lsb && !cfg.am; }
 
 bool dspAm() { return cfg.am; }
 
+// パネルの設定モードから: 側帯波・変調度だけを保存する（シリアルで試しに変えた mic・out などは保存しない）
+static void saveModeSettings() {
+  prefs.begin("psndsp", false);
+  prefs.putBool("lsb", cfg.lsb);
+  prefs.putBool("am", cfg.am);
+  prefs.putFloat("amd", cfg.amDepthPct);
+  prefs.end();
+}
+
+void dspSetAm(bool am) {
+  cfg.am = am;
+  cfg.lsb = false;
+  buildFilter();
+  saveModeSettings();
+}
+
+float dspAmDepth() { return cfg.amDepthPct; }
+
+void dspSetAmDepth(float pct, bool save) {
+  cfg.amDepthPct = constrain(pct, 10, 100);
+  buildFilter();
+  if (save) saveModeSettings();
+}
+
 void dspAgcWrite(uint32_t duty) {
   agcDuty = duty;
   if (!pdmOn) ledcWrite(pinI, duty);

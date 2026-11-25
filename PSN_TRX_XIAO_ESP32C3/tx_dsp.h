@@ -23,6 +23,9 @@ bool dspAlcOn();                            // ALC が有効か
 #define DSP_AM_BW_HZ 2500                   // AM: 音声の上限（−6 dB）。占有は表示周波数 ± これ
 bool dspLsb();                              // 側帯波が LSB か（sb コマンド。受信の BFO もこれに合わせる。AM では false）
 bool dspAm();                               // AM か（sb am。受信は USB、送信局発は表示周波数 − DSP_AM_IF_HZ）
+void dspSetAm(bool am);                     // USB / AM を切り替えて保存（パネルの MODE。LSB は使わないので USB に戻す）
+float dspAmDepth();                         // AM の変調度 [%]
+void dspSetAmDepth(float pct, bool save);   // AM の変調度を変える（10〜100 %）。save = true で保存
 float dspAlcLevelDb();                      // 前回からの入力ピーク [dB、ALC の効き始め = 0]。正なら ALC がその分絞った
 bool dspCommand(String line);               // 設定コマンド。処理したら true
 void dspPrintStatus();

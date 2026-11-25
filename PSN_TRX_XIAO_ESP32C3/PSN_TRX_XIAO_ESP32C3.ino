@@ -35,7 +35,10 @@
  *     送信時間       : 送信中は t6 に "TX 0:42"。TX_WARN_SEC を超えると赤
  *     ピークホールド : 受信中、直前のピークの位置に赤い短い線（針の先の部分）を PEAK_HOLD_MS 残す
  *     ダイヤルロック : 設定モードの LOCK で ON/OFF。ON のときは t1 に "LOCK" が付き、ダイヤルで周波数が変わらない
- *     AM             : sb am のときは t1 に "AM" が付く（搬送波を出すモードなので目立たせる）
+ *     AM             : 設定モードの MODE（または sb am）で AM のときは t1 に "AM" が付く（搬送波を出すモードなので目立たせる）
+ *   設定モード（ダイヤルを押す）: RIT → STEP → MODE → AM DEPTH → AGC → LOCK → EXIT
+ *     MODE     : USB / AM（50MHz なので LSB はパネルでは選ばない。シリアルの sb lsb は残す）
+ *     AM DEPTH : AM の変調度 10〜100 %（5 % 刻み）。変更中から送信に反映するので、送信しながら合わせられる
  *   配置（480x320）: font0 = 24 ドット、font1 = 32 ドット（半角英数）、page0 の背景 = ピクチャ 0（sta=image）
  *     t0 (16,16)   448x40  font1 maxl16 | t1 (16,72)   320x32 font0 maxl32 | t5 (344,72) 120x32 font0 maxl12
  *     メーター面 (16,112) 305x181（背景画像、部品は置かない）
@@ -191,8 +194,10 @@ long bfoHz[2] = {BFO_USB_DEFAULT, BFO_LSB_DEFAULT};   // [0] = USB、[1] = LSB
 
 // ---- 設定モード ----
 enum UiMode { UI_NORMAL, UI_MENU, UI_EDIT };
-enum MenuId { MENU_RIT, MENU_STEP, MENU_AGC, MENU_LOCK, MENU_EXIT, MENU_COUNT };
-const char* menuItems[MENU_COUNT] = {"RIT", "STEP", "AGC", "LOCK", "EXIT"};
+enum MenuId { MENU_RIT, MENU_STEP, MENU_MODE, MENU_AMD, MENU_AGC, MENU_LOCK, MENU_EXIT, MENU_COUNT };
+const char* menuItems[MENU_COUNT] = {"RIT", "STEP", "MODE", "AM DEPTH", "AGC", "LOCK", "EXIT"};
+#define AMD_STEP 5                     // AM DEPTH の 1 クリック [%]
+long          amdBefore = 0;           // AM DEPTH の変更前の値（取り消しで戻す）
 UiMode        uiMode    = UI_NORMAL;
 int           menuIndex = MENU_RIT;
 long          editValue = 0;   // 値の変更中の仮の値（確定するまで本体の設定は変えない）
@@ -327,6 +332,8 @@ void menuEnter(int id) {
   switch (id) {
     case MENU_RIT:  editValue = ritHz;     break;
     case MENU_STEP: editValue = stepIndex; break;
+    case MENU_MODE: editValue = dspAm();   break;
+    case MENU_AMD:  editValue = amdBefore = lrintf(dspAmDepth()); break;
     case MENU_AGC:  editValue = agcMode;   break;
     case MENU_LOCK: editValue = dialLock;  break;
   }
@@ -343,6 +350,15 @@ void menuTurn(int id, int diff) {
     case MENU_STEP:
       editValue = ((editValue + diff) % stepCount + stepCount) % stepCount;
       break;
+    case MENU_MODE:
+      if (diff % 2) editValue = !editValue;
+      break;
+    case MENU_AMD:
+      editValue += (long)diff * AMD_STEP;
+      if (editValue > 100) editValue = 100;
+      if (editValue < 10)  editValue = 10;
+      dspSetAmDepth(editValue, false);     // 送信中なら聞きながら（モニターしながら）合わせられる
+      break;
     case MENU_AGC:
       editValue = ((editValue + diff) % AGC_MODES + AGC_MODES) % AGC_MODES;
       break;
@@ -356,6 +372,8 @@ void menuText(int id, long v, char* buf, size_t len) {
   switch (id) {
     case MENU_RIT:  snprintf(buf, len, "RIT: %+.2fkHz", v / 1000.0); break;
     case MENU_STEP: snprintf(buf, len, "STEP: %s", stepLabels[v]);   break;
+    case MENU_MODE: snprintf(buf, len, "MODE: %s", v ? "AM" : "USB"); break;
+    case MENU_AMD:  snprintf(buf, len, "AM DEPTH: %ld%%", v);         break;
     case MENU_AGC:  snprintf(buf, len, "%s", agcLabels[v]);          break;
     case MENU_LOCK: snprintf(buf, len, "LOCK: %s", v ? "ON" : "OFF"); break;
     default:        snprintf(buf, len, "EXIT");                       break;
@@ -366,6 +384,8 @@ void menuCommit(int id) {
   switch (id) {
     case MENU_RIT:  ritHz     = editValue;      break;
     case MENU_STEP: stepIndex = (int)editValue; break;
+    case MENU_MODE: dspSetAm(editValue != 0);   break;   // 側帯波・AM は tx_dsp 側に保存する
+    case MENU_AMD:  dspSetAmDepth(editValue, true); break;
     case MENU_AGC:  agcMode   = (int)editValue; break;
     case MENU_LOCK: dialLock  = editValue != 0; break;
   }
@@ -401,6 +421,8 @@ void leaveUi(bool commit) {
   if (commit && uiMode == UI_EDIT) {
     menuCommit(menuIndex);
     saveFreq();
+  } else if (uiMode == UI_EDIT && menuIndex == MENU_AMD) {
+    dspSetAmDepth(amdBefore, false);       // 取り消し: 変更中に反映した変調度を元に戻す
   }
   uiMode = UI_NORMAL;
   applyFreq();
