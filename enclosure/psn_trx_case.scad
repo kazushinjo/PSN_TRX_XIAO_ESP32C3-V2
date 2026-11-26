@@ -92,6 +92,7 @@ lcd_insert_depth = lcd_boss_h + bezel_t - 1.0;   // ベゼル前面に 1mm 残�
 bezel_screw = [bezel[0] / 2 - 6, 20];            // ベゼル固定ねじ位置（中心からのずれ。LCD の左右の帯に上下 2 本ずつ）
 bezel_insert_depth = bezel_t - 1.0;              // ベゼル前面に 1mm 残す止まり穴
 bezel_hole = 3.4;            // ふたのベゼル固定ねじ穴（M3）
+lid_bezel_hole_off = [-2.5, 0];  // ふたのベゼル固定ねじ穴だけのずれ（2026-11-27、VOL と逆側の -X へ 2.5mm。ベゼル側のインサート位置は変えない）
 lcd_c = [20 + bezel[0] / 2, 47 + bezel[1] / 2];  // LCD・ベゼル中心（ベゼル左端 X=20（2026-11-18 に 26 → 20。下の列とは別に決める）、前端 Y=47。手前に MIC・PHN、奥は放熱器の手前まで）
 
 // LCD の右（基板の外側、X > 169 のふた裏は空いている）に縦 1 列（同じ X）: 奥から RF・VOL・TUNE
@@ -306,7 +307,7 @@ module lid() {
 // 上面の穴と文字（上から見た向き、ケース X/Y 座標）
 module top_holes_2d() {
     translate(lcd_c) square(lcd_cut, center = true);              // LCD モジュール用切り欠き
-    bezel_screw_pos() circle(d = bezel_hole);
+    translate(lid_bezel_hole_off) bezel_screw_pos() circle(d = bezel_hole);
     translate(enc_c) circle(d = enc_hole);
     translate(afv_c) circle(d = afv_hole);
     translate(rfg_c) circle(d = rfg_hole);
