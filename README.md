@@ -250,6 +250,9 @@ kicad/
 PSN_TRX_XIAO_ESP32C3/
   PSN_TRX_XIAO_ESP32C3.ino - XIAO ESP32C3 のスケッチ（VFO・表示・S メーター・AGC）
   tx_dsp.cpp / tx_dsp.h    - 送信 I/Q の生成（ADC・複素 FIR・PDM）と受信音のサンプリング（Ver 2.0）
+measure/spurious/
+  README.md               - 新スプリアス規格の測定手順（JARD 提出用、DSA815-TG・LAN、定格 1W）
+  jard_spurious.py        - 測定の自動化スクリプト（idn / pathloss / monitor / measure、--dry-run で測定器なしでも動く）
 docs/
   PSN_TRX_VFO改造仕様書.docx  - VFO 仕様書（Si5351・XIAO の接続、局発・BFO、送信 I/Q、PA）
   PSN_TRX_組み立て説明書.docx  - 組み立て説明書（部品の取り付け・配線・調整の流れ）
@@ -266,6 +269,7 @@ docs/
 
 | 日付 | 変更内容 |
 |---|---|
+| 2026-11-26 | **新スプリアス規格の測定手順と自動化スクリプトを追加**（`measure/spurious/`、V2.1 と同じもので、定格の初期値と許容値の説明を V2 の 1W に合わせた。1W 以下: 帯域外 −10dBm 以下、スプリアス −13dBm 以下）: RIGOL DSA815-TG を LAN（SCPI、ポート 5555）でつなぎ、JARD の資料「アマチュア無線機の測定」に合わせて、搬送波電力・帯域外領域（無変調、fc±62.5kHz）・スプリアス領域（擬似音声、9kHz〜1GHz、MAX HOLD）を測って判定し、画面・グラフ・結果の表を作る。測定器なしの模擬データ（--dry-run）でのみ確認、DSA815 の実機では未確認 |
 | 2026-11-26 | **LCD の表示例を追加**: AM モードの画面（`docs/images/lcd_am.png`）と、バンドプランから外れて周波数が赤になった画面（`docs/images/lcd_am_out_of_band.png`）を、Nextion Editor のシミュレータで作って README の「LCD の表示」・操作説明書 4.2・画面データ作成手順 6 章・VFO 改造仕様書 6.3 に載せた（スケッチ・画面データの変更なし） |
 | 2026-11-25 | **周波数範囲をバンドプラン（JARL、令和 7 年 7 月 17 日施行）に合わせた**: 50.000〜51.000MHz → **50.000〜52.900MHz**（52.90MHz より上は実験・研究用の区分なので出さない）。バンド外の赤表示は、USB が 50.070〜52.900MHz（CW の区分が 50.070MHz までになった）、AM が 51.000〜52.900MHz（50.070〜51.000MHz は AM を除く狭帯域）。全域の計算（`kicad/sim/band.py`）で、受信の前段 TC1・TC2 と局発の L3 は 51.45〜51.5MHz で合わせ、2 倍波トラップは TC4 で 103MHz（51.5MHz の 2 倍）に合わせるように調整手順を変更（50.5MHz・101MHz のままだと 52.9MHz で受信 −6.7dB・局発 −10.4dB、2 倍波 −47〜−53dBc で規定 −60dBc を満たさない）。実機は未確認 |
 | 2026-11-25 | **AM 送信と、設定モードの MODE・AM DEPTH を追加**（スケッチだけ、回路・画面データの変更なし）。MODE で USB / AM、AM DEPTH で変調度 10〜100 % をダイヤルで変える（確定で保存、長押しで取り消し）。シリアルでは `sb am`・`amd <%>`。操作説明書・送信IQ調整手順・画面データ作成手順・VFO改造仕様書・組み立て説明書を更新。実機は未確認 |
@@ -324,4 +328,5 @@ GNU General Public License for more details.
 | [`manual/README.md`](manual/README.md) | 操作説明書（各部の名称・周波数の合わせ方・送受信・困ったときは） |
 | [`docs/PSN_TRX_組み立て説明書.docx`](docs/PSN_TRX_組み立て説明書.docx) | 部品実装・配線・調整手順 |
 | [`docs/PSN_TRX_部品実装図.pdf`](docs/PSN_TRX_部品実装図.pdf) | 部品実装図（全体図＋ブロック別部品表＋調整箇所） |
+| [`measure/spurious/README.md`](measure/spurious/README.md) | 新スプリアス規格の測定手順（定格 1W。DSA815-TG を LAN でつないで、帯域外領域・スプリアス領域をスクリプト `jard_spurious.py` で測り、JARD に出す画面と結果の表を作る） |
 | [`enclosure/README.md`](enclosure/README.md) | ケース（OpenSCAD。3D 印刷用 STL の出力方法・パネル穴あけ図） |
