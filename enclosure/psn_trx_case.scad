@@ -74,7 +74,8 @@ function pz(z) = panel_z0 + z;
 //   ※ 表示領域の中心ずれ（lcd_win_off）と取付穴（lcd_holes）は推定値。実物を実測して修正すること。
 lcd_mod   = [100.5, 54.94];  // モジュール外形（基板）
 lcd_win   = [74.5, 50.0];    // 表示窓（表示領域 73.44×48.96 ＋ 余裕）
-lcd_win_off = [2.5, 0];      // 表示領域の中心ずれ（モジュール中心基準）。2026-11-26 実物合わせで左右 2.5mm ずれていたため窓だけ +X へ 2.5mm（ベゼルは左右対称なので 180° 回せば -X 側にもなる）
+lcd_win_off = [0, 0];        // 表示窓のずれ（ベゼル中心基準）。窓はベゼルの中央のまま、ずれは LCD 固定ボスの位置（lcd_mod_off）で合わせる
+lcd_mod_off = [-2.5, 0];     // LCD モジュール（取付穴・LCD 固定ボス）のベゼル中心からのずれ。2026-11-26 実物合わせで表示が左右 2.5mm ずれていたため（ベゼルは左右対称なので 180° 回せば +X 側にもなる）
 lcd_holes = [94.5, 48.94];   // 取付穴ピッチ（ガラス左右の基板 4 隅、基板端から約 3mm と仮定）※要実測
 // LCD の取付: ふた上面にベゼルを置き、LCD はベゼル裏のボス（M3 インサートナット）に LCD 基板の裏側からねじ止め。
 //             ベゼルは別の 4 個のインサートナットで、ふた裏側からふたの穴を通したねじで固定する。
@@ -348,7 +349,10 @@ module front_2d() {
     difference() { square([panel_w, panel_h]); front_holes_2d(); }
 }
 // パネル実体（2D の x→X、y→Z、厚み方向 +z = 外側）。エンボス文字は外面に盛り上げ
-module lcd_boss_pos() { for (sx = [-1, 1], sz = [-1, 1]) translate(lcd_c + [sx * lcd_holes[0] / 2, sz * lcd_holes[1] / 2]) children(); }
+module lcd_boss_pos() { for (sx = [-1, 1], sz = [-1, 1]) translate(lcd_c + lcd_mod_off + [sx * lcd_holes[0] / 2, sz * lcd_holes[1] / 2]) children(); }
+// LCD 固定ボスとベゼル固定用インサートの間の肉厚 1mm 以上、ガラス（85.5mm）がふたの切り欠きに 1mm 以上の余裕で入る
+for (sx = [-1, 1], sy = [-1, 1]) assert(norm(lcd_mod_off + [sx * lcd_holes[0] / 2, sy * lcd_holes[1] / 2] - [sx * bezel_screw[0], sy * bezel_screw[1]]) >= lcd_boss_od / 2 + lcd_insert / 2 + 1, "LCD 固定ボスがベゼル固定用インサートに近すぎる");
+assert(abs(lcd_mod_off[0]) + 85.5 / 2 + 1 <= lcd_cut[0] / 2 && abs(lcd_mod_off[1]) + lcd_mod[1] / 2 <= lcd_cut[1] / 2 + 0.01, "LCD のガラスがふたの切り欠きにかかる");
 module bezel_screw_pos() { for (sx = [-1, 1], sz = [-1, 1]) translate(lcd_c + [sx * bezel_screw[0], sz * bezel_screw[1]]) children(); }
 // 前面パネルの板: z=0〜panel_t が板、+z 側（外面）にエンボス文字
 module front_print() {
@@ -496,9 +500,9 @@ module pcb_dummy() {
 }
 module top_parts_dummy() {
     // LCD: ガラスはふたの切り欠きの中（ベゼル裏〜lcd_boss_h）、その下に LCD 基板とコネクタ
-    color([0.2, 0.3, 0.6]) translate([lcd_c[0] - 42.75, lcd_c[1] - lcd_mod[1] / 2, H - lcd_boss_h]) cube([85.5, lcd_mod[1], lcd_boss_h]);
-    color("black") translate([lcd_c[0] - lcd_mod[0] / 2, lcd_c[1] - lcd_mod[1] / 2, H - lcd_boss_h - 1.6]) cube([lcd_mod[0], lcd_mod[1], 1.6]);
-    color("dimgray") translate([lcd_c[0] - lcd_mod[0] / 2 + 5, lcd_c[1] - 10, H - lcd_depth]) cube([10, 20, lcd_depth - lcd_boss_h - 1.6]);
+    color([0.2, 0.3, 0.6]) translate([lcd_c[0] + lcd_mod_off[0] - 42.75, lcd_c[1] + lcd_mod_off[1] - lcd_mod[1] / 2, H - lcd_boss_h]) cube([85.5, lcd_mod[1], lcd_boss_h]);
+    color("black") translate([lcd_c[0] + lcd_mod_off[0] - lcd_mod[0] / 2, lcd_c[1] + lcd_mod_off[1] - lcd_mod[1] / 2, H - lcd_boss_h - 1.6]) cube([lcd_mod[0], lcd_mod[1], 1.6]);
+    color("dimgray") translate([lcd_c[0] + lcd_mod_off[0] - lcd_mod[0] / 2 + 5, lcd_c[1] + lcd_mod_off[1] - 10, H - lcd_depth]) cube([10, 20, lcd_depth - lcd_boss_h - 1.6]);
     // エンコーダ・ボリューム: シャフト（つまみは付けない）とふた裏の本体
     color("silver") translate([enc_c[0], enc_c[1], H]) cylinder(d = 6, h = 15);
     color("silver") translate([afv_c[0], afv_c[1], H]) cylinder(d = 6, h = 12);
