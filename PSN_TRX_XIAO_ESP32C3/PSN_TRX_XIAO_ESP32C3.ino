@@ -39,9 +39,10 @@
  *     送信時間       : 送信中は t6 に "TX 0:42"。TX_WARN_SEC を超えると赤
  *     ピークホールド : 受信中、直前のピークの位置に赤い短い線（針の先の部分）を PEAK_HOLD_MS 残す
  *     ダイヤルロック : 設定モードの LOCK で ON/OFF。ON のときは t1 に "LOCK" が付き、ダイヤルで周波数が変わらない
- *     AM             : 設定モードの MODE（または sb am）で AM のときは t1 に "AM" が付く（搬送波を出すモードなので目立たせる）
- *   設定モード（ダイヤルを押す）: RIT → STEP → MODE → AM DEPTH → AGC → LOCK → EXIT
- *     MODE     : USB / AM（50MHz なので LSB はパネルでは選ばない。シリアルの sb lsb は残す）
+ *     変調           : t1 に "SSB" / "AM" をいつも出す（設定モードの SSB/AM、またはシリアルの sb usb|lsb|am。sb lsb のときは "LSB"）
+ *   設定モード（ダイヤルを押す）: RIT → STEP → SSB/AM → AM DEPTH → AGC → LOCK → EXIT
+ *     SSB/AM   : SSB（USB）/ AM（50MHz なので LSB はパネルでは選ばない。シリアルの sb lsb は残す）。
+ *                設定モード（MENU）と紛らわしいので、項目名は MODE ではなく SSB/AM
  *     AM DEPTH : AM の変調度 10〜100 %（5 % 刻み）。変更中から送信に反映するので、送信しながら合わせられる
  *   配置（480x320）: font0 = 24 ドット、font1 = 32 ドット（半角英数）、page0 の背景 = ピクチャ 0（sta=image）
  *     t0 (16,16)   448x40  font1 maxl16 | t1 (16,72)   320x32 font0 maxl32 | t5 (344,72) 120x32 font0 maxl12
@@ -229,7 +230,7 @@ long bfoHz[2] = {BFO_USB_DEFAULT, BFO_LSB_DEFAULT};   // [0] = USB、[1] = LSB
 // ---- 設定モード ----
 enum UiMode { UI_NORMAL, UI_MENU, UI_EDIT };
 enum MenuId { MENU_RIT, MENU_STEP, MENU_MODE, MENU_AMD, MENU_AGC, MENU_LOCK, MENU_EXIT, MENU_COUNT };
-const char* menuItems[MENU_COUNT] = {"RIT", "STEP", "MODE", "AM DEPTH", "AGC", "LOCK", "EXIT"};
+const char* menuItems[MENU_COUNT] = {"RIT", "STEP", "SSB/AM", "AM DEPTH", "AGC", "LOCK", "EXIT"};
 #define AMD_STEP 5                     // AM DEPTH の 1 クリック [%]
 long          amdBefore = 0;           // AM DEPTH の変更前の値（取り消しで戻す）
 UiMode        uiMode    = UI_NORMAL;
@@ -420,7 +421,7 @@ void menuText(int id, long v, char* buf, size_t len) {
   switch (id) {
     case MENU_RIT:  snprintf(buf, len, "RIT: %+.2fkHz", v / 1000.0); break;
     case MENU_STEP: snprintf(buf, len, "STEP: %s", stepLabels[v]);   break;
-    case MENU_MODE: snprintf(buf, len, "MODE: %s", v ? "AM" : "USB"); break;
+    case MENU_MODE: snprintf(buf, len, "SSB/AM: %s", v ? "AM" : "SSB"); break;   // 設定モード（MENU）と紛らわしいので MODE と呼ばない
     case MENU_AMD:  snprintf(buf, len, "AM DEPTH: %ld%%", v);         break;
     case MENU_AGC:  snprintf(buf, len, "%s", agcLabels[v]);          break;
     case MENU_LOCK: snprintf(buf, len, "LOCK: %s", v ? "ON" : "OFF"); break;
@@ -455,7 +456,7 @@ void uiLine(char* buf, size_t len) {
     snprintf(buf, len, "> %s [OK]", v);   // 28 ドットで t1 の幅（22 文字）に収める
   } else {
 #ifdef USE_NEXTION_DISPLAY
-    snprintf(buf, len, "%s%s", dialLock ? "LOCK" : "", dspAm() ? (dialLock ? "  AM" : "AM") : "");   // ステップは下線で示す
+    snprintf(buf, len, "%s%s", dspAm() ? "AM" : (dspLsb() ? "LSB" : "SSB"), dialLock ? "  LOCK" : "");   // 変調はいつも出す。ステップは下線で示す
 #else
     snprintf(buf, len, "STEP: %s%s%s", stepLabels[stepIndex], dialLock ? "  LOCK" : "", dspAm() ? "  AM" : "");
 #endif
