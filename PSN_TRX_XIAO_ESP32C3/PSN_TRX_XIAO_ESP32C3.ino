@@ -127,7 +127,7 @@
 // 分圧比（(47k + 10k) / 10k）。テスターの値に合わせるときはシリアルで vdc <電圧> と打つ（NVS に保存）
 #define VSUP_DIV_DEFAULT   5.7f
 // この電圧より低い・高いと赤で表示 [V]
-#define VSUP_LOW_V         11.0f
+#define VSUP_LOW_V         11.5f
 #define VSUP_HIGH_V        15.0f
 // これより低いときは分圧抵抗が付いていないとみなし、t2 は固定の文字（NEXTION_FIXED_LINE1）のまま [V]
 #define VSUP_MIN_V         3.0f
