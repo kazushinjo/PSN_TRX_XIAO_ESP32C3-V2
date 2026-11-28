@@ -20,7 +20,7 @@
  *
  * ---- Nextion 画面構成 (Nextion Editor で作成) ----
  *   t0 : 周波数表示  (大テキスト)
- *   t1 : ステップ表示（設定モード中はメニュー・設定値）
+ *   t1 : LOCK・AM（設定モード中はメニュー・設定値）。ステップは t0 の周波数の桁の下に白い下線（drawStepMark）
  *   t2 : 固定情報    (NEXTION_FIXED_LINE1 / LINE2 で内容を指定)
  *   電源投入直後は WELCOME_MS（5 秒）の間、t0・t1 に Welcome 表示（WELCOME_LINE1 / LINE2）
  *   電源電圧 : 周波数（t0）の右に右詰めで "12.9V"（t7、フォント 3 = 36 ドット、緑。VSUP_LOW_V〜VSUP_HIGH_V の外は赤）。
@@ -52,7 +52,7 @@
  *   LCD との通信は起動時に 9600bps → 115200bps に切り替える（baud= で一時的に変更、LCD には保存しない）
  *
  * ---- 操作 ----
- *   通常       : ダイヤル = 周波数、押す = 設定モードへ、長押し = RIT を 0 に戻す
+ *   通常       : ダイヤル = 周波数（ステップより下の桁は 0 にそろえる）、押す = 設定モードへ、長押し = RIT を 0 に戻す
  *   設定モード : ダイヤル = 機能を選ぶ（RIT / STEP / AGC / LOCK / 戻る）、押す = その機能の値の変更へ
  *   値の変更   : ダイヤル = 値を変える、押す = 確定して通常に戻る
  *                RIT の値は t5 にだけ表示（t1 は "MENU > RIT"）
@@ -395,7 +395,8 @@ void menuTurn(int id, int diff) {
       applyFreq();
       break;
     case MENU_STEP:
-      editValue = ((editValue + diff) % stepCount + stepCount) % stepCount;
+      // 右に回す = 下線が右へ（下の桁・小さいステップ）、左に回す = 上の桁へ
+      editValue = ((editValue - diff) % stepCount + stepCount) % stepCount;
       break;
     case MENU_MODE:
       if (diff % 2) editValue = !editValue;
@@ -444,12 +445,20 @@ void uiLine(char* buf, size_t len) {
     snprintf(buf, len, "MENU > %s", menuItems[menuIndex]);
   } else if (uiMode == UI_EDIT && menuIndex == MENU_RIT) {
     snprintf(buf, len, "MENU > RIT");      // RIT の値は t5 にだけ出す
+#ifdef USE_NEXTION_DISPLAY
+  } else if (uiMode == UI_EDIT && menuIndex == MENU_STEP) {
+    snprintf(buf, len, "MENU > STEP");     // ステップは周波数の桁の下線で示す
+#endif
   } else if (uiMode == UI_EDIT) {
     char v[24];
     menuText(menuIndex, editValue, v, sizeof(v));
     snprintf(buf, len, "> %s [OK]", v);   // 28 ドットで t1 の幅（22 文字）に収める
   } else {
+#ifdef USE_NEXTION_DISPLAY
+    snprintf(buf, len, "%s%s", dialLock ? "LOCK" : "", dspAm() ? (dialLock ? "  AM" : "AM") : "");   // ステップは下線で示す
+#else
     snprintf(buf, len, "STEP: %s%s%s", stepLabels[stepIndex], dialLock ? "  LOCK" : "", dspAm() ? "  AM" : "");
+#endif
   }
 }
 
@@ -587,6 +596,29 @@ void updateSupply(bool force) {
 }
 void updateSupply() { updateSupply(false); }
 
+// ステップの下線: 周波数（t0、"50.150.000 MHz"、フォント 1 = consolas52.zi の 1 文字 24px）のステップの桁の下に白い線。
+// t0 の中に引くと、LCD が t0 を描き直すときに消される（txt を送った後で描き直すので、後から引いても消える）。
+// そのため t0（y 16〜72）と t1（y 76〜）のすき間に引く。消すときは背景画像（ピクチャ 0）で描き直す
+#define STEP_MARK_X0   16      // t0 の左端（1 文字目の左端）
+#define STEP_MARK_CW   24      // 1 文字の幅（.zi の文字幅。高さの半分の 26 ではない）
+#define STEP_MARK_Y    72      // t0 の下端
+#define STEP_MARK_H    3
+#define STEP_MARK_GAP  2       // 線の左右を少し空ける
+void drawStepMark() {
+  static int shownCol = -1;
+  static const int cols[] = {8, 7, 5, 4, 3};   // stepValues {10, 100, 1k, 10k, 100k} の桁（"50.150.000" の何文字目か）
+  int idx = (uiMode == UI_EDIT && menuIndex == MENU_STEP) ? (int)editValue : stepIndex;   // 変更中は選んでいる値
+  int col = cols[idx];
+  if (col == shownCol) return;
+  char buf[48];
+  snprintf(buf, sizeof(buf), "picq %d,%d,%d,%d,0", STEP_MARK_X0, STEP_MARK_Y, 10 * STEP_MARK_CW, STEP_MARK_H);
+  nxSend(buf);
+  snprintf(buf, sizeof(buf), "fill %d,%d,%d,%d,65535", STEP_MARK_X0 + col * STEP_MARK_CW + STEP_MARK_GAP,
+           STEP_MARK_Y, STEP_MARK_CW - 2 * STEP_MARK_GAP, STEP_MARK_H);
+  nxSend(buf);
+  shownCol = col;
+}
+
 void updateDisplay() {
   long f   = currentFreq;
   int  mhz = f / 1000000;
@@ -602,6 +634,7 @@ void updateDisplay() {
     shownOut = out;
   }
   nxSetText("t0", freqBuf);
+  drawStepMark();                        // ステップが変わったときだけ引き直す
   updateSupply(true);                    // t0 を描き直すと電源電圧の表示が消えるので描き直す
 
   char line[40];
@@ -1080,7 +1113,12 @@ void loop() {
     lastCount = cnt;
     if (uiMode == UI_NORMAL) {
       if (dialLock) diff = 0;               // ダイヤルロック中は周波数を変えない
-      currentFreq += (long)diff * stepValues[stepIndex];
+      if (diff) {                           // ステップより下の桁は 0 にそろえる（50.150.123 → 上: 50.151.000、下: 50.150.000）
+        long st   = stepValues[stepIndex];
+        long base = currentFreq / st * st;
+        if (base != currentFreq && diff < 0) diff++;   // 端数を切り捨てるだけで 1 ステップ下がる
+        currentFreq = base + (long)diff * st;
+      }
       if (currentFreq < FREQ_MIN) currentFreq = FREQ_MIN;
       if (currentFreq > FREQ_MAX) currentFreq = FREQ_MAX;
       applyFreq();
