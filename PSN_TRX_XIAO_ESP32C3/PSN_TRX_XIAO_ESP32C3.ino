@@ -22,6 +22,7 @@
  *   t0 : 周波数表示  (大テキスト)
  *   t1 : ステップ表示（設定モード中はメニュー・設定値）
  *   t2 : 固定情報    (NEXTION_FIXED_LINE1 / LINE2 で内容を指定)
+ *   電源投入直後は WELCOME_MS（5 秒）の間、t0・t1 に Welcome 表示（WELCOME_LINE1 / LINE2）
  *   電源電圧 : 周波数（t0）の右に右詰めで "12.9V"（t7、フォント 3 = 36 ドット、緑。VSUP_LOW_V〜VSUP_HIGH_V の外は赤）。
  *              t7 のない画面データでは VSUP_USE_T7 を外すと xstr で描く（USE_VSUP_DISPLAY を外すと出さない）
  *   Sメーター : アナログメーター。背景（ピクチャ 0、nextion/background.png）の目盛りの上に、
@@ -32,6 +33,7 @@
  *   送信中はメーターが ALC メーターになる: 針 = マイク入力のピーク（ALC の効き始め = S9 の位置、
  *        赤い +dB の目盛り = ALC が絞った量）、t3 = "ALC 6dB"（絞った量）/ "ALC OFF"
  *   t5 : RIT         ("RIT +0.25k"、RIT 0 のときは空欄)
+ *                     設定モードで RIT を選んでいる間は 0 でも "RIT +0.00k"
  *   追加表示（2026-11-25、画面データ（.tft）は変えずにスケッチだけで表示）:
  *     バンド外の警告 : 送信する電波がバンドプランの区分（SSB: SSB_MIN_HZ〜BAND_MAX_HZ、AM: AM_MIN_HZ〜BAND_MAX_HZ）から外れる周波数では t0 を赤にする
  *     送信時間       : 送信中は t6 に "TX 0:42"。TX_WARN_SEC を超えると赤
@@ -53,6 +55,7 @@
  *   通常       : ダイヤル = 周波数、押す = 設定モードへ、長押し = RIT を 0 に戻す
  *   設定モード : ダイヤル = 機能を選ぶ（RIT / STEP / AGC / LOCK / 戻る）、押す = その機能の値の変更へ
  *   値の変更   : ダイヤル = 値を変える、押す = 確定して通常に戻る
+ *                RIT の値は t5 にだけ表示（t1 は "MENU > RIT"）
  *   設定モード・値の変更中に長押し、または 15 秒操作なし = 取り消して通常に戻る
  *   機能を増やすときは menuItems[] に 1 行足し、menuEnter/menuTurn/menuText/menuCommit に処理を足す
  *
@@ -91,6 +94,10 @@
 // Nextion 固定表示文字列（内容未定のため仮。確定後に変更）
 #define NEXTION_FIXED_LINE1  "6m PSN TRX"
 #define NEXTION_FIXED_LINE2  ""
+// 電源投入直後の Welcome 表示（t0 = 1 行目、t1 = 2 行目）。この間は Si5351 を動かさない（電波を出さない）
+#define WELCOME_LINE1  "Welcome JA6FUF"   // t0 は 14 文字まで
+#define WELCOME_LINE2  "50MHz PSN SSB TRX V2"
+#define WELCOME_MS     5000
 // ============================================================
 
 // ============================================================
@@ -159,6 +166,7 @@ Preferences prefs;
 #define ENC_A  D3
 #define ENC_B  D1
 #define ENC_SW D9
+#define ENC_STATES_PER_DETENT 4   // 1 クリックで A・B が 1 周期（状態 4 つ）進むエンコーダ。1 クリック = 半周期のものは 2
 
 // ---- Sメーター・AGC・送信検出・送信音声（tx_dsp.cpp）----
 #define AGC_PWM  D10           // 送信中は I の PDM 出力
@@ -231,6 +239,7 @@ unsigned long lastUiMs  = 0;
 
 // ---- エンコーダ ----
 volatile int encCount  = 0;
+volatile uint8_t encPrev = 3;          // エンコーダの前の状態（A<<1 | B）。setup で読む
 int          lastCount = 0;
 
 // ---- ボタン ----
@@ -299,14 +308,19 @@ int           shownPeak   = -1;
 unsigned long txStartMs   = 0;       // 送信を始めた時刻
 
 // ---- ISR ----
+// A・B 両方の変化で 2 ビットの状態（AB）の遷移表を引く。チャタリングは +1・−1 で打ち消し合い、
+// 飛び（2 ビット同時の変化）は 0 として捨てる。ENC_STATES_PER_DETENT 回分そろったら 1 クリック。
 void IRAM_ATTR encoderISR() {
-  static int lastA = HIGH;
-  int a = digitalRead(ENC_A);
-  int b = digitalRead(ENC_B);
-  if (a != lastA) {
-    encCount += (b != a) ? 1 : -1;
-    lastA = a;
-  }
+  static const int8_t tbl[16] = { 0, -1,  1,  0,
+                                  1,  0,  0, -1,
+                                 -1,  0,  0,  1,
+                                  0,  1, -1,  0 };
+  static int8_t acc = 0;
+  uint8_t cur = (digitalRead(ENC_A) << 1) | digitalRead(ENC_B);
+  acc += tbl[(encPrev << 2) | cur];
+  encPrev = cur;
+  if (acc >= ENC_STATES_PER_DETENT)       { encCount++; acc = 0; }
+  else if (acc <= -ENC_STATES_PER_DETENT) { encCount--; acc = 0; }
 }
 
 // ---- Si5351 ----
@@ -428,6 +442,8 @@ void menuCommit(int id) {
 void uiLine(char* buf, size_t len) {
   if (uiMode == UI_MENU) {
     snprintf(buf, len, "MENU > %s", menuItems[menuIndex]);
+  } else if (uiMode == UI_EDIT && menuIndex == MENU_RIT) {
+    snprintf(buf, len, "MENU > RIT");      // RIT の値は t5 にだけ出す
   } else if (uiMode == UI_EDIT) {
     char v[24];
     menuText(menuIndex, editValue, v, sizeof(v));
@@ -448,6 +464,11 @@ bool outOfBand(long f) {
 void ritText(char* buf, size_t len) {
   if (ritHz == 0) buf[0] = '\0';
   else snprintf(buf, len, "RIT %+.2fk", ritHz / 1000.0);
+}
+
+// 設定モードで RIT を選んでいる（メニューで RIT を指している、または RIT を変更中）
+bool ritSelected() {
+  return uiMode != UI_NORMAL && menuIndex == MENU_RIT;
 }
 
 void leaveUi(bool commit) {
@@ -588,7 +609,12 @@ void updateDisplay() {
   nxSetText("t1", line);
 
   char rit[16];
-  ritText(rit, sizeof(rit));
+  if (ritSelected()) {                   // 設定モードで RIT を選んでいる間は、0 でも t5 に RIT の値（変更中は変えている値）
+    long v = (uiMode == UI_EDIT) ? editValue : ritHz;
+    snprintf(rit, sizeof(rit), "RIT %+.2fk", v / 1000.0);
+  } else {
+    ritText(rit, sizeof(rit));
+  }
   nxSetText("t5", rit);
 }
 
@@ -988,7 +1014,9 @@ void setup() {
   pinMode(ENC_A,  INPUT_PULLUP);
   pinMode(ENC_B,  INPUT_PULLUP);
   pinMode(ENC_SW, INPUT_PULLUP);
+  encPrev = (digitalRead(ENC_A) << 1) | digitalRead(ENC_B);
   attachInterrupt(digitalPinToInterrupt(ENC_A), encoderISR, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(ENC_B), encoderISR, CHANGE);
 
   // AGC の PWM・送信音声の I/Q 生成（tx_dsp.cpp）
   dspBegin(TX_SENSE, PDM_Q, AGC_PWM, AGC_PWM_FREQ, AGC_PWM_BITS);
@@ -1005,11 +1033,19 @@ void setup() {
   oled.clearDisplay();
   oled.setTextColor(SSD1306_WHITE);
   oled.setTextSize(1);
-  oled.setCursor(20, 28);
-  oled.print("PSN TRX VFO");
+  oled.setCursor(20, 20);
+  oled.print(WELCOME_LINE1);
+  oled.setCursor(0, 36);
+  oled.print(WELCOME_LINE2);
   oled.display();
-  delay(1000);
 #endif
+  // Welcome 表示。Si5351 を設定する前に待つので、この間に PTT を押しても電波は出ない
+#ifdef USE_NEXTION_DISPLAY
+  nxSetText("t0", WELCOME_LINE1);
+  nxSetText("t1", WELCOME_LINE2);
+#endif
+  delay(WELCOME_MS);
+  lastCount = encCount;        // Welcome 中に回したダイヤルは無視する
 
   if (!si5351.init(SI5351_CRYSTAL_LOAD_8PF, 25000000, 0))
     Serial.println("Si5351 not found");
