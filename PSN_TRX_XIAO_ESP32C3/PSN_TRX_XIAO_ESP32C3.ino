@@ -21,7 +21,8 @@
  * ---- Nextion 画面構成 (Nextion Editor で作成) ----
  *   t0 : 周波数表示  (大テキスト)
  *   t1 : ステップ表示（設定モード中はメニュー・設定値）
- *   t2 : 固定情報    (NEXTION_FIXED_LINE1 / LINE2 で内容を指定)
+ *   t2 : 電源電圧    ("DC 13.8V"、VSUP_LOW_V〜VSUP_HIGH_V の外は赤。USE_VSUP_DISPLAY を外すと
+ *                     NEXTION_FIXED_LINE1 / LINE2 の固定の文字)
  *   Sメーター : アナログメーター。背景（ピクチャ 0、nextion/background.png）の目盛りの上に、
  *               スケッチが picq（メーター面の描き直し）と line（針）で針を描く
  *   t3 : Sメーター値 ("S7"、"S9+20" など)
@@ -70,6 +71,7 @@
  *   マイク入力  -> D2/A2 (GPIO4, ADC1)  送信中のマイク（U5A → C65・R52）、R73/R74 で 1.65V にバイアス。処理は tx_dsp.cpp
  *                  ※ V2 では受信音は来ない（Sメーター・AGC は ADS1015 で測る）
  *   ADS1015     -> D4/D5 (I2C、Si5351 と共用、アドレス 0x48)  A0 = AD8307 の出力（25mV/dB）
+ *                  A3 = 電源電圧（+12V を 47kΩ / 10kΩ で 1/5.7 に分圧。後付けの改造、VSUP_ADS_CH で A1・A2 にもできる）
  *   Si5351 CLK2 -> 受信中だけ BFO（R19・R20 → U2）
  *   AGC 出力    -> D10 (GPIO10) PWM → R75・C104 → R76 → Q21 で RF 増幅 Q3・IF 増幅 Q7 のゲートを下げる
  *                  送信中は I の PDM 出力（R53・C66・R54・C67 → C70 → Q15）
@@ -111,6 +113,26 @@
 // AGC を最大に効かせたときのゲイン低下 [dB]（Sメーター換算用の目安。ngspice の見積もりで
 //   RF 増幅 Q3 約 15.7dB ＋ IF 増幅 Q7 約 15.5dB = 約 31dB。28dB は控えめの値で、実機で合わせる）
 #define AGC_RANGE_DB       28.0f
+// ============================================================
+
+// ============================================================
+// ★ 電源電圧の表示（ADS1015 の空き入力で +12V を測る）
+// ============================================================
+// 配線: L20 の 1 番（+12V）─ 47kΩ ─ 線 ─ J4 の A3（10 番）、A3 と GND（J4 の 2 番）の間に 10kΩ と 0.1µF
+//   ※ 47kΩ は必ず線の 12V 側（L20 側）に入れる。12V を J4 のピンに直接つなぐと ADS1015 が壊れる
+// 分圧抵抗を付けていないときはコメントアウトする（入力が浮いていると、でたらめな電圧が出るため）
+#define USE_VSUP_DISPLAY
+// 測る入力（1 = A1、2 = A2、3 = A3）
+#define VSUP_ADS_CH        3
+// 分圧比（(47k + 10k) / 10k）。テスターの値に合わせるときはシリアルで vdc <電圧> と打つ（NVS に保存）
+#define VSUP_DIV_DEFAULT   5.7f
+// この電圧より低い・高いと赤で表示 [V]
+#define VSUP_LOW_V         11.0f
+#define VSUP_HIGH_V        15.0f
+// これより低いときは分圧抵抗が付いていないとみなし、t2 は固定の文字（NEXTION_FIXED_LINE1）のまま [V]
+#define VSUP_MIN_V         3.0f
+// 測る間隔 [ms]（測るたびに S メーターの読み取りが約 3ms 止まる）
+#define VSUP_PERIOD_MS     1000
 // ============================================================
 
 #include <Wire.h>
@@ -217,6 +239,7 @@ unsigned long btnDownTime  = 0;
 bool          longHandled  = false;
 
 void updateDisplay();
+void updateSupply();
 void saveFreq();
 
 // ---- 受信レベル測定（AD8307 → ADS1015）----
@@ -225,6 +248,12 @@ float         rssiMv     = 0;        // 前のブロックのピーク [mV]
 float         rssiPeak   = 0;        // 今のブロックのピーク [mV]
 unsigned long lastRssiMs = 0;
 unsigned long lastBlockMs = 0;
+
+// ---- 電源電圧（ADS1015 の A3）----
+float         vsupDiv    = VSUP_DIV_DEFAULT;
+float         vsupV      = -1;       // 平均した電源電圧 [V]（まだ測っていない・読めないときは -1）
+float         vsupAdcMv  = -1;       // 最後に読んだ ADS1015 の入力電圧 [mV]
+unsigned long lastVsupMs = 0;
 
 // ---- AGC ----
 float agcCtl = 0;              // 0 = ゲイン最大、1000 = 最大に絞る
@@ -485,12 +514,32 @@ void nxInit() {
   nxSend("baud=115200");
   delay(50);
   nxSend("page 0");
-  char fixed[48];
-  if (strlen(NEXTION_FIXED_LINE2) > 0)
-    snprintf(fixed, sizeof(fixed), "%s  %s", NEXTION_FIXED_LINE1, NEXTION_FIXED_LINE2);
-  else
-    snprintf(fixed, sizeof(fixed), "%s", NEXTION_FIXED_LINE1);
-  nxSetText("t2", fixed);
+  updateSupply();                          // t2（電源電圧、測っていないときは固定の文字）
+}
+
+// t2: 電源電圧（"DC 13.8V"、VSUP_LOW_V〜VSUP_HIGH_V の外は赤）。測っていないときは固定の文字
+void updateSupply() {
+  static char shown[48] = "";
+  static bool shownRed = false;            // 最初は色を送らない（画面データの色のまま）
+  char buf[48];
+  bool red = false;
+  if (vsupV >= VSUP_MIN_V) {
+    snprintf(buf, sizeof(buf), "DC %.1fV", vsupV);
+    red = (vsupV < VSUP_LOW_V || vsupV > VSUP_HIGH_V);
+  } else if (strlen(NEXTION_FIXED_LINE2) > 0) {
+    snprintf(buf, sizeof(buf), "%s  %s", NEXTION_FIXED_LINE1, NEXTION_FIXED_LINE2);
+  } else {
+    snprintf(buf, sizeof(buf), "%s", NEXTION_FIXED_LINE1);
+  }
+  if (red != shownRed) {
+    nxSend(red ? "t2.pco=63488" : "t2.pco=65535");
+    shownRed = red;
+    shown[0] = '\0';                       // 色を変えたら文字も送り直す
+  }
+  if (strcmp(buf, shown) != 0) {
+    nxSetText("t2", buf);
+    strncpy(shown, buf, sizeof(shown) - 1);
+  }
 }
 
 void updateDisplay() {
@@ -624,6 +673,12 @@ void updateDisplay() {
     oled.setCursor(108, 20);
     oled.print("OUT");
   }
+  if (vsupV >= VSUP_MIN_V) {             // 電源電圧（範囲外は "!" を付ける）
+    bool bad = (vsupV < VSUP_LOW_V || vsupV > VSUP_HIGH_V);
+    snprintf(buf, sizeof(buf), "%s%.1fV", bad ? "!" : "", vsupV);
+    oled.setCursor(66, 20);
+    oled.print(buf);
+  }
 
   oled.drawLine(0, 28, 127, 28, SSD1306_WHITE);
 
@@ -653,6 +708,15 @@ void updateMeter(int bar, const char* text, const char* agc, const char* agcAmt)
   oled.display();
 }
 
+// 電源電圧の表示が 0.1V 変わったときだけ描き直す
+void updateSupply() {
+  static int shown = -9999;
+  int v = vsupV >= VSUP_MIN_V ? (int)lroundf(vsupV * 10) : -1;
+  if (v == shown) return;
+  shown = v;
+  updateDisplay();
+}
+
 #endif  // USE_NEXTION_DISPLAY
 
 // ---- NVS 保存 ----
@@ -675,6 +739,8 @@ void saveBfo() {
 // ---- NVS 読み込み ----
 #define BFO_MIN 11990000L
 #define BFO_MAX 12010000L
+#define VSUP_DIV_MIN 4.0f       // 分圧比の補正で受け付ける範囲（5.7 の約 ±30%）
+#define VSUP_DIV_MAX 8.0f
 
 void loadFreq() {
   prefs.begin("psn_trx", true);
@@ -684,8 +750,10 @@ void loadFreq() {
   dialLock    = prefs.getBool("lock", false);
   bfoHz[0]    = prefs.getLong("bfo_u", BFO_USB_DEFAULT);
   bfoHz[1]    = prefs.getLong("bfo_l", BFO_LSB_DEFAULT);
+  vsupDiv     = prefs.getFloat("vdiv", VSUP_DIV_DEFAULT);
   prefs.end();
 
+  if (!(vsupDiv >= VSUP_DIV_MIN && vsupDiv <= VSUP_DIV_MAX)) vsupDiv = VSUP_DIV_DEFAULT;
   if (currentFreq < FREQ_MIN || currentFreq > FREQ_MAX)
     currentFreq = FREQ_DEFAULT;
   if (stepIndex < 0 || stepIndex >= stepCount)
@@ -760,6 +828,42 @@ bool ritCommand(String line) {
   return true;
 }
 
+// ---- 電源電圧: vdc（表示）/ vdc <テスターで測った電圧 V>（分圧比を合わせて保存）/ vdc reset ----
+bool vdcCommand(String line) {
+  line.trim();
+  if (!line.startsWith("vdc")) return false;
+#ifndef USE_VSUP_DISPLAY
+  Serial.println("vdc: 電源電圧の表示は無効（USE_VSUP_DISPLAY をコメントアウト中）");
+  return true;
+#endif
+  String arg = line.substring(3);
+  arg.trim();
+  if (arg == "reset") {
+    vsupDiv = VSUP_DIV_DEFAULT;
+  } else if (arg.length()) {
+    float v = arg.toFloat();
+    if (vsupAdcMv < 100) {
+      Serial.println("vdc: ADS1015 の入力が読めていない（配線と分圧抵抗を確認）");
+      return true;
+    }
+    float div = v / (vsupAdcMv / 1000.0f);
+    if (!(div >= VSUP_DIV_MIN && div <= VSUP_DIV_MAX)) {
+      Serial.printf("vdc: 分圧比 %.3f は範囲外（%.1f〜%.1f）。電圧か配線を確認\n", div, VSUP_DIV_MIN, VSUP_DIV_MAX);
+      return true;
+    }
+    vsupDiv = div;
+  }
+  if (arg.length()) {
+    prefs.begin("psn_trx", false);
+    prefs.putFloat("vdiv", vsupDiv);
+    prefs.end();
+    if (vsupAdcMv >= 0) vsupV = vsupAdcMv / 1000.0f * vsupDiv;   // 平均をやり直す
+    updateSupply();
+  }
+  Serial.printf("vdc: %.2f V（A%d = %.0f mV、分圧比 %.3f）\n", vsupV, VSUP_ADS_CH, vsupAdcMv, vsupDiv);
+  return true;
+}
+
 // ---- Sメーター表示の固定（表示の確認用）: smeter s7 / smeter s9+20 / smeter off ----
 bool smeterCommand(String line) {
   line.trim();
@@ -784,16 +888,22 @@ bool smeterCommand(String line) {
   return true;
 }
 
-// ---- ADS1015: A0 を連続変換（±4.096V、1600SPS）----
-void adsBegin() {
+// ---- ADS1015: 入力 ch（0〜3）対 GND を連続変換（±4.096V、1600SPS）----
+bool adsSetMux(int ch) {
   Wire.beginTransmission(ADS1015_ADDR);
-  Wire.write(0x01);            // 設定レジスタ
-  Wire.write(0x42);            // MUX = A0 対 GND、PGA = ±4.096V、連続変換
-  Wire.write(0x83);            // 1600SPS、コンパレータ不使用
-  adsOk = (Wire.endTransmission() == 0);
+  Wire.write(0x01);                        // 設定レジスタ
+  Wire.write(0x02 | ((4 + ch) << 4));      // MUX = Ach 対 GND（A0 で 0x42）、PGA = ±4.096V、連続変換
+  Wire.write(0x83);                        // 1600SPS、コンパレータ不使用
+  bool ok = (Wire.endTransmission() == 0);
   Wire.beginTransmission(ADS1015_ADDR);
-  Wire.write(0x00);            // 以後は変換結果レジスタを読む
+  Wire.write(0x00);                        // 以後は変換結果レジスタを読む
   Wire.endTransmission();
+  return ok;
+}
+
+// 普段は A0（AD8307）を連続変換
+void adsBegin() {
+  adsOk = adsSetMux(0);
   if (!adsOk) Serial.println("ADS1015 not found");
 }
 
@@ -803,6 +913,19 @@ float adsReadMv() {
   if (Wire.requestFrom(ADS1015_ADDR, 2) != 2) return -1;
   int16_t raw = (int16_t)((Wire.read() << 8) | Wire.read()) >> 4;   // 12 ビット、1LSB = 2mV
   return raw * 2.0f;
+}
+
+// 電源電圧の入力（VSUP_ADS_CH）を 1 回読んで A0 に戻す [mV]（読めなければ -1）
+// 入力を切り替えてから 3ms（1600SPS で 4 回分以上の変換）待ち、切り替え後の値を読む
+float adsReadSupplyMv() {
+  if (!adsOk) return -1;
+  float mv = -1;
+  if (adsSetMux(VSUP_ADS_CH)) {
+    delay(3);
+    mv = adsReadMv();
+  }
+  adsSetMux(0);
+  return mv;
 }
 
 // ---- 1 ブロック（16ms）分の処理（AGC とSメーター）----
@@ -957,19 +1080,35 @@ void loop() {
     processBlock();
   }
 
+#ifdef USE_VSUP_DISPLAY
+  // 電源電圧（VSUP_PERIOD_MS ごとに ADS1015 の入力を切り替えて読む。送信中も測る）
+  if (now - lastVsupMs >= VSUP_PERIOD_MS) {
+    lastVsupMs = now;
+    vsupAdcMv = adsReadSupplyMv();
+    lastRssiMs = millis();                 // A0 に戻した直後の変換結果（A3 の値が残る）を読まない
+    if (vsupAdcMv < 0) {
+      vsupV = -1;
+    } else {
+      float v = vsupAdcMv / 1000.0f * vsupDiv;
+      vsupV = (vsupV < 0) ? v : vsupV + (v - vsupV) * 0.5f;   // 表示がちらつかないよう軽く平均
+    }
+    updateSupply();
+  }
+#endif
+
   // 設定コマンド（送信音声: dsp / mic / out / iqd / iqa / sb / amd / tone / alc / w、受信: bfo、表示: freq / rit / smeter）
   static String cmdLine;
   while (Serial.available()) {
     char ch = Serial.read();
     if (ch == '\n' || ch == '\r') {
       if (cmdLine.length() && !bfoCommand(cmdLine) && !freqCommand(cmdLine) &&
-          !ritCommand(cmdLine) && !smeterCommand(cmdLine)) {
+          !ritCommand(cmdLine) && !smeterCommand(cmdLine) && !vdcCommand(cmdLine)) {
         if (dspCommand(cmdLine)) {
           applyFreq();                     // sb で側帯波を変えたら BFO・局発も合わせる
           updateDisplay();                 // バンド外の判定も側帯波で変わる
         }
         else
-          Serial.println("コマンド: dsp / mic <dB> / out <%> / iqd <us> / iqa <dB> / sb usb|lsb|am / amd <%> / tone <Hz> / alc <dBFS>|off / w / bfo [usb|lsb <Hz>] / freq [<Hz>] / rit [<Hz>] / smeter s7|s9+20|off");
+          Serial.println("コマンド: dsp / mic <dB> / out <%> / iqd <us> / iqa <dB> / sb usb|lsb|am / amd <%> / tone <Hz> / alc <dBFS>|off / w / bfo [usb|lsb <Hz>] / freq [<Hz>] / rit [<Hz>] / smeter s7|s9+20|off / vdc [<V>|reset]");
       }
       cmdLine = "";
     } else if (cmdLine.length() < 40) cmdLine += ch;
