@@ -21,8 +21,9 @@
  * ---- Nextion 画面構成 (Nextion Editor で作成) ----
  *   t0 : 周波数表示  (大テキスト)
  *   t1 : ステップ表示（設定モード中はメニュー・設定値）
- *   t2 : 電源電圧    ("DC 13.8V"、VSUP_LOW_V〜VSUP_HIGH_V の外は赤。USE_VSUP_DISPLAY を外すと
- *                     NEXTION_FIXED_LINE1 / LINE2 の固定の文字)
+ *   t2 : 固定情報    (NEXTION_FIXED_LINE1 / LINE2 で内容を指定)
+ *   電源電圧 : 周波数（t0）の右に右詰めで "12.9V"（t7、フォント 3 = 36 ドット、緑。VSUP_LOW_V〜VSUP_HIGH_V の外は赤）。
+ *              t7 のない画面データでは VSUP_USE_T7 を外すと xstr で描く（USE_VSUP_DISPLAY を外すと出さない）
  *   Sメーター : アナログメーター。背景（ピクチャ 0、nextion/background.png）の目盛りの上に、
  *               スケッチが picq（メーター面の描き直し）と line（針）で針を描く
  *   t3 : Sメーター値 ("S7"、"S9+20" など)
@@ -514,33 +515,56 @@ void nxInit() {
   nxSend("baud=115200");
   delay(50);
   nxSend("page 0");
-  updateSupply();                          // t2（電源電圧、測っていないときは固定の文字）
+  char fixed[48];
+  if (strlen(NEXTION_FIXED_LINE2) > 0)
+    snprintf(fixed, sizeof(fixed), "%s  %s", NEXTION_FIXED_LINE1, NEXTION_FIXED_LINE2);
+  else
+    snprintf(fixed, sizeof(fixed), "%s", NEXTION_FIXED_LINE1);
+  nxSetText("t2", fixed);
 }
 
-// t2: 電源電圧（"DC 13.8V"、VSUP_LOW_V〜VSUP_HIGH_V の外は赤）。測っていないときは固定の文字
-void updateSupply() {
-  static char shown[48] = "";
-  static bool shownRed = false;            // 最初は色を送らない（画面データの色のまま）
-  char buf[48];
+// 電源電圧: 周波数（t0）の右の t7（x 380, y 36, 96x36、フォント 3 = 36 ドット、右寄せ、緑）に "12.9V"。
+// VSUP_LOW_V〜VSUP_HIGH_V の外は赤。t7 は PSN_TRX_K035.HMI（2026-11-28）で追加し、t0 の幅を 448 → 364 に詰めた。
+// t7 のない画面データ（TJC 用など）は VSUP_USE_T7 をコメントアウトすると、同じ位置に xstr で直接描く
+// （そのときは t0 を描き直すたびに消えるので描き直す（force）。フォントは VSUP_FONT）
+#define VSUP_USE_T7
+#define VSUP_COLOR 2016u  // 普段の文字色 = 緑（RGB565 の 0x07E0）。下回ったとき・上回ったときは赤 63488
+#define VSUP_FONT  0      // xstr で描くときのフォント（t7 を使うときは t7 の font 属性 = 3）
+#define VSUP_X     380    // t0 の左端 16 + 14 文字 × 26px（フォント 1）
+#define VSUP_Y     40     // t0（y 16〜72）の下寄せ
+#define VSUP_W     84     // 画面の t0 の右端 464 まで
+#define VSUP_H     32
+void updateSupply(bool force) {
+  static char shown[12] = "?";
+  static bool shownRed = false;
+  char buf[12] = "";
   bool red = false;
   if (vsupV >= VSUP_MIN_V) {
-    snprintf(buf, sizeof(buf), "DC %.1fV", vsupV);
+    snprintf(buf, sizeof(buf), "%.1fV", vsupV);
     red = (vsupV < VSUP_LOW_V || vsupV > VSUP_HIGH_V);
-  } else if (strlen(NEXTION_FIXED_LINE2) > 0) {
-    snprintf(buf, sizeof(buf), "%s  %s", NEXTION_FIXED_LINE1, NEXTION_FIXED_LINE2);
-  } else {
-    snprintf(buf, sizeof(buf), "%s", NEXTION_FIXED_LINE1);
   }
+#ifdef VSUP_USE_T7
+  (void)force;                             // t7 は t0 と重ならないので描き直し不要
   if (red != shownRed) {
-    nxSend(red ? "t2.pco=63488" : "t2.pco=65535");
+    nxSend(red ? "t7.pco=63488" : "t7.pco=2016");
     shownRed = red;
-    shown[0] = '\0';                       // 色を変えたら文字も送り直す
   }
   if (strcmp(buf, shown) != 0) {
-    nxSetText("t2", buf);
+    nxSetText("t7", buf);
     strncpy(shown, buf, sizeof(shown) - 1);
   }
+#else
+  if (!force && red == shownRed && strcmp(buf, shown) == 0) return;
+  // xstr x,y,w,h,フォント,文字色,背景（sta=0 のときピクチャ番号）,横寄せ（2 = 右）,縦寄せ（1 = 中央）,sta（0 = 背景を切り抜き）,"文字"
+  char cmd[80];
+  snprintf(cmd, sizeof(cmd), "xstr %d,%d,%d,%d,%d,%u,0,2,1,0,\"%s\"",
+           VSUP_X, VSUP_Y, VSUP_W, VSUP_H, VSUP_FONT, red ? 63488u : VSUP_COLOR, buf);
+  nxSend(cmd);
+  strncpy(shown, buf, sizeof(shown) - 1);
+  shownRed = red;
+#endif
 }
+void updateSupply() { updateSupply(false); }
 
 void updateDisplay() {
   long f   = currentFreq;
@@ -557,6 +581,7 @@ void updateDisplay() {
     shownOut = out;
   }
   nxSetText("t0", freqBuf);
+  updateSupply(true);                    // t0 を描き直すと電源電圧の表示が消えるので描き直す
 
   char line[40];
   uiLine(line, sizeof(line));
